@@ -1,0 +1,15 @@
+make folder
+
+cd desktop/django/folder
+
+py -m venv env
+
+env\Scripts\activate
+
+pip install django
+
+django-admin startproject projName
+
+py manage.py startapp appName
+
+py manage.py runserver

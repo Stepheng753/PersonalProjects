@@ -1,0 +1,2 @@
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\CPPTut\CPPTut\x64\Debug\CPPTut.exe
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\CPPTut\CPPTut\x64\Debug\CPPTut.pdb

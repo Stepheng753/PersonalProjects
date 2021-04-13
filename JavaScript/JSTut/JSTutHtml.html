@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+    <script src="JSTut.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 1.6em;
+            padding-bottom: 500em;
+            background: #282c34;
+            color: white;
+            width: 800px;
+            margin: auto;
+        }
+
+        a {
+            color: #528bff;
+        }
+
+        h3 {
+            text-decoration: underline;
+            color: #e5c07b;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .show {
+            display: inline !important;
+        }
+
+        button {
+            border: 2px solid black;
+            background: #5cecec;
+            font-size: .5em;
+            font-weight: bold;
+            color: black;
+            padding: .8em 2em;
+            margin-top: .4em;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://www.youtube.com/watch?v=fju9ii8YsGs&ab_channel=DerekBanas" target="_blank">JS Tutorial Video</a>
+
+    <h3>Introduction</h3>
+    <p id="sayHello"></p>
+    <button onClick="introduction()"> Hello Button </button>
+
+    <h3>Variables</h3>
+    <button onClick="variables()"> Set Variables </button>
+
+    <h3>Math</h3>
+    <button onclick="math()"> Math Button </button>
+
+    <h3>Strings</h3>
+    <button onclick="strings()"> Strings Button </button>
+
+    <h3>Conditionals</h3>
+    <button onclick="conditionals()"> Conditionals </button>
+
+    <h3>p5.js</h3>
+    <div id="p5Clock"></div>
+
+    <h3>Loops</h3>
+    <button onclick="loops()"> Loops </button>
+
+    <h3>Arrays</h3>
+    <button onclick="arrays()"> Arrays </button>
+
+    <h3>Functions</h3>
+    <button onclick="funcs()"> Functions </button>
+
+    <h3>Event Handling</h3>
+
+    <a href="JavaScript:void(0)" onclick="alert('Hello')"> Say Hello </a> <br>
+    <a href="JavaScript:void(0)" onclick="openAlert('Hi')"> Say Hi </a> <br>
+    <a href="JavaScript:void(0)" onmouseover="this.style.color = 'red';" onmouseout="this.style.color = 'pink'"
+        ondblclick="this.text = 'Double Click'" onmousedown="this.text = 'Mouse Down'"
+        onmouseup="this.text = 'Mouse Up'">Mouse Operations</a> <br>
+    User Typed: <input type="text" id="randInput" onchange="input()">
+
+    <br><br>
+
+    <form action="#" id="sampForm">
+        Char Click: <input id="charInput" type="text" onfocus="charClick()">
+        <p id="keyData">Key Data Here</p>
+        <input type="submit" value="submit">
+        <input type="reset" value="reset">
+    </form>
+
+    <br><br>
+
+    <img src="https://cdn.uconnectlabs.com/wp-content/uploads/sites/25/2020/04/J.png" id="logo" height="100em"
+        onload="imgClick()"> <br>
+    <button id="logoButton">Get Logo</button><br>
+    Img Click: <input id="mouseInput" type="text" size="30"><br>
+
+    <br><br>
+
+    <button onclick="mouseLoc()">Mouse Location</button> <br>
+    Mouse X: <input type="text" id="mouseX"><br>
+    Mouse Y: <input type="text" id="mouseY"><br>
+
+    <br><br>
+
+    <button onclick="clearInput()">Clear Inputs</button> <br>
+
+    <h3>Object Styling</h3>
+    <div id="sampDiv">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget turpis eget quam luctus malesuada ut ac
+        nulla. Suspendisse fermentum magna neque, a auctor felis pretium eget. Fusce ornare feugiat magna, ut faucibus
+        sapien congue ut. Nunc nec fringilla ex, nec varius nisl. Ut eget laoreet nisi. Aenean quis venenatis mauris, at
+        volutpat ante. Donec sollicitudin lacinia ornare. In quis accumsan ligula, id egestas enim.
+    </div>
+    <br>
+    <button onclick="backCol()" id="chgBkColor">Background Color</button>
+    <button onclick="backImg()" id="chgBkImg">Background Image</button>
+    <button onclick="borderStyle()" id="chgBorderStyle">Border Style</button>
+    <button onclick="borderWidth()" id="chgBorderWidth">Border Width</button>
+    <button onclick="borderCol()" id="chgBorderColor">Border Color</button>
+
+    <br><br>
+
+    <h3>Manipulating the DOM</h3>
+    <div id="sampDiv2">
+        <p>
+            Lorem ipsum dolor sit amet, <em>consectetur adipiscing</em> elit. Proin eget turpis eget quam luctus
+            malesuada ut ac nulla. Suspendisse fermentum magna neque, a auctor felis pretium eget. Fusce ornare feugiat magna, ut faucibus sapien congue ut. Nunc nec fringilla ex, nec varius nisl. Ut eget laoreet nisi. Aenean
+            quis venenatis mauris, at volutpat ante. Donec sollicitudin lacinia ornare. In quis accumsan ligula, id
+            egestas enim.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, <b>consectetur adipiscing</b> elit. Proin eget turpis eget quam luctus malesuada ut ac nulla. Suspendisse fermentum magna neque, a auctor felis pretium eget. <em>Fusce ornare</em> feugiat magna, ut faucibus sapien congue ut. <b>Nunc nec fringilla</b> ex, nec varius nisl.
+        </p>
+    </div>
+
+    <img src="https://cdn.uconnectlabs.com/wp-content/uploads/sites/25/2020/04/J.png" id="logo2" alt="JS Logo2" height="100em" width="75em">
+    <br><br>
+    <button onclick="goToGoogle()" id="goToGoogle">Go to Google</button>
+    <button onclick="forward()" id="forwardPage">Forward Page</button>
+    <button onclick="back()" id="backPage">Back Page</button>
+    <button onclick="reload()" id="reload">Reload Page</button>
+    <br><br>
+    <button onclick="getWebpage()">getWebpage</button>
+    <button onclick="cNodes()">childNodes</button>
+    <p id="NodeType"></p>
+    <p id="NodeName"></p>
+    <button onclick="logo()">Logo</button>
+    <button onclick="cElement()">createElement</button>
+
+    <h3>Object Oriented Programming</h3>
+    <button onclick="OOP()">OOP</button>
+
+    <h3>Form Validation</h3>
+    <div>
+        Enter your name:
+        <input id="name" name="name" type="text" size="30" onblur="isTheFieldEmpty(this, document.getElementById('name_help'))">
+        <span id="name_help"></span>
+    </div>
+
+    <h3>Exception Handling</h3>
+    <button onclick="exHand()">Exception Handling</button>
+
+
+</body>
+
+
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LinkedList:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LinkedList_jar</output-path>
+    <root id="archive" name="LinkedList.jar">
+      <element id="module-output" name="LinkedList" />
+    </root>
+  </artifact>
+</component>

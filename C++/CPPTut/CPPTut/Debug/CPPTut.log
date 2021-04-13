@@ -1,0 +1,5 @@
+﻿  Basics.cpp
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\CPPTut\CPPTut\Basics.cpp(26,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\CPPTut\CPPTut\Basics.cpp(84,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\CPPTut\CPPTut\Basics.cpp(160,17): warning C4018: '<': signed/unsigned mismatch
+  CPPTut.vcxproj -> C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\CPPTut\CPPTut\Debug\CPPTut.exe

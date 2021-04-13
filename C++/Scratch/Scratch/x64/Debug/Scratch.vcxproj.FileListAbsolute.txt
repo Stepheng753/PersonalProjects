@@ -1,0 +1,2 @@
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\Scratch\Scratch\x64\Debug\Scratch.exe
+C:\Users\Stephen Giang\Google Drive\Personal Programming\C++\Scratch\Scratch\x64\Debug\Scratch.pdb

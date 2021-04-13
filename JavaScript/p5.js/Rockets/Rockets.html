@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Sketch</title>
+
+		<style type="text/css">
+			body {
+				width: 1000px;
+				margin: auto;
+				text-align: center;
+			}
+			a:hover {
+				color: blue;
+			}
+			a:active {
+				color: red;
+			}
+			a:visited {
+				color: #000;
+			}
+			a {
+				text-decoration: underline;
+			}
+			h2 {
+				text-align: left;
+			}
+
+			#leftH2 {
+				float: left;
+				text-align: left;
+			}
+			#rightH2 {
+				float: right;
+				text-align: right;
+			}
+			#current {
+				color: #b31b1b;
+			}
+		</style>
+
+		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+	</head>
+
+	<body>
+		<h2 id="leftH2">SmartRockets.js</h2>
+		<h2 id="rightH2">
+			<a onclick="rewardPunish(1)">Inc Speed Reward</a> //
+			<a onclick="rewardPunish(2)">Inc Completion Reward</a> //
+			<a onclick="rewardPunish(3)">Inc Crash Punishment</a>
+		</h2>
+
+		<script src="sketch.js"></script>
+		<script src="Rocket.js"></script>
+		<script src="DNA.js"></script>
+		<script src="Population.js"></script>
+		<script src="Obstacle.js"></script>
+	</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Personal Website for Stephen Giang" />
+		<meta name="keywords" content="Stephen Giang" />
+		<meta name="robots" content="index,follow" />
+		<base href="Home.html" />
+		<link rel="stylesheet" href="CSS/style.css" />
+		<link rel="icon" href="External/Icon.svg" />
+		<title>Stephen Giang</title>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<noscript> Please Enable JavaScript </noscript>
+
+			<header>
+				<h1 id="headerH1"><a id="headerA" href="Home.html"> Stephen Giang </a></h1>
+			</header>
+			<nav id="horzNav">
+				<p>
+					<a href="Home.html"> Home</a>
+					<a href="Projects.html"> Projects</a>
+					<a href="Resume.html"> Resume</a>
+					<a href="Transcripts.html"> Transcripts</a>
+					<a href="Biography.html"> Biography</a>
+					<a href="Tutoring.html"> Tutoring</a>
+					<a href="Contact.html"> Contact</a>
+				</p>
+			</nav>
+
+			<object
+				data="./Projects/Welcome/Welcome.html"
+				width="1000px"
+				height="225px"
+				style="padding-top: 10px"
+			></object>
+			<img src="External/HotAir.jpg" width="250" align="right" style="padding: 10px 10px 10px 10px" />
+			<h2>Welcome to my Very First Website!</h2>
+			<p id="Intro">
+				Hi! My Name is Stephen Giang. I have built this from scratch using HTML, JS, CSS, and PHP. I am a
+				student at SDSU majoring in Mathematics with an emphasis in Computational Science and a minor in
+				Computer Science. I am expected to graduate in May 2021. Originally through my coursework, I have
+				learned back end developing through languages such as Java, Python, C++, Matlab, and more. I went ahead
+				and took the initiative to learn front end developing using videos taught on
+				<a href="https://www.youtube.com/" target="blank">Youtube</a> from a channel called
+				<a href="https://www.youtube.com/user/derekbanas" target="blank">Derek Banas</a>. I am also learning
+				about visualization and machine learning using JavaScript by another Youtuber,
+				<a href="https://www.youtube.com/user/shiffman" target="blank">The Coding Train</a>. I am making this
+				website to hopefully broadcast my passion for learning and to display my coding to any future employers
+				or anyone interested. My goal career wise is to be a software engineer for a company that focuses on
+				mathematical application. An example of topics in which I am very much interested would be the science
+				of autonomous vehicles such as drones or cars. The sensors needed for that is what I would greatly want
+				to be involved in as I am very much interested in Computer Vision. Currently, I have joined a team
+				called StreetsMart. Here, we are building a social networking app based around travel. This will be an
+				app that will allow its users to truly connect to others, and share their experience around the world. I
+				am currently learning React Native, MySQL, and more to assist as much as I can in this team.
+			</p>
+
+			<b>
+				<form method="GET" action="PHP/emailComments.php" id="commentForm">
+					Name: <input type="text" name="name" size="40" maxlength="40" /> <br /><br />
+					Email: <input type="text" name="emailAddress" size="40" maxlength="40" /> <br /><br />
+					Comments/Suggestions For my Website: <br />
+					<textarea name="comments" row="20" cols="50"></textarea>
+					<br />
+					<input type="submit" name="submit" value="Submit" />
+					<input type="reset" name="reset" value="Reset" />
+				</form>
+			</b>
+			<footer>
+				<address>Stepheng753@Gmail.com</address>
+				<small><a onclick="window.location.reload(true);">Copy Right 2020</a></small>
+			</footer>
+		</div>
+	</body>
+</html>

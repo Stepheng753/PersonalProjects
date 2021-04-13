@@ -1,0 +1,81 @@
+
+/* change color of h1 tag */
+h1 {
+	color: red;
+}
+
+/* change color based on action
+   hover - hover
+   active - click
+   visited - clicked
+*/
+a:hover{ color: blue; } 
+a:active{ color: red; }
+a:visited{ color: pink; }
+
+body {
+	background: white; 
+}
+
+div#wrapper {
+	margin:auto;
+	background: white;
+	width: 1000px;
+	height: 2000px;
+}
+
+
+
+header{
+	display: block;
+	padding: 0px 0px 0px 0px;
+}
+
+
+#horzNav {
+	display: block;
+	padding: 10px 20px 10px 0px;
+	background: green;
+}
+
+#horzNav a{
+	text-decoration: underline;
+	padding: 0px 0px 0px 20px;
+	color: white;
+}
+
+main {
+	padding: 10px 20px 20px 20px;
+}
+
+aside {
+	background: pink;
+}
+
+#uoListsTypes {
+	list-style-type: circle;
+}
+
+#oListsTypes {
+	list-style-type: upper-roman;
+}
+
+#oListIndent {
+	list-style-type: lower-roman;
+}
+
+#tableData {
+	width: 600px;
+	border: 3px solid black;
+}
+
+#tableData td, th {
+	border: 1px solid black;
+}
+
+footer {
+	background: lightblue;
+	color: blue;
+	padding: 10px 10px 10px 10px
+}
+

@@ -1,0 +1,11 @@
+cd Desktop/React Native
+
+expo init AppName
+
+open android emulator
+
+code .
+
+npm start
+ 
+a
