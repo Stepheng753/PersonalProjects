@@ -1,0 +1,97 @@
+#lorem {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+
+	margin: 50px;
+
+	border-top: 5px solid #00308f;
+	border-bottom: 5px dotted #00308f;
+	border-left: 5px dashed #00308f;
+	border-right: 5px double #00308f;
+
+	background: #f2f3f4
+		url('https://media.istockphoto.com/photos/watercolor-textured-background-picture-id887755698?k=6&m=887755698&s=612x612&w=0&h=_yEUF8gLpWjZv5IgwuWkecNVt4X4P7vpuFBKCWIuR44=')
+		repeat;
+}
+
+#fsNormal {
+	font-style: normal;
+}
+
+#fsItalic {
+	font-style: italic;
+}
+
+#fsOblique {
+	font-style: oblique;
+}
+
+#fvNormal {
+	font-variant: normal;
+}
+
+#fvSmallCaps {
+	font-variant: small-caps;
+}
+
+#fwNormal {
+	font-weight: normal;
+}
+
+#fwBold {
+	font-weight: bold;
+}
+
+#fwBolder {
+	font-weight: bolder;
+}
+
+#fwLighter {
+	font-weight: lighter;
+}
+
+#fszMedium {
+	font-size: medium;
+}
+
+#fszXXSmall {
+	font-size: xx-small;
+}
+
+#fszSmall {
+	font-size: small;
+}
+
+#fszXXLarge {
+	font-size: xx-large;
+}
+
+#fszLarge {
+	font-size: large;
+}
+
+#fszPrct {
+	font-size: 200%;
+}
+
+#fsz25pt {
+	font-size: 25pt;
+}
+
+#lhNormal {
+	line-height: normal;
+}
+
+#lh25pt {
+	line-height: 25pt;
+}
+
+#lh200prct {
+	line-height: 200%;
+}
+
+#lh200prct {
+	line-height: 200%;
+}

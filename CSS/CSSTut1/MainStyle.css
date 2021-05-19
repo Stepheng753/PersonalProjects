@@ -1,0 +1,64 @@
+@import 'paragraph.css';
+@import 'heading.css';
+
+/* For all tags within document */
+* {
+	font-family: 'Arial Black', Gadget, sans-serif;
+}
+
+/* For all tags within specific tags */
+div * {
+	font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+/* For classes use a period  */
+.sitelink {
+	font-family: Georgia, serif;
+}
+
+/* For ID's use a # */
+#tonyquote {
+	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+	color: black;
+}
+
+/* For specific tags within classes */
+p.sitelink {
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	color: black;
+}
+
+/* For ID's but with certain type of tag */
+span#tonyname {
+	font-family: 'Times New Roman', Times, serif;
+	color: blue;
+}
+
+/* To get specific tags within a tag with an ID */
+#tutorials ol li {
+	color: purple;
+}
+#tutorials ul li {
+	color: green;
+}
+
+/* Target a specific tag that comes right after another tag */
+h3 + p {
+	font-style: italic;
+}
+
+/* Target a specific tag inside a tag that comes right after another tag */
+h3 + p > a {
+	color: red;
+}
+
+/* Target every tag that has a class */
+p[class] {
+	background: gray;
+}
+p[id] {
+	background-color: yellow;
+}
+*[alt~='nintendo'] {
+	background: orange;
+}
