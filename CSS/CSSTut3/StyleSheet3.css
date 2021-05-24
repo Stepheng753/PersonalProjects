@@ -1,0 +1,84 @@
+#parent-div {
+	background: #b2beb5;
+	border: 0.1em solid black;
+}
+
+#default {
+	background: #dbe9f4;
+}
+
+/* Margin: auto allows for equal spacing horizontally */
+#centered {
+	background: #89cff0;
+	width: 50%;
+	margin: auto;
+}
+
+#centered-text {
+	text-align: center;
+}
+
+#top-left-pos {
+	background-color: #89cff0;
+	border: 0.1em solid black;
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	z-index: 4;
+}
+
+#bottom-right-tl-parent {
+	background-color: #dbe9f4;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+#top-right-pos {
+	background-color: #89cff0;
+	border: 0.1em solid black;
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	top: 0px;
+	right: 0px;
+}
+
+#bottom-left-tr-parent {
+	background-color: #dbe9f4;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
+
+#fixed-pos {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background: #fa2;
+	border: 0.1em solid black;
+	margin: 10px;
+	z-index: 5;
+}
+
+#relative-1 {
+	background-color: #dbe9f4;
+	border: 0.1em solid black;
+	height: 100px;
+}
+
+#relative-2 {
+	position: relative;
+	left: 20px;
+	top: 30px;
+	background: #dbe9f4;
+	border: 0.1em solid black;
+	height: 100px;
+}
+
+img[src="https://techstacker.com/static/695197f9845f4e2da7a3da0e77e784f4/4148e/css.png"]
+{
+	float: left;
+	padding: 10px;
+}

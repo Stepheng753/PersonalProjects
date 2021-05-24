@@ -1,0 +1,19 @@
+body {
+	margin: 0;
+}
+
+h1 {
+	margin: 0;
+	color: white;
+	font-size: xx-large;
+	text-decoration: underline;
+	line-height: 15vh;
+}
+
+#MainView {
+	width: 100vw;
+	height: 100vh;
+	background-image: linear-gradient(#ff971d, #4d0180);
+	display: flex;
+	justify-content: center;
+}
