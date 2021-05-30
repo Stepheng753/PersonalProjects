@@ -149,6 +149,7 @@
 }
 
 .car1:hover,
-.car2:hover {
+.car2:hover,
+.car3:hover {
 	animation-play-state: paused;
 }
