@@ -1,12 +1,13 @@
 var population;
 var maxDistance;
-var obstacle;
 
 var count = 0;
 var obstacleCount = 0;
 var targetCount = 0;
 var speciesCount = 1;
 
+var rx = 250;
+var ry = 200;
 var rw = 500;
 var rh = 10;
 
@@ -15,13 +16,13 @@ var targety = 50;
 var targetradius = 20;
 
 var maxForce = 1;
-var popsize = 500;
-var lifespan = 300;
+var popsize = 1000;
+var lifespan = 500;
 
 var speedThres = 300;
 var speedFactor = 2;
-var completionFactor = 50;
-var crashFactor = 2;
+var completionFactor = 10;
+var crashFactor = 10;
 
 function setup() {
 	createCanvas(1000, 400);
@@ -29,7 +30,6 @@ function setup() {
 	target = createVector(width / 2, targety);
 	maxDistance = dist(width / 2, targety, width, height);
 	population = new Population();
-	obstacle = new Obstacle();
 }
 
 function draw() {
@@ -55,12 +55,20 @@ function draw() {
 		population.evaluate(); // Creates the mating pool based off Parents' DNA
 		population.selection(); // Makes the current Rockets, the children Rockets.
 		speciesCount++;
-		obstacle.changeVel(random(50));
 	}
 
-	obstacle.draw();
-	obstacle.update();
+	drawObstacle();
 	drawTarget();
+}
+
+function drawObstacle() {
+	colorMode(HSB);
+
+	push();
+	let color = map(obstacleCount, 0, popsize, 0, 360);
+	fill(color, 100, 100);
+	rect(rx, ry, rw, rh);
+	pop();
 }
 
 function drawTarget() {

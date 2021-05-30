@@ -1,0 +1,159 @@
+/*
+Browsers add prefixes to property names before they are stable
+    moz : Firefox, 
+    ms : IE, 
+    o : Opera 
+    webkit : Chrome / Safari
+*/
+
+body {
+	height: 2000px;
+}
+
+div#div1,
+div#div2,
+div#div3,
+div#div4 {
+	height: 100px;
+	width: 100px;
+	margin: 10px;
+	border: 3px solid black;
+}
+
+#div1 {
+	background: -moz-linear-gradient(45deg, red, yellow, blue);
+	background: -webkit-linear-gradient(45deg, red, yellow, blue);
+	background: -ms-linear-gradient(45deg, red, yellow, blue);
+	background: -o-linear-gradient(45deg, red, yellow, blue);
+	background: linear-gradient(45deg, red, yellow, blue);
+}
+
+#div2 {
+	background: -moz-linear-gradient(to bottom right, red 20%, yellow 30%, blue 60%);
+	background: -webkit-linear-gradient(to bottom right, red 20%, yellow 30%, blue 60%);
+	background: -ms-linear-gradient(to bottom right, red, yellow, blue);
+	background: -o-linear-gradient(to bottom right, red, yellow, blue);
+	background: linear-gradient(to bottom right, red 20%, yellow 30%, blue 60%);
+}
+
+#div3 {
+	background: -moz-repeating-linear-gradient(to bottom right, red 20%, yellow 30%, blue 60%);
+	background: -webkit-repeating-linear-gradient(to bottom right, red 20%, yellow 30%, blue 60%);
+	background: -ms-repeating-linear-gradient(to bottom right, red, yellow, blue);
+	background: -o-repeating-linear-gradient(to bottom right, red, yellow, blue);
+	background: repeating-linear-gradient(to bottom right, red 20%, yellow 30%, blue 60%);
+}
+
+#div4 {
+	background: -moz-radial-gradient(red 20%, yellow 30%, blue 60%);
+	background: -webkit-radial-gradient(red 20%, yellow 30%, blue 60%);
+	background: -ms-radial-gradient(red, yellow, blue);
+	background: -o-radial-gradient(red, yellow, blue);
+	background: radial-gradient(red 20%, yellow 30%, blue 60%);
+}
+
+div#div5,
+div#div6,
+div#div7,
+div#div8 {
+	height: 100px;
+	width: 100px;
+	margin: 20px;
+	border: 3px solid black;
+}
+
+#div5:hover {
+	-webkit-transform: scale(2);
+	-moz-transform: scale(2);
+	-o-transform: scale(2);
+	-ms-transform: scale(2);
+	transform: scale(2);
+}
+
+#div6:hover {
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45);
+}
+
+#div7:hover {
+	-webkit-transform: skew(20deg, 10deg);
+	-moz-transform: skew(20deg, 10deg);
+	-o-transform: skew(20deg, 10deg);
+	-ms-transform: skew(20deg, 10deg);
+	transform: skew(20deg, 10deg);
+}
+
+#div8:hover {
+	-webkit-transform: translate(20px, 20px);
+	-moz-transform: translate(20px, 20px);
+	-o-transform: translate(20px, 20px);
+	-ms-transform: translate(20px, 20px);
+	transform: translate(20px, 20px);
+}
+
+div#div9 {
+	height: 100px;
+	width: 100px;
+	margin: 20px;
+	border: 3px solid black;
+	background: orange;
+}
+
+/* You can define a change to an element and have it slowly take effect
+Transition
+ease : Increasing change
+ease-in : Increase at start
+ease-out : Decrease at end
+ease-in-out : Increase at start, decrease at end
+linear : Constant change
+*/
+#div9:hover {
+	background-color: red;
+	border-radius: 20px;
+	-webkit-transition: 2s ease-in-out;
+	-ms-transition: 2s ease-in-out;
+	-o-transition: 2s ease-in-out;
+	-moz-transition: 2s ease-in-out;
+	transition: 0.5s ease-out;
+}
+
+div#div10 {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+	position: relative;
+	animation-name: example;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes example {
+	0% {
+		background-color: red;
+		left: 0px;
+		top: 0px;
+	}
+	25% {
+		background-color: yellow;
+		left: 200px;
+		top: 0px;
+	}
+	50% {
+		background-color: blue;
+		left: 200px;
+		top: 200px;
+	}
+	75% {
+		background-color: green;
+		left: 0px;
+		top: 200px;
+	}
+	100% {
+		background-color: purple;
+		left: 0px;
+		top: 0px;
+	}
+}

@@ -1,0 +1,100 @@
+#div1,
+#div2,
+#div3 {
+	height: 100px;
+	width: 100px;
+	margin: 10px;
+	border: 3px solid black;
+}
+
+#div1 {
+	box-shadow: 5px 5px 5px 2px gray;
+}
+
+#div2 {
+	box-shadow: 5px 5px 5px 2px gray inset;
+}
+
+#div3 {
+	box-shadow: 0px 0px 10px 5px yellow;
+}
+
+#div4,
+#div5 {
+	width: 30px;
+	height: 30px;
+	font: 20pt Arial;
+}
+
+#div4 {
+	text-shadow: 2px 2px 3px gray;
+}
+
+#div5 {
+	text-shadow: 0 0 3px yellow;
+	margin-bottom: 40px;
+}
+
+div#div6,
+div#div7,
+div#div8,
+div#div9,
+div#div10 {
+	height: 100px;
+	width: 100px;
+	float: left;
+	margin-top: 40px;
+}
+
+#div6 {
+	background-color: rgb(0, 0, 205);
+}
+#div7 {
+	background-color: rgb(0, 0, 205);
+	opacity: 0.5;
+}
+#div8 {
+	background-color: rgba(0, 0, 205, 0.1);
+}
+#div9 {
+	background-color: hsl(205, 100%, 50%);
+}
+#div10 {
+	background-color: hsla(205, 100%, 50%, 0.25);
+}
+
+div#div11,
+div#div12,
+div#div13 {
+	height: 100px;
+	width: 100px;
+	float: left;
+	margin: 20px;
+	border: 3px solid black;
+	text-align: center;
+}
+
+#div11 {
+	border-radius: 30px;
+}
+#div12 {
+	border-radius: 50px;
+}
+#div13 {
+	border-top-right-radius: 30px;
+}
+
+div#div14,
+div#div15 {
+	height: 92px;
+	width: 80px;
+	float: left;
+	border: 2px solid black;
+	background-image: url(https://picsum.photos/200);
+}
+#div14 {
+	background-size: 200% 200%;
+}
+#div15 {
+	background-size: 50% 50%;
+}

@@ -89,7 +89,3 @@ function newCircle() {
 		return null;
 	}
 }
-
-function stop() {
-	noLoop();
-}

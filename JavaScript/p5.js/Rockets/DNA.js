@@ -26,7 +26,7 @@ function DNA(genes) {
 		return new DNA(newGenes);
 	};
 
-	// We choose a mutation percentage.
+    // We choose a mutation percentage. 
 	this.mutation = function () {
 		for (let i = 0; i < this.genes.length; i++) {
 			if (random(1) < 0.01) {

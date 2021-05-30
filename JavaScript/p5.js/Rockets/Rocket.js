@@ -45,20 +45,9 @@ function Rocket(dna) {
 		}
 
 		// Crash
-		if (
-			this.pos.x > obstacle.pos.x &&
-			this.pos.x < obstacle.pos.x + rw &&
-			this.pos.y > obstacle.pos.y &&
-			this.pos.y < obstacle.pos.y + rh
-		) {
+		if (this.pos.x > rx && this.pos.x < rx + rw && this.pos.y > ry && this.pos.y < ry + rh) {
 			this.crashed = true;
 			obstacleCount++;
-			if (leftRight[0]) {
-				this.pos.sub(obstacle.vel);
-			}
-			if (leftRight[1]) {
-				this.pos.add(obstacle.vel);
-			}
 		}
 		if (this.pos.x > width || this.pos.x < 0) {
 			this.crashed = true;
@@ -74,7 +63,7 @@ function Rocket(dna) {
 			this.vel.add(this.acc);
 			this.pos.add(this.vel);
 			this.acc.mult(0);
-			this.vel.limit(10);
+			this.vel.limit(4);
 		}
 	};
 

@@ -1,0 +1,30 @@
+div#lorem {
+	height: 150px;
+	width: 450px;
+	border: 2px solid black;
+	overflow: hidden;
+	columns: 4;
+	column-rule: 2px dashed black;
+}
+
+#container {
+	height: 150px;
+	width: 450px;
+	border: 2px solid black;
+	display: flex;
+}
+
+#div1 {
+	flex: 2;
+	border: 2px solid black;
+}
+
+#div2 {
+	flex: 2;
+	border: 2px solid black;
+}
+
+#div3 {
+	flex: 4;
+	border: 2px solid black;
+}

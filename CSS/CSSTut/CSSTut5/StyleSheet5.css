@@ -1,0 +1,194 @@
+a:hover {
+	color: blue;
+}
+a:active {
+	color: red;
+}
+a:visited {
+	color: #989898;
+}
+
+body {
+	background-color: #5d8aa8;
+}
+
+#wrapper {
+	margin: 0 auto;
+	background-color: white;
+	width: 800px;
+	height: 2200px;
+}
+
+header {
+	display: block;
+	padding-bottom: 10px;
+}
+
+#websiteLogo {
+	padding: 5px 0px 0px 5px;
+}
+
+#horzNav {
+	display: block;
+	padding: 5px 20px 5px 0px;
+	background: black;
+}
+
+#horzNav a {
+	text-decoration: none;
+	padding: 0px 0px 0px 20px;
+	color: white;
+}
+
+#horzNav a:hover {
+	color: #89cff0;
+}
+
+main {
+	padding: 10px 10px 20px 20px;
+	float: left;
+	width: 600px;
+}
+
+#sidebar {
+	padding: 20px 10px 0px 10px;
+	float: right;
+	width: 150px;
+	height: auto;
+	background: #dbe9f4;
+}
+
+h2 {
+	font-size: 1em;
+}
+
+#para-1 {
+	text-align: left;
+	word-spacing: 0.5em;
+}
+
+#para-2 {
+	text-align: right;
+}
+
+#para-3 {
+	text-align: center;
+}
+
+#para-4 {
+	text-indent: 2em;
+	outline: 2px solid blue;
+}
+
+#para-5 {
+	letter-spacing: 0.5em;
+	border: 2px solid red;
+}
+
+footer {
+	clear: both;
+	background-color: black;
+	color: white;
+	padding: 10px;
+}
+
+#sidebar-list {
+	list-style-type: lower-latin;
+	list-style-position: outside;
+}
+
+#sidebar-list-2 {
+	list-style-type: lower-greek;
+	list-style-position: inside;
+}
+
+#para-1:before {
+	content: '*';
+}
+
+#para-1:after {
+	content: '@';
+}
+
+h3 {
+	font-size: 0.9em;
+	counter-increment: num;
+}
+
+h4 {
+	font-size: 0.7em;
+	counter-increment: subNum 2;
+}
+
+h3:before {
+	content: counter(num) ' ';
+}
+
+h4:before {
+	content: counter(num) '.' counter(subNum) ' ';
+}
+
+#para-2::first-letter {
+	font-size: 25pt;
+}
+
+#para-3::first-line {
+	background-color: yellow;
+}
+
+span:first-child {
+	background-color: orange;
+}
+
+p:last-child {
+	background-color: #fae7b5;
+}
+
+span:nth-child(2) {
+	background-color: #ffe4c4;
+}
+
+h3:hover {
+	background-color: orange;
+}
+
+#common-quote {
+	cursor: cell;
+}
+
+dl#buttons {
+	width: 150px;
+}
+
+dt.site-button {
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+dt.site-button a {
+	display: block;
+	color: white;
+	text-decoration: none;
+}
+
+dt.site-button a:link {
+	background-color: blue;
+	border: 5px solid green;
+}
+
+dt.site-button a:hover {
+	background-color: green;
+	border: 5px solid blue;
+}
+
+dl#kids-pics a img.hidden {
+	visibility: hidden;
+	position: absolute;
+	left: 500px;
+	top: 500px;
+	margin: 100px;
+}
+
+dl#kids-pics a:hover img.hidden {
+	visibility: visible;
+}

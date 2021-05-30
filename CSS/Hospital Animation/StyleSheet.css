@@ -1,0 +1,154 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.scene {
+	position: relative;
+	height: 100vh;
+	background: linear-gradient(#a6d8ff, #fff, #fff);
+	overflow-x: hidden;
+}
+
+.night .scene {
+	background: #222833;
+}
+
+.stars {
+	position: absolute;
+	font-size: xx-large;
+	color: white;
+	visibility: hidden;
+	z-index: 2;
+}
+
+.night .stars {
+	visibility: visible;
+	animation: moveStars 29s linear infinite;
+	animation-iteration-count: infinite;
+}
+
+@keyframes moveStars {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(100vw);
+	}
+}
+
+.sun-moon {
+	position: absolute;
+	top: 100px;
+	left: 55%;
+	height: 100px;
+	width: 100px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 50px #fff;
+	cursor: pointer;
+	transform: translateX(-50%);
+	transition: left 0.5s, box-shadow 0s;
+	z-index: 2;
+}
+
+.night .sun-moon {
+	left: 45%;
+	box-shadow: 0 0 0 #fff;
+}
+
+.night .sun-moon:before {
+	content: '';
+	position: absolute;
+	top: -5px;
+	left: 25px;
+	width: 80%;
+	height: 80%;
+	background-color: #222833;
+	border-radius: 50%;
+	z-index: 1;
+}
+
+.building {
+	position: absolute;
+	bottom: 0px;
+	height: 375px;
+	width: 100%;
+	background: url(Buildings.png);
+	background-size: 2000px;
+	background-repeat: repeat-x;
+	animation: moveBuildings 25s linear infinite;
+	z-index: 3;
+}
+
+@keyframes moveBuildings {
+	0% {
+		background-position-x: 0px;
+	}
+	100% {
+		background-position-x: 2000px;
+	}
+}
+
+.car1 {
+	position: absolute;
+	left: -200px;
+	bottom: 20px;
+	max-width: 200px;
+	z-index: 10;
+	animation: moveRight 18s linear infinite;
+}
+
+@keyframes moveRight {
+	0% {
+		transform: translate(0px);
+	}
+	90%,
+	100% {
+		transform: translate(calc(100vw + 200px));
+	}
+}
+
+.car2 {
+	position: absolute;
+	right: -200px;
+	bottom: 55px;
+	max-width: 200px;
+	z-index: 5;
+	animation: moveLeftAndMirror 30s linear infinite;
+}
+
+@keyframes moveLeftAndMirror {
+	0% {
+		transform: translate(0px) rotateY(180deg);
+	}
+	90%,
+	100% {
+		transform: translate(calc(-100vw - 200px)) rotateY(180deg);
+	}
+}
+
+.car3 {
+	position: absolute;
+	right: -600px;
+	bottom: 70px;
+	max-width: 200px;
+	z-index: 4;
+	animation: moveLeft 24s linear infinite;
+}
+
+@keyframes moveLeft {
+	0% {
+		transform: translate(0px);
+	}
+	90%,
+	100% {
+		transform: translate(calc(-100vw - 600px));
+	}
+}
+
+.car1:hover,
+.car2:hover {
+	animation-play-state: paused;
+}
