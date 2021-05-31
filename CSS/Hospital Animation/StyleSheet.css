@@ -97,7 +97,7 @@
 	bottom: 20px;
 	max-width: 200px;
 	z-index: 10;
-	animation: moveRight 18s linear infinite;
+	animation: moveRight 14s linear infinite;
 }
 
 @keyframes moveRight {
