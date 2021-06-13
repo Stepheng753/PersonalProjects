@@ -7,9 +7,11 @@ let selectAmtLargeNums;
 let amtLargeNums = Math.floor(Math.random() * 4);
 let startTime;
 let totalTime = 30;
+let selectSolutions;
 
 function setup() {
 	createCanvas(1000, 500);
+
 	selectAmtLargeNums = createSelect();
 	selectAmtLargeNums.position(10, 95);
 	selectAmtLargeNums.size(100);
@@ -102,6 +104,19 @@ function stats() {
 		text('Time Remaining: ' + timeRemaining + ' secs', 10, 75);
 	} else if (!isNaN(timeRemaining) && timeRemaining <= 0) {
 		text('Time Remaining: 0.00 secs', 10, 75);
+		let solutions = loops(numbers, targetNumber);
+
+		selectSolutions = createSelect();
+		selectSolutions.position(10, 155);
+		selectSolutions.size(250);
+		selectSolutions.option('See the following solutions:');
+		if (solutions == 'No Solutions') {
+			selectSolutions.option(solutions);
+		} else {
+			solutions.forEach((sol) => {
+				selectSolutions.option(sol);
+			});
+		}
 	}
 }
 

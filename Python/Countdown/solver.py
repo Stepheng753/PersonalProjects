@@ -4,11 +4,11 @@ from itertools import product
 
 def loops(numbers, target_number):
     operations = ['+', '-', '*', '/']
+    solutions_arr = []
 
     for i in range(1,6):
-        all_numbers_perm = list(permutations(numbers, i))
-        all_order_operations = list(product(operations, repeat=i-1))
-        solutions_arr = []
+        all_numbers_perm = list(set(permutations(numbers, i)))
+        all_order_operations = list(set(product(operations, repeat=i-1)))
 
         for num_seq in all_numbers_perm:
             for op_seq in all_order_operations:
@@ -20,6 +20,7 @@ def loops(numbers, target_number):
                         arr_str += ' ' + str(arr[i])
                     arr_str += ' = ' + str(target_number)
                     solutions_arr.append(arr_str)
+                    print(arr_str)
 
     if solutions_arr == []:
         return 'No Solutions'
@@ -59,8 +60,8 @@ def arithmetic(arr):
             answer *= arr[i+1]
         elif (arr[i] == '/'):
             answer /= arr[i+1]
-    return(answer)
+    return answer
 
 
 if __name__ == '__main__':
-    loops([25,50,9,6,4,10], 25)
+    loops([4, 10, 2, 6, 7, 2], 662)
