@@ -85,9 +85,8 @@ def timer():
     while (time.time() - start_time < total_time):
         elapsed_time = round(time.time() - start_time)
         if elapsed_time == show_times[0]:
-            sys.stdout.write('\rTime Remaining: [' + '.'*elapsed_time + ' '*(total_time - elapsed_time) + ']')
+            print('\rTime Remaining: [' + '.'*elapsed_time + ' '*(total_time - elapsed_time) + ']', end='')
             show_times.remove(elapsed_time)
-        sys.stdout.flush()
     print('\nTIMES UP')
 
 
