@@ -70,7 +70,7 @@ function startButton() {
 	fill(0);
 	circle(950, 35, 50);
 
-	fill('#50C878');
+	fill(255);
 	stroke(0);
 	strokeWeight(1);
 	triangle(970, 35, 937, 50, 937, 20);
