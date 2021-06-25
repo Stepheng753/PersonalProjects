@@ -125,7 +125,7 @@ function shuffle(arr) {
 		let randIndex = Math.floor(Math.random() * (i + 1));
 		let currentElement = arr[i];
 		arr[i] = arr[randIndex];
-		a[randIndex] = currentElement;
+		arr[randIndex] = currentElement;
 	}
 	return arr;
 }
