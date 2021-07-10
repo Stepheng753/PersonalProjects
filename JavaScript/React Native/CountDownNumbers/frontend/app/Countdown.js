@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import BackgroundTimer from 'react-native-background-timer';
 import { arithmetic, loops } from './solver';
 
 const screenHeight = Math.round(Dimensions.get('window').height);
@@ -28,7 +27,7 @@ function Countdown(props) {
 	const [answerCorrect, setAnswerCorrect] = useState(false);
 	const pickerRef = useRef();
 
-	const startGame = () => {
+	const start = () => {
 		if (!timerIsRunning) {
 			pickerRef.current.focus();
 			randomizeNumbers();
@@ -39,37 +38,22 @@ function Countdown(props) {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (answerCorrect) {
-	// 		setTimerIsRunning(false);
-	// 		if (targetNum != 0) setSolutions(loops(randNums, targetNum));
-	// 	}
-	// 	if (timeRemaining <= 1) {
-	// 		setTimerIsRunning(false);
-	// 		setTimeRemaining(0);
-	// 		if (targetNum != 0) setSolutions(loops(randNums, targetNum));
-	// 	}
-	// 	if (timerIsRunning) {
-	// 		wait(1000).then(() => {
-	// 			setTimeRemaining(timeRemaining - 1);
-	// 		});
-	// 	}
-	// }, [timeRemaining]);
-
 	useEffect(() => {
-		if (timerIsRunning) decrementTime();
-		else BackgroundTimer.stopBackgroundTimer();
-		return () => BackgroundTimer.stopBackgroundTimer();
-	}, [timerIsRunning]);
-
-	const decrementTime = () => {
-		BackgroundTimer.runBackgroundTimer(() => {
-			setTimeRemaining((timeLeft) => {
-				if (timeLeft > 0) return timeLeft - 1;
-				else return 0;
+		if (answerCorrect) {
+			setTimerIsRunning(false);
+			if (targetNum != 0) setSolutions(loops(randNums, targetNum));
+		}
+		if (timeRemaining <= 1) {
+			setTimerIsRunning(false);
+			setTimeRemaining(0);
+			if (targetNum != 0) setSolutions(loops(randNums, targetNum));
+		}
+		if (timerIsRunning) {
+			wait(1000).then(() => {
+				setTimeRemaining(timeRemaining - 1);
 			});
-		}, 1000);
-	};
+		}
+	}, [timeRemaining]);
 
 	const randomizeNumbers = () => {
 		let shuffleLargeIndex = shuffle([...Array(largeNums.length).keys()]);
@@ -206,7 +190,7 @@ function Countdown(props) {
 				<Picker.Item label="4 Large Numbers, 2 Small Numbers" value={4} />
 			</Picker>
 			<View style={styles.centerArea}>
-				<TouchableOpacity style={styles.startButton} onPress={() => startGame()}>
+				<TouchableOpacity style={styles.startButton} onPress={() => start()}>
 					<View style={styles.circle} />
 					<View style={styles.triangle} />
 				</TouchableOpacity>
