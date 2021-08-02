@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { Audio } from 'expo-av';
 import { arithmetic, loops } from './solver';
 
 const screenHeight = Math.round(Dimensions.get('window').height);
@@ -17,7 +18,7 @@ const wait = (timeout) => {
 function Countdown(props) {
 	const [randNums, setRandNums] = useState([0, 0, 0, 0, 0, 0]);
 	const [targetNum, setTargetNum] = useState(0);
-	const [amtLargeNums, setAmtLargeNums] = useState(4);
+	const [amtLargeNums, setAmtLargeNums] = useState(Math.floor(Math.random() * 4));
 	const [timeRemaining, setTimeRemaining] = useState(0);
 	const [timerIsRunning, setTimerIsRunning] = useState(false);
 	const [solutions, setSolutions] = useState([]);
@@ -25,16 +26,27 @@ function Countdown(props) {
 	const [attemptedAnswerStr, setAttemptedAnswerStr] = useState('');
 	const [pressedHistory, setPressedHistory] = useState([]);
 	const [answerCorrect, setAnswerCorrect] = useState(false);
-	const pickerRef = useRef();
+	const [sound, setSound] = React.useState();
 
-	const start = () => {
+	const start = async () => {
+		if (timerIsRunning) {
+			setTimerIsRunning(false);
+			setRandNums([0, 0, 0, 0, 0, 0]);
+			setTargetNum(0);
+			setTimeRemaining(0);
+			await sound.pauseAsync();
+			await sound.setPositionAsync(0);
+		}
 		if (!timerIsRunning) {
-			pickerRef.current.focus();
+			const { sound } = await Audio.Sound.createAsync(require('../assets/CountdownAudio.mp3'));
+			setSound(sound);
+			setSolutions([]);
 			randomizeNumbers();
 			setTimerIsRunning(true);
 			setTimeRemaining(totalTime);
 			appendAnswer('C');
 			setAnswerCorrect(false);
+			await sound.playAsync();
 		}
 	};
 
@@ -45,13 +57,15 @@ function Countdown(props) {
 		}
 		if (timeRemaining <= 1) {
 			setTimerIsRunning(false);
-			setTimeRemaining(0);
 			if (targetNum != 0) setSolutions(loops(randNums, targetNum));
 		}
 		if (timerIsRunning) {
 			wait(1000).then(() => {
 				setTimeRemaining(timeRemaining - 1);
 			});
+		}
+		if (!timerIsRunning) {
+			setTimeRemaining(0);
 		}
 	}, [timeRemaining]);
 
@@ -160,7 +174,7 @@ function Countdown(props) {
 		}
 		arrStr += ' = ' + result.toString();
 
-		if (arrStr.includes(targetNum) && timerIsRunning) {
+		if (targetNum == result && timerIsRunning) {
 			setAnswerCorrect(true);
 		}
 		return arrStr;
@@ -168,20 +182,18 @@ function Countdown(props) {
 
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity
+			<View
 				style={[
 					styles.targetBox,
 					answerCorrect ? { backgroundColor: '#50C878' } : { backgroundColor: '#4B2DD7' },
 				]}
-				onPress={() => randomizeNumbers()}
 			>
 				<Text style={styles.targetNumber}>{targetNum}</Text>
-			</TouchableOpacity>
+			</View>
 			<Picker
 				selectedValue={amtLargeNums}
 				onValueChange={(itemValue) => setAmtLargeNums(itemValue)}
 				style={styles.picker}
-				ref={pickerRef}
 			>
 				<Picker.Item label="0 Large Numbers, 6 Small Numbers" value={0} />
 				<Picker.Item label="1 Large Numbers, 5 Small Numbers" value={1} />

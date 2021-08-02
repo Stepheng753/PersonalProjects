@@ -1,12 +1,25 @@
 import sys
 
-def fun2(n):
-     result = []
-     a, b = 0, 1
-     while a < n:
-         result.append(a)
-         a, b = b, a+b
-     return result
+class reversor:
+    def __init__(self, obj):
+        self.obj = obj
+
+    def __eq__(self, other):
+        return other.obj == self.obj
+
+    def __lt__(self, other):
+        return other.obj < self.obj
+
+def main():
+    a = [['Kristi Martone','Esthetician', 3], ['Zizzy','Esthetician', 3], 
+            ['Lemmy','Admin', 3], ['Aerial','Admin', 3]]
+
+    a.sort(key=lambda x: (reversor(x[1]), x[0]))
+
+    print(a)
 
 
-print(fun2(20))
+if __name__ == '__main__':
+    main()
+
+
