@@ -1,17 +1,22 @@
 from matplotlib import pyplot as plt
 import numpy as np 
+import random
 
-def syracuse(n, count = 0):
-    # print(count, ': Number is: ', n)
-    total_count = 0
-    if n == 1:
-        return count
+def syracuse(n, count_arr = [], values_arr = [], loops = 0, show_num_loops = 10):
+    count_arr.append(len(count_arr))
+    values_arr.append(n)
+    plot_vals = []
+
+    if n == 1 and loops < show_num_loops:
+        loops = loops + 1
+    elif n == 1 and loops >= show_num_loops:
+        return (count_arr, values_arr)
     if n % 2 == 0:
-        total_count = syracuse(n / 2, count + 1)
+        plot_vals = syracuse(n / 2, count_arr, values_arr, loops)
     else:
-        total_count = syracuse(3 * n + 1, count + 1)
+        plot_vals = syracuse(3 * n + 1, count_arr, values_arr, loops)
 
-    return total_count
+    return plot_vals
 
 
 def loop_iterations():
@@ -24,12 +29,19 @@ def loop_iterations():
     print(biggest_index, ': ', syracuse_arr[biggest_index]) 
 
 if __name__ == '__main__':
-    x = np.arange(1,11) 
-    y = 2 * x + 5 
-    plt.title("Matplotlib demo") 
-    plt.xlabel("x axis caption") 
-    plt.ylabel("y axis caption") 
-    plt.plot(x,y) 
+    plt.title('Syracuse Problem for n = [1, 50)') 
+    plt.xlabel('Iteration') 
+    plt.ylabel('Syracuse Value') 
     plt.grid()
+    legend = []
+    for i in range(1, 20):
+        legend.append('n = ' + str(i))
+        xy_vals = syracuse(i, [], [])
+        x_vals = np.asarray(xy_vals[0])
+        y_vals = np.asarray(xy_vals[1])
+        plt.plot(x_vals, y_vals, color=(random.random(), random.random(), random.random()))
+    plt.legend(legend, bbox_to_anchor=(0.9, 1.1), loc='upper left')
     plt.show()
+    
+        
 
