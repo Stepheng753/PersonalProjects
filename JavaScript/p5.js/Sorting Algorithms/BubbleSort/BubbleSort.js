@@ -15,6 +15,13 @@ function setup() {
 function draw() {
 	background(0);
 
+	for (let i = 0; i < values.length; i++) {
+		colorMode(HSB);
+		var strokeCol = map(values[i], 0, height, 0, 360);
+		stroke(strokeCol, 100, 100);
+		line(i, height, i, height - values[i]);
+	}
+
 	// increment j
 	if (i < values.length - 1) {
 		for (let j = i + 1; j < values.length - 1; j++) {
@@ -28,13 +35,6 @@ function draw() {
 		noLoop();
 	}
 	i++;
-
-	for (let i = 0; i < values.length; i++) {
-		colorMode(HSB);
-		var strokeCol = map(values[i], 0, height, 0, 360);
-		stroke(strokeCol, 100, 100);
-		line(i, height, i, height - values[i]);
-	}
 
 	fill(255);
 	noStroke();
