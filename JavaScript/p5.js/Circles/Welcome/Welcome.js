@@ -1,10 +1,12 @@
 let circles = [];
 let img;
+let img1;
 let spots = [];
 let keepColor = false;
 
 function preload() {
-	img = loadImage('Welcome.png');
+	img = loadImage('Welcome1.png');
+	img1 = loadImage('Sky.jpg');
 }
 function setup() {
 	createCanvas(img.width, img.height);
@@ -23,7 +25,7 @@ function setup() {
 }
 
 function draw() {
-	background(0);
+	background(img1);
 
 	let total = 10;
 	let count = 0;
