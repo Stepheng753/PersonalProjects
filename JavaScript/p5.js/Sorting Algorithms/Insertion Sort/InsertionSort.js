@@ -38,8 +38,7 @@ async function insertionSort() {
 		let key = lineHeight[i];
 		let shifterIndex = i - 1;
 		await sleep();
-		comparisons++;
-		while (shifterIndex >= 0 && key < lineHeight[shifterIndex]) {
+		while (shifterIndex >= 0 && key < lineHeight[shifterIndex] && comparisons++ >= 0) {
 			lineHeight[shifterIndex + 1] = lineHeight[shifterIndex];
 			shifterIndex--;
 		}

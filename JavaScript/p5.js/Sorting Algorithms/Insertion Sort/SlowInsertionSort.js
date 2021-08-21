@@ -23,8 +23,7 @@ function draw() {
 	if (i < lineHeight.length) {
 		let key = lineHeight[i];
 		let shifterIndex = i - 1;
-		comparisons++;
-		while (shifterIndex >= 0 && key < lineHeight[shifterIndex]) {
+		while (shifterIndex >= 0 && key < lineHeight[shifterIndex] && comparisons++ >= 0) {
 			lineHeight[shifterIndex + 1] = lineHeight[shifterIndex];
 			shifterIndex--;
 		}
