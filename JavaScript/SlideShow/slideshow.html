@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style type="text/css">
+			img {
+				width: 800px;
+			}
+			/* This is the currrent view */
+			#slider {
+				width: 800px;
+				height: 500px;
+				overflow: hidden;
+			}
+			/* This makes all images side by side bc of flex-direction: row  */
+			/* width makes the transition better */
+			#slides {
+				width: 4000px;
+				display: flex;
+			}
+			#first {
+				transition: all 1s;
+				margin-left: -0%;
+			}
+			#title {
+				border: 2pt solid black;
+			}
+		</style>
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="slider">
+			<h3 id="title">Slider</h3>
+			<div id="slides">
+				<img
+					src="https://images.ctfassets.net/hrltx12pl8hq/3MbF54EhWUhsXunc5Keueb/60774fbbff86e6bf6776f1e17a8016b4/04-nature_721703848.jpg?fit=fill&w=480&h=270"
+					id="first"
+				/>
+				<img
+					src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWF8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
+				/>
+				<img
+					src="https://media.istockphoto.com/photos/picturesque-morning-in-plitvice-national-park-colorful-spring-scene-picture-id1093110112?k=6&m=1093110112&s=612x612&w=0&h=uBH7Rj-Ew_ixjunRrD_U7alq2ZUPJ_5XgMpe9xO52QQ="
+				/>
+				<img src="https://cdn.pixabay.com/photo/2018/10/30/16/06/water-lily-3784022__480.jpg" />
+				<img src="https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg" />
+			</div>
+		</div>
+		<script>
+			window.onload = function () {
+				move();
+			};
+
+			function move() {
+				let first = document.getElementById('first');
+				let title = document.getElementById('title');
+				let movePercent = 20;
+				title.onclick = () => {
+					console.log(movePercent);
+					first.style.setProperty('margin-left', '-' + movePercent + '%');
+					movePercent += 20;
+					if (movePercent >= 100) {
+						movePercent = 0;
+					}
+				};
+			}
+		</script>
+	</body>
+</html>
