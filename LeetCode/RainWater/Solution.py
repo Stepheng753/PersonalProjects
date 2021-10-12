@@ -1,12 +1,14 @@
+
+# https://leetcode.com/problems/trapping-rain-water-ii/
+from operator import sub
 class Solution:
     def trapRainWater(self, heightMap):
         row_length = len(heightMap[0])
         col_length = len(heightMap)
         index = 0
-        counter = 0
-        origArr = heightMap.copy()
+        orig_arr = heightMap.copy()
         if type(heightMap[0][0]) is not dict:
-            heightMap = self.initHeightMap(origArr)
+            heightMap = self.initHeightMap(orig_arr)
 
         while (index < row_length * col_length):
             row_num = int(index / row_length)
@@ -29,17 +31,33 @@ class Solution:
                     lowest_wall = right
 
                 if heightMap[row_num][col_num]['height'] < lowest_wall['height']:
-                    counter = counter + lowest_wall['height'] - heightMap[row_num][col_num]['height']
                     heightMap[row_num][col_num]['height'] = lowest_wall['height']
                     heightMap[row_num][col_num]['filledWithWater'] = True
 
-                doubleCheck = self.recursiveCheck(origArr, heightMap, index, row_length, counter)
-                heightMap = doubleCheck['heightMap']
-                counter = doubleCheck['counter']
+                heightMap = self.recursiveCheck(orig_arr, heightMap, index, row_length)
+
                 
             index = index + 1
 
-        return counter
+        return self.sum2dArr(self.subtractElementWise2dArr(heightMap, orig_arr))
+        
+    def sum2dArr(self, arr):
+        sum = 0
+        for row in arr:
+            for element in row:
+                sum = sum + element
+        return sum
+
+    def subtractElementWise2dArr(self, heightMap, orig_arr):
+        arr2d = []
+        for i in range(0, len(heightMap)):
+            arr1d = []
+            for j in range(0, len(heightMap[i])):
+                arr1d.append(heightMap[i][j]['height'] - orig_arr[i][j])
+            arr2d.append(arr1d)
+        return arr2d
+
+
 
     def initHeightMap(self, heightMap):
         arr2d = []
@@ -52,7 +70,7 @@ class Solution:
             arr2d.append(arr1d)
         return arr2d
         
-    def recursiveCheck(self, origArr, heightMap, index, row_length, counter):
+    def recursiveCheck(self, orig_arr, heightMap, index, row_length):
         row_num = int(index / row_length)
         col_num = int(index % row_length)
 
@@ -61,32 +79,41 @@ class Solution:
         left = heightMap[row_num][col_num - 1]
         right = heightMap[row_num][col_num + 1]
 
-        change_top = top['filledWithWater'] and origArr[row_num - 1][col_num] <= heightMap[row_num][col_num]['height'] and heightMap[row_num][col_num]['height'] < top['height']
-        change_bottom = bottom['filledWithWater'] and origArr[row_num + 1][col_num] <= heightMap[row_num][col_num]['height'] and heightMap[row_num][col_num]['height'] < bottom['height']
-        change_left = left['filledWithWater'] and origArr[row_num][col_num - 1] <= heightMap[row_num][col_num]['height'] and heightMap[row_num][col_num]['height'] < left['height']
-        change_right = right['filledWithWater'] and origArr[row_num][col_num + 1] <= heightMap[row_num][col_num]['height'] and heightMap[row_num][col_num]['height'] < right['height']
+        change_top = top['filledWithWater'] and heightMap[row_num][col_num]['height'] < top['height']
+        change_bottom = bottom['filledWithWater']and heightMap[row_num][col_num]['height'] < bottom['height']
+        change_left = left['filledWithWater'] and heightMap[row_num][col_num]['height'] < left['height']
+        change_right = right['filledWithWater'] and heightMap[row_num][col_num]['height'] < right['height']
         if change_top:
-            counter = counter - (top['height'] - heightMap[row_num][col_num]['height'])
-            heightMap[row_num - 1][col_num]['height'] = heightMap[row_num][col_num]['height']
-            return self.recursiveCheck(origArr, heightMap, index - row_length, row_length, counter)
+            if orig_arr[row_num - 1][col_num] <= heightMap[row_num][col_num]['height']:
+                heightMap[row_num - 1][col_num]['height'] = heightMap[row_num][col_num]['height']
+            else:
+                heightMap[row_num - 1][col_num]['height'] = orig_arr[row_num - 1][col_num]
+            heightMap = self.recursiveCheck(orig_arr, heightMap, index - row_length, row_length)
         if change_bottom:
-            counter = counter - (bottom['height'] - heightMap[row_num][col_num]['height'])
-            heightMap[row_num + 1][col_num]['height'] = heightMap[row_num][col_num]['height']
-            return self.recursiveCheck(origArr, heightMap, index + row_length, row_length, counter)
+            if orig_arr[row_num + 1][col_num] <= heightMap[row_num][col_num]['height']:
+                heightMap[row_num + 1][col_num]['height'] = heightMap[row_num][col_num]['height']
+            else:
+                heightMap[row_num + 1][col_num]['height'] = orig_arr[row_num + 1][col_num]
+            heightMap = self.recursiveCheck(orig_arr, heightMap, index + row_length, row_length)
         if change_left:
-            counter = counter - (left['height'] - heightMap[row_num][col_num]['height'])
-            heightMap[row_num][col_num - 1]['height'] = heightMap[row_num][col_num]['height']
-            return self.recursiveCheck(origArr, heightMap, index - 1, row_length, counter)
+            if orig_arr[row_num][col_num - 1] <= heightMap[row_num][col_num]['height']:
+                heightMap[row_num][col_num - 1]['height'] = heightMap[row_num][col_num]['height']
+            else:
+                heightMap[row_num][col_num - 1]['height'] = orig_arr[row_num][col_num - 1]
+            heightMap = self.recursiveCheck(orig_arr, heightMap, index - 1, row_length)
         if change_right:
-            counter = counter - (right['height'] - heightMap[row_num][col_num]['height'])
-            heightMap[row_num][col_num + 1]['height'] = heightMap[row_num][col_num]['height']
-            return self.recursiveCheck(origArr, heightMap, index + 1, row_length, counter)
-        else:
-            return {'heightMap': heightMap, 'counter': counter}
+            if orig_arr[row_num][col_num + 1] <= heightMap[row_num][col_num]['height']:
+                heightMap[row_num][col_num + 1]['height'] = heightMap[row_num][col_num]['height']
+            else:
+                heightMap[row_num][col_num + 1]['height'] = orig_arr[row_num][col_num + 1]
+            heightMap = self.recursiveCheck(orig_arr, heightMap, index + 1, row_length)
+            
+        return heightMap
+            
 
 
 def main():
-    print(Solution().trapRainWater([[2,2,2],[2,1,2],[2,1,2],[2,1,2]]))
+    print(Solution().trapRainWater([[14,17,12,13,20,14],[12,10,5,8,9,5],[16,1,4,7,2,1],[17,4,3,1,7,2],[16,6,5,8,7,6],[17,10,4,8,5,6]]))
 
 
 
