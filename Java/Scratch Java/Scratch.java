@@ -6,7 +6,9 @@ public class Scratch extends printer {
     }
 
     public static void main(String[] args) {
-        new printer(-16);
+        int a = 4516;
+        int b = 10;
+        System.out.println(a / b);
     }
 
 }
