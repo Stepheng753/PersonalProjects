@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[parfill]{parskip}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{mdframed}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\lstset{style=mystyle}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=red,
+	pdfpagemode=FullScreen,
+}
+\newcommand{\skipline}{\vspace{\baselineskip}}
+\newcommand{\spacer}{\noalign{\medskip}}
+\newcommand{~}{\sim}
+\newcommand{\approches}{\rightarrow}
+\newcommand{\qarrow}{\quad \rightarrow \quad}
+\newcommand{\qqarrow}{\qquad \rightarrow \qquad}
+\newcommand{\qtext}[1]{\quad \text{ #1 } \quad}
+\newcommand{\qqtext}[1]{\qquad \text{ #1 } \qquad}
+\newcommand{\pard}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\answer}[1]{\textbf{\boldmath #1}}
+\newenvironment{problem}[1]{\textbf{Excersise #1: }}{\newpage}
+\newcommand{\mol}{\text{ mol }}
+\begin{document}
+	
+	\begin{center}
+		\textbf{Chemistry Review} \\
+		\textbf{Stephen Giang} \\
+		\skipline \skipline
+	\end{center}
+
+	\textbf{Links: }
+	\begin{enumerate}[label=(\alph*)]
+		\item \href{https://www.youtube.com/watch?v=5yw1YH7YA7c&ab_channel=TheOrganicChemistryTutor}{General Chemistry 1 Part 1}
+		\item \href{https://www.youtube.com/watch?v=g3bH4JYmIpg&t=4s&ab_channel=TheOrganicChemistryTutor}{General Chemistry 1 Part 2}
+		\item \href{https://www.youtube.com/watch?v=lSmJN1_uVpI&t=2s&ab_channel=TheOrganicChemistryTutor}{General Chemistry 2 Part 1}
+		\item \href{https://www.youtube.com/watch?v=gOJaWfj1eoI&t=2s&ab_channel=TheOrganicChemistryTutor}{General Chemistry 2 Part 2}
+		\item \href{https://ptable.com/?lang=en#Properties}{Periodic Table}
+		\item \href{https://cpanhd.sitehost.iu.edu/C101webnotes/chemical-nomenclature/images/polyions.jpg}{Polyatomic Ions}
+	\end{enumerate}
+	
+	\newpage
+	
+	\textbf{Notes: }
+	\begin{enumerate}[label=\arabic*.]
+		\item How many protons, electrons and neutrons are found in the ion shown below:
+		\[ \,_{13}^{27}Al^{+3}\]
+		\textbf{\boldmath This has 13 Protons, $13 - 3 = 10$ elections, and $27 - 13 = 14$ neutrons.}
+		\item What is the correct name for the compound $N_2O_5$
+		\begin{enumerate}[label=(\alph*)]
+			\item Molecular Compounds - Nonmetal $\rightarrow$ Nonmetal
+				\begin{enumerate}[label=(\roman*)]
+					\item Prefixes - Mono-, Di-, Tri-, Tetra- for both nonmetals 
+					\item $N_2O_5$ - Dinitrogen Pentoxide
+					\item $SF_6$ - Sulfur Hexaflouride - (If first element is 1, then no need for -mono)
+				\end{enumerate}
+			\item Ionic Compounds - Metal $\rightarrow$ Nonmetal
+				\begin{enumerate}[label=(\roman*)]
+					\item Suffixes - -ide for Nonmetal
+					\item $AlCl_3$ - Aluminum Chloride
+					\item $MgF_2$ - Magnesium Fluoride
+				\end{enumerate}
+		\end{enumerate}
+		\textbf{Dinitrogen Pentoxide}
+		\item Calculate the percent composition of Aluminum in Aluminum Sulfite $Al_2(SO_3)_3$
+		\\ \\
+		We can find this by taking the mass of the Aluminum in the compound and dividing it with the entire mass of the compound:
+		\[\frac{2(26.982)}{2(26.982) + 3(32.06) + 9(15.999)} = .183467 = 18.3467\%\]
+		\item Nitrogen gas reacts with Hydrogen gas to form Ammonia.  Calculate the mass of the Ammonia($NH_3$) produced if 15g of Nitrogen gas reacts with excess Hydrogen gas.
+		\[N_2 + 3H_2 \rightarrow 2NH_3\]
+		Notice the following:
+		\[15g N_2 \times \frac{1 \mol N_2}{2(14.007) g N_2} * \frac{2 \mol NH_3}{1 \mol N_2} * \frac{14.007 + 3(1.008)g NH_3}{1 \mol NH_3} = 18.2383 g NH_3\]
+		\item 15g of Sodium Hydroxide is dissolved in enough water to produced a 250ml solution.  Calculate the molarity of the solution.
+		\\ \\
+		Notice that molarity is the ratio between moles of a compound to its volume that it diluted in.
+		\[15g NaOH \times \frac{1 \mol NaOH}{22.990 + 15.999 + 1.008 g NaOH} * \frac{1}{250 * (10^{-3}) L NaOH} = 1.500 M NaOH \]
+		\newpage
+		\item How many mL of water must be added to a 200ml of a 0.75M solution of NaOH to dilute the concentration to 0.25M
+		\[\frac{.75\mol\,NaOH}{1 L\,\,NaOH} \times \frac{.2}{.2} = \frac{.75(.2) \mol NaOH}{.2 L\,\,NaOH} = \frac{.75(.2) mol NaOH}{200 ml\,\,NaOH}\]
+		Now we can see the following equality, where $x$ is how many ml to add to dilute the concentration to 0.25M
+		\[\frac{.75(.2) \mol NaOH}{(200 + x) ml\,\,NaOH} = 0.25 M\]
+		We can see the solution, $x$ below:
+		\[\frac{.75(.2)\mol \,\, NaOH}{0.25 M} - 200ml = .6L - 200ml = 600ml - 200ml = 400ml = x\]  
+		\item What is the correct oxidation state of Chromium in Sodium Dichromate ($Na_2Cr_2O_7$)
+		\\ \\
+		Notice the oxidation equation:
+		\[2Na + 2Cr + 7O = 0\]
+		We write out its charge into the equation and get:
+		\[2(+1) + 2x + 7(-2) = 0 \qqarrow x = +6\]
+		Notice the following rules about oxidations:
+		\begin{enumerate}[label=(\alph*)]
+			\item $H_2, N_2, O_2$ - Oxidation of 0
+			\item $O = -2$ as an oxide, $O = -1$ as a peroxide
+			\item $H = +1$ when bonded to a Nonmetal
+			\item $H = -1$ when bonded to a Metal
+		\end{enumerate}
+		\item 38.6ml of a 0.249M NaOH solution was required to completely tritate 44.7ml of Sulfuric Acid ($H_2SO_4$) solution.  Determine the unknown concentration of the Sulfuric Acid solution.
+		\[2NaOH + H_2SO_4 \rightarrow 2H_2O + Na_2SO_4\]
+		Notice the following:
+		\[38.6 ml\,\,NaOH \times \frac{1L}{10^3 ml} \times \frac{0.249 \mol\,\,NaOH}{1 L\,\,NaOH} \times \frac{1 \mol H_2SO_4}{2 \mol NaOH} \times \frac{1}{44.7 ml\,\,H_2SO_4} \times \frac{10^{3} ml}{1 L} = .108 M\,\,H_2SO_4\]
+		\item A 250ml sample of Argon gas has a pressure of 1.25atm at a temperature of 300K.  Calculate the new pressure if the temperature is increased to 500K and the volume is decreased to 100ml.
+		\\ \\
+		Notice we can use the Combined Gas Law:
+		\[\frac{P_1V_1}{T_1} = \frac{P_2V_2}{T_2}\]
+		Applying it, we get:
+		\[\frac{(1.25atm)(250ml)}{300K} = \frac{P_2(100ml)}{500K} \qqarrow P_2 = \frac{(1.25atm)(250ml)}{300K}\times\frac{500K}{100ml} = 5.2083 atm\]
+		\item Calculate the density of Oxygen gas ($O_2$) at STP.
+		\\ \\
+		At STP, we know the temperature is $0^\circ C$, the pressure is 1atm and the volume of 1 mole of any gas is 22.4L.
+		\\ \\
+		Thus, we get the density of Oxygen gas at STP is as follows:
+		\[\frac{2(15.999)\,\,g\,O_2}{22.4 L\,\, O_2} = \frac{1.42848\,g\,\,O_2}{L\,\,O_2}\]
+		\\ \\
+		Density can also be calculated the following way with $R$ being the gas constant, $0.08206\,L\,\text{atm}\mol^{-1}K^{-1}$, and $M$ being the molar mass:
+		\[d = \frac{PM}{RT} = \frac{(1atm)(2(15.999) g\,\mol^{-1})}{(0.08206\,L\,\text{atm}\mol^{-1}K^{-1})(273 K)} = \frac{1.42833\,g\,\,O_2}{L\,\,O_2}\]
+		\item Calculate the partial pressure of Ammonia ($NH_3$) if 24g of Nitrogen gas reacts with excess Hydrogen gas at 298K inside a 2.50L container.
+		\[N_2 + 3H_2 \rightarrow 2NH_3\]
+		So we can use the ideal gas law to calculate the partial pressure, $P$:
+		\[PV = nRT  \qarrow P = \frac{nRT}{V}\]
+		So we first need to calculate the number of moles of $NH_3$:
+		\[n = 24g N_2 \times \frac{1\mol\,N_2}{2(14.007) g\,N_2} \times \frac{2\mol\,NH_3}{1\mol\,N_2} = \frac{24}{14.007}\mol\,NH_3\]
+		Thus we get $P$:
+		\[P = \frac{24 \mol\,NH_3}{14.007} \times \frac{0.08206\,L\,\text{atm} \,NH_3}{\mol K \,NH_3} * \frac{298K \,NH_3}{2.50L\,NH_3} = 16.75999 atm\]
+		\item 4.722g of an unknown gas is collected over water inside a 2.75L container at 298K.  The total pressure inside the container is 749 torr and the vapor pressure of water is 23.76 torr.  Determine the identity of the unknown gas.
+		\\ \\
+		We can find the pressure of the unknown gas can be found by the following:
+		\[P_{\text{total}} = P_{\text{uknown gas}} + P_{H_2O} \qarrow P_{\text{unknown gas}} = 749 - 23.76 = 725.24 \text{ torr} = 0.95426 \text{ atm}\]
+		We can use the ideal gas law to find the number of moles to find the molar mass:
+		\[PV = nRT \qarrow n = \frac{(0.95426 \text{ atm})(2.75L)}{(0.08206\,L\,\text{atm}\mol^{-1}K^{-1})(298K)} = 0.1073\mol\]
+		Using $n$, we can see that the molar mass of the unknown gas is:
+		\[M_{\text{unknown gas}} = 4.722g \div \frac{(0.95426 \text{ atm}) (2.75L)}{(0.08206 \,L\,\text{atm}\mol^{-1}K^{-1})(298K)} = 44.002195 \frac{g}{\mol}\]
+		Looking at the choices between $H_2, CO_2, N_2, Xe$, we can see that 
+		\[\textbf{\boldmath $CO_2$ has a molar mass of $(12.011 + 2(15.999)) = 44.009 \frac{g}{\mol}$}\]
+		\newpage
+		\item Which of the following statements is not correct?
+		\begin{enumerate}[label=(\alph*)]
+			\item The average kinetic energy of a sample of gas is dependent on temperature. 
+			\\
+			\textbf{\boldmath True - $KE = \frac{3}{2}RT$}
+			\item The pressure inside a container is dependent on the total number of moles of gas particles inside the container.
+			\item Heavier gas particles exert a greater pressure on the walls inside of the container.
+			\item The average velocity of gas particles is dependent on temperature.
+			\\
+			\textbf{\boldmath True - $V_{rms} = \sqrt{\frac{3RT}{M}}$}
+			\\
+			This is the Root mean square Velocity, where $R = 8.3145 J\mol^{-1}K^{-1}$ and $M$ is the molar mass in $kg /\mol$
+		\end{enumerate}
+	\end{enumerate}
+
+\end{document}
