@@ -1,0 +1,15 @@
+# ninja log v5
+0	62	1641709341578556078	CMakeFiles/helloWorld.sh.dir/main.c.o	37b229071a1163e3
+0	73	1641709341586556037	CMakeFiles/helloWorld.dir/printHello.c.o	28a1f54f18a4cff8
+73	107	1641709341622555856	libhelloWorld.a	e3e1698e5444624e
+107	151	1641709341666555634	helloWorld.sh	66932164f9c8b53
+0	28	1641709792496683291	printHello/CMakeFiles/helloWorld.dir/src/printHello/printHello.c.o	832fdbd9f0f81ab1
+0	30	1641709916140267078	printHello/CMakeFiles/helloWorld.dir/src/printHello/printHello.c.o	52b36b17e78d0a80
+0	26	1641710025135921858	printHello/CMakeFiles/helloWorld.dir/src/printHello/printHello.c.o	f01594ae3f6e7ec4
+1	26	1641710025135921858	helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o	86764dc4db2b34f1
+26	39	1641710025151921809	printHello/libhelloWorld.a	5c086a35970f6602
+39	59	1641710025167921760	helloExe/helloWorld.sh	56c25dcf17090719
+0	27	1641710246487267494	helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o	d88704222a8194e6
+0	23	1641710255655241472	printHello/CMakeFiles/helloWorld.dir/src/printHello/printHello.c.o	a7758adf6fd0c1bc
+24	37	1641710255671241428	printHello/libhelloWorld.a	5c086a35970f6602
+37	58	1641710255691241370	helloExe/helloWorld.sh	56c25dcf17090719

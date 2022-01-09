@@ -1,0 +1,13 @@
+[
+{
+  "directory": "/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-9 -DPRINT_HELLO_VERSION=4.0 -I../printHello/src/printHello  -g   -o printHello/CMakeFiles/helloWorld.dir/src/printHello/printHello.c.o   -c /home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/printHello/src/printHello/printHello.c",
+  "file": "/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/printHello/src/printHello/printHello.c"
+},
+
+{
+  "directory": "/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-9 -DPRINT_HELLO_VERSION=4.0 -I../printHello/src/printHello  -g   -o helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o   -c /home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/helloExe/main.c",
+  "file": "/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/helloExe/main.c"
+}
+]
