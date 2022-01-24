@@ -1,0 +1,98 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "printHello",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "printHello",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "helloExe",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "helloExe",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "MyProject",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "helloWorld::@ab00de9a5b388b14dba4",
+					"jsonFile" : "target-helloWorld-d9f9a30b4b2702ee5c12.json",
+					"name" : "helloWorld",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "helloWorld.sh::@4a10ce9c1513f3b3f635",
+					"jsonFile" : "target-helloWorld.sh-b707d28e9f5c6f9701a0.json",
+					"name" : "helloWorld.sh",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build",
+		"source" : "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

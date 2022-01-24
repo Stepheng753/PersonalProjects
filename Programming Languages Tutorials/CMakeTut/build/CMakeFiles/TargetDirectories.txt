@@ -1,8 +1,0 @@
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/CMakeFiles/edit_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/printHello/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/printHello/CMakeFiles/edit_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/printHello/CMakeFiles/helloWorld.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/helloExe/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/helloExe/CMakeFiles/edit_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/CMake/CMakeTut/build/helloExe/CMakeFiles/helloWorld.sh.dir

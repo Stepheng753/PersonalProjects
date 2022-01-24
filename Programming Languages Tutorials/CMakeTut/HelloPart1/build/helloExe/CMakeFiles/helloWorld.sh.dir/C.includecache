@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../printHello/src/printHello/printHello.h
+
+/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c
+stdio.h
+-
+printHello.h
+/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/printHello.h
+

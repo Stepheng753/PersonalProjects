@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/helloWorld.sh.dir/main.c.o  -o helloWorld.sh  ../printHello/libhelloWorld.a 
