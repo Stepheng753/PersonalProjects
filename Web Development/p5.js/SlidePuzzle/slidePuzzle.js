@@ -1,9 +1,10 @@
 let source;
-let tiles = [];
-let board = [];
+let tiles;
+let board;
 let cols = 3;
 let rows = 3;
-let fr = 60;
+let fr = 100;
+let fc = 0;
 let w;
 let h;
 
@@ -18,9 +19,16 @@ function preload() {
 	source = loadImage('Icon.png');
 }
 
-function setup() {
-	createCanvas(500, 500);
-	frameRate(fr);
+function setSize(newSize) {
+	cols = newSize;
+	rows = newSize;
+	reset();
+}
+
+function reset() {
+	tiles = [];
+	board = [];
+	fc = 0;
 	w = width / cols;
 	h = height / rows;
 
@@ -42,8 +50,12 @@ function setup() {
 	tiles.pop();
 	board.pop();
 	board.push(-1);
+}
 
-	// shuffleTiles(board);
+function setup() {
+	createCanvas(500, 500);
+	frameRate(fr);
+	reset();
 }
 
 function randomMove() {
@@ -65,14 +77,13 @@ function swap(arr, i, j) {
 function mousePressed() {
 	let i = floor(mouseX / w);
 	let j = floor(mouseY / h);
-	console.log(i, j, cols, rows);
 	move(i, j);
 }
 
 function draw() {
 	background(255);
 
-	if (frameCount < 5 * fr) {
+	if (fc++ < 5 * fr + 50 * cols) {
 		randomMove();
 	}
 
