@@ -8,6 +8,7 @@ let timeTotal = 120;
 let timeLeft;
 let numAnsWin = timeTotal / 2;
 let numInput;
+let startTimer;
 let start = 0;
 let stopped = 0;
 
@@ -24,10 +25,12 @@ function setup() {
 }
 
 function myInputEvent() {
+	if (!startTimer) {
+		startTimer = true;
+		start = millis();
+	}
 	answerInput = !isNaN(parseInt(this.value())) ? parseInt(this.value()) : 'Not Number';
 }
-
-function keyPressed() {}
 
 function draw() {
 	background(0);
@@ -41,11 +44,13 @@ function draw() {
 	pop();
 
 	if (isLooping()) {
-		timeLeft = (timeTotal - (millis() - start) / 1000).toFixed(2);
-		if (timeLeft < 0) {
-			timeLeft = 0;
-			noLoop();
-			draw();
+		if (startTimer) {
+			timeLeft = (timeTotal - (millis() - start) / 1000).toFixed(2);
+			if (timeLeft < 0) {
+				timeLeft = 0;
+				noLoop();
+				draw();
+			}
 		}
 
 		push();
@@ -94,7 +99,7 @@ function draw() {
 		text('Total Points: ' + points, 325, 100);
 		if (points >= numAnsWin) text('Winner Winner!', 325, 200);
 		else text('Try Again!', 350, 200);
-		text('Points Per Second: ' + (points / timeTotal).toFixed(2), 225, 300);
+		text('Time per point: ' + (timeTotal / points).toFixed(2) + ' secs', 225, 300);
 		pop();
 		noLoop();
 	}
@@ -112,9 +117,10 @@ function setVars(num) {
 
 function reset() {
 	loop();
-	points = 0;
+	points = -1;
 	start = millis();
-	randNum1 = floor(random(0, range1 + 1));
-	randNum2 = floor(random(0, range2 + 1));
+	randNum1 = 0;
+	randNum2 = 0;
 	numInput.show();
+	timeLeft = timeTotal;
 }

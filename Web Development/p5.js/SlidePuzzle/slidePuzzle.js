@@ -1,12 +1,14 @@
 let source;
 let tiles;
 let board;
-let cols = 3;
-let rows = 3;
-let fr = 100;
-let fc = 0;
 let w;
 let h;
+let size = 4;
+let moveCounterDom = document.getElementById('move-counter');
+let timeCounterDom = document.getElementById('time-counter');
+let solvedDom = document.getElementById('solved');
+let numMoves = 0;
+let start;
 
 class Tile {
 	constructor(index, img) {
@@ -15,32 +17,67 @@ class Tile {
 	}
 }
 
-function preload() {
-	source = loadImage('Icon.png');
+function updateCount() {
+	let delta;
+	if (start) {
+		delta = ((Date.now() - start) / 1000).toFixed(2);
+	} else {
+		delta = 0;
+	}
+
+	moveCounterDom.innerHTML = 'Moves: ' + numMoves;
+	timeCounterDom.innerHTML = 'Time: ' + convertSecs(delta);
 }
 
-function setSize(newSize) {
-	cols = newSize;
-	rows = newSize;
+function convertSecs(secs) {
+	if (secs >= 0 && secs < 60) {
+		return '' + secs + (secs > 1 ? ' secs ' : ' sec ');
+	} else if (secs >= 60 && secs < 3600) {
+		return (
+			'' +
+			Math.floor(secs / 60) +
+			(Math.floor(secs / 60) > 1 ? ' mins ' : ' min ') +
+			convertSecs((secs % 60).toFixed(2))
+		);
+	} else {
+		return (
+			'' +
+			Math.floor(secs / 3600) +
+			(Math.floor(secs / 3600) > 1 ? ' hrs ' : ' hr ') +
+			convertSecs((secs % 3600).toFixed(2))
+		);
+	}
+}
+
+function preload() {
+	source = loadImage('Icon.png');
+	updateCount();
+}
+
+function setSize() {
+	size = parseInt(document.getElementById('sizer').value);
 	reset();
 }
 
-function reset() {
+function reset(multiplier = 1000) {
+	loop();
 	tiles = [];
 	board = [];
-	fc = 0;
-	w = width / cols;
-	h = height / rows;
+	w = width / size;
+	h = height / size;
+	numMoves = 0;
+	start = null;
+	solvedDom.innerHTML = '';
 
-	for (let i = 0; i < cols; i++) {
-		for (let j = 0; j < rows; j++) {
+	for (let i = 0; i < size; i++) {
+		for (let j = 0; j < size; j++) {
 			let x = i * w;
 			let y = j * h;
 
 			let img = createImage(w, h);
 			img.copy(source, x, y, w, h, 0, 0, w, h);
 
-			let index = i + j * cols;
+			let index = i + j * size;
 			board.push(index);
 
 			let tile = new Tile(index, img);
@@ -50,48 +87,24 @@ function reset() {
 	tiles.pop();
 	board.pop();
 	board.push(-1);
+
+	shuffleBoard(size * multiplier);
 }
 
 function setup() {
 	createCanvas(500, 500);
-	frameRate(fr);
+	frameRate(60);
 	reset();
-}
-
-function randomMove() {
-	let randNum1 = floor(random(cols));
-	let randNum2 = floor(random(rows));
-	move(randNum1, randNum2);
-}
-
-function shuffleTiles() {
-	for (let i = 0; i < 1000; i++) {
-		randomMove();
-	}
-}
-
-function swap(arr, i, j) {
-	[arr[i], arr[j]] = [arr[j], arr[i]];
-}
-
-function mousePressed() {
-	let i = floor(mouseX / w);
-	let j = floor(mouseY / h);
-	move(i, j);
 }
 
 function draw() {
 	background(255);
 
-	if (fc++ < 5 * fr + 50 * cols) {
-		randomMove();
-	}
-
-	for (let i = 0; i < cols; i++) {
-		for (let j = 0; j < rows; j++) {
+	for (let i = 0; i < size; i++) {
+		for (let j = 0; j < size; j++) {
 			let x = i * w;
 			let y = j * h;
-			let tileIndex = board[i + j * cols];
+			let tileIndex = board[i + j * size];
 			if (tileIndex > -1) {
 				let img = tiles[tileIndex].img;
 				image(img, x, y, w, h);
@@ -102,8 +115,8 @@ function draw() {
 		}
 	}
 
-	for (let i = 0; i < cols; i++) {
-		for (let j = 0; j < rows; j++) {
+	for (let i = 0; i < size; i++) {
+		for (let j = 0; j < size; j++) {
 			let x = i * w;
 			let y = j * h;
 			strokeWeight(2);
@@ -112,29 +125,51 @@ function draw() {
 		}
 	}
 
-	if (isSolved()) {
-		console.log('SOLVED');
+	if (isSolved() && numMoves > 0) {
+		solvedDom.innerHTML = 'SOLVED';
+		noLoop();
+	} else {
+		updateCount();
 	}
 }
 
-function isSolved() {
-	for (let i = 0; i < board.length - 1; i++) {
-		if (board[i] != tiles[i].index) {
-			return false;
-		}
-	}
-	return true;
+function randomMove() {
+	let randNum1 = floor(random(size));
+	let randNum2 = floor(random(size));
+	move(randNum1, randNum2);
 }
 
-function move(i, j) {
-	if (i >= 0 && i < cols && j >= 0 && j < rows) {
+function shuffleBoard(numTimes) {
+	for (let i = 0; i < numTimes; i++) {
+		randomMove();
+	}
+}
+
+function mousePressed() {
+	let i = floor(mouseX / w);
+	let j = floor(mouseY / h);
+	move(i, j, true);
+}
+
+function move(i, j, updateCounter = false) {
+	if (i >= 0 && i < size && j >= 0 && j < size) {
 		let blankIndex = findBlank();
-		let blankCol = blankIndex % cols;
-		let blankRow = floor(blankIndex / rows);
+		let blankCol = blankIndex % size;
+		let blankRow = floor(blankIndex / size);
 		if (isNeighbor(i, j, blankCol, blankRow)) {
-			swap(board, blankIndex, i + j * cols);
+			swap(board, blankIndex, i + j * size);
+			if (updateCounter) {
+				if (numMoves == 0) {
+					start = Date.now();
+				}
+				numMoves++;
+			}
 		}
 	}
+}
+
+function swap(arr, i, j) {
+	[arr[i], arr[j]] = [arr[j], arr[i]];
 }
 
 function isNeighbor(i, j, x, y) {
@@ -152,4 +187,13 @@ function findBlank() {
 			return i;
 		}
 	}
+}
+
+function isSolved() {
+	for (let i = 0; i < board.length - 1; i++) {
+		if (board[i] != tiles[i].index) {
+			return false;
+		}
+	}
+	return true;
 }
