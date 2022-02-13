@@ -55,7 +55,10 @@ function preload() {
 }
 
 function setSize() {
-	size = parseInt(document.getElementById('sizer').value);
+	let sizerVal = parseInt(document.getElementById('sizer').value);
+	if (sizerVal > 0 && sizerVal < 10) {
+		size = sizerVal;
+	}
 	reset();
 }
 
