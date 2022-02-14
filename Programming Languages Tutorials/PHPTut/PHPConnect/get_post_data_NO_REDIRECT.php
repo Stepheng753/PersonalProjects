@@ -48,6 +48,7 @@
 			<br />
 			<input type="submit" value="Submit" />
 		</form>
+		<br><br>
 		<?php
 		DEFINE ('DB_HOST', '5.181.218.155');
 		DEFINE ('DB_PORT', '3306');
