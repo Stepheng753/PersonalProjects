@@ -92,10 +92,6 @@
 				}
 			}
 		} 
-		else if ($_POST) {
-			echo 'INCORRECT PASSWORD!';
-		}
-
 		?>
 
 <!-- 		<script src="getName.js"></script> -->
