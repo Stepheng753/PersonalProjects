@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style type="text/css">
+			h1,
+			h2,
+			h3 {
+				text-decoration: underline;
+			}
+			body {
+				margin: auto;
+				margin-top: 50px;
+				background: white;
+				width: 1000px;
+				padding-bottom: 500px;
+			}
+		</style>
+		<title>Post Data</title>
+	</head>
+	<body>
+		<form action="get_post_data.php" method="POST">
+			<label>Enter in Password : </label>
+			<input type="password" name="password" />
+			<br />
+
+			<label>Would you like to POST data : </label>
+			<input type="radio" name="post_data" value="TRUE" />
+			<label for="TRUE">YES</label>
+			<input type="radio" name="post_data" value="FALSE" />
+			<label for="FALSE">NO</label>
+			<br />
+
+			<label>Would you like to GET data : </label>
+			<input type="radio" name="get_data" value="TRUE" />
+			<label for="TRUE">YES</label>
+			<input type="radio" name="get_data" value="FALSE" />
+			<label for="FALSE">NO</label>
+			<br />
+
+			<!-- <label>First Name : </label> -->
+			<input type="hidden" id="f_name" name="f_name" />
+			<br />
+			<!-- <label>Last Name : </label> -->
+			<input type="hidden" id="l_name" name="l_name" />
+			<br />
+			<input type="submit" value="Submit" />
+		</form>
+
+		<script src="getName.js"></script>
+	</body>
+</html>
