@@ -91,7 +91,7 @@
 				}
 			}
 		} 
-		else {
+		else if ($_POST) {
 			echo 'INCORRECT PASSWORD!';
 		}
 
