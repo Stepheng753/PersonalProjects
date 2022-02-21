@@ -52,8 +52,8 @@
 		<?php
 		DEFINE ('DB_HOST', '5.181.218.155');
 		DEFINE ('DB_PORT', '3306');
-		DEFINE ('DB_USER', 'u190664279_testStudents');
-		DEFINE ('DB_NAME', 'u190664279_testStudentsDB');
+		DEFINE ('DB_USER', 'u190664279_test');
+		DEFINE ('DB_NAME', 'u190664279_testDB');
 
 		if (isset($_POST) && array_key_exists('password', $_POST)) {
 			$DB_PASSWORD = $_POST['password'];
@@ -68,9 +68,9 @@
 			if ($post_data == 'TRUE') {
 				$sql = '';
 				if (isset($f_name) && !empty($f_name) && isset($l_name) && !empty($l_name)) {
-					$sql = "INSERT INTO student (f_name, l_name) VALUES ('". $f_name . "','" . $l_name . "')";
+					$sql = "INSERT INTO testTable (f_name, l_name) VALUES ('". $f_name . "','" . $l_name . "')";
 				} else {
-					$sql = "INSERT INTO student (f_name, l_name) VALUES ('NO NAME', 'GIVEN')";
+					$sql = "INSERT INTO testTable (f_name, l_name) VALUES ('NO NAME', 'GIVEN')";
 				}
 				if ($dbc->query($sql) === TRUE) {
 					echo "New record created successfully";
@@ -80,7 +80,7 @@
 				echo "<br>";
 			}
 			if ($get_data == 'TRUE') {
-				$query = "SELECT f_name, l_name FROM student";
+				$query = "SELECT f_name, l_name FROM testTable";
 				$response = @mysqli_query($dbc, $query);
 
 				$count = 1;

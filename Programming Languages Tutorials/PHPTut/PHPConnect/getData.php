@@ -2,7 +2,7 @@
 
 require_once('connectDB.php');
 
-$query = "SELECT f_name, l_name FROM student";
+$query = "SELECT f_name, l_name FROM testTable";
 $response = @mysqli_query($dbc, $query);
 $count = 1;
 
