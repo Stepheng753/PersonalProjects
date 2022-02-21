@@ -3,7 +3,7 @@ let tiles;
 let board;
 let w;
 let h;
-let size = 4;
+let size = 2;
 let moveCounterDom = document.getElementById('move-counter');
 let timeCounterDom = document.getElementById('time-counter');
 let solvedDom = document.getElementById('solved');
@@ -56,7 +56,7 @@ function preload() {
 
 function setSize() {
 	let sizerVal = parseInt(document.getElementById('sizer').value);
-	if (sizerVal > 0 && sizerVal < 10) {
+	if (sizerVal > 2 && sizerVal < 10) {
 		size = sizerVal;
 	}
 	reset();
@@ -130,6 +130,7 @@ function draw() {
 
 	if (isSolved() && numMoves > 0) {
 		solvedDom.innerHTML = 'SOLVED';
+		solvedDom.style.paddingBottom = '25px';
 		noLoop();
 	} else {
 		updateCount();
