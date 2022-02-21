@@ -1,18 +1,17 @@
 <?php
 
-require_once('../../../PHPPasswords/passStore.php');
-
+require_once('../../../PHPConnect/connectStore.php');
 if (isset($_POST) && array_key_exists('password', $_POST)) {
 	$DB_PASSWORD = $_POST['password'];
 	$post_data = $_POST['post_data'];
 	$get_data = $_POST['get_data'];
 	$f_name = $_POST['f_name'];
 	$l_name = $_POST['l_name'];
-
+	
 	$dbc = @mysqli_connect(DB_HOST, Test_DB_USER, $DB_PASSWORD, Test_DB_NAME, DB_PORT) OR 
 		die('Could not connect to MySQL: ' . mysqli_connect_error());
 
-	if ($post_data == 'TRUE') {
+	if ($GET_data == 'TRUE') {
 		$sql = '';
 		if (isset($f_name) && !empty($f_name) && isset($l_name) && !empty($l_name)) {
 			$sql = "INSERT INTO testTable (f_name, l_name) VALUES ('". $f_name . "','" . $l_name . "')";

@@ -3,9 +3,10 @@ let tiles;
 let board;
 let w;
 let h;
-let size = 2;
+let size = 3;
 let moveCounterDom = document.getElementById('move-counter');
 let timeCounterDom = document.getElementById('time-counter');
+let submitDom = document.getElementById('submitForm');
 let solvedDom = document.getElementById('solved');
 let numMoves = 0;
 let start;
@@ -51,12 +52,13 @@ function convertSecs(secs) {
 
 function preload() {
 	source = loadImage('Icon.png');
+	document.getElementById('sizer').value = size;
 	updateCount();
 }
 
 function setSize() {
 	let sizerVal = parseInt(document.getElementById('sizer').value);
-	if (sizerVal > 2 && sizerVal < 10) {
+	if (sizerVal >= 3 && sizerVal < 10) {
 		size = sizerVal;
 	}
 	reset();
@@ -128,12 +130,12 @@ function draw() {
 		}
 	}
 
+	updateCount();
 	if (isSolved() && numMoves > 0) {
 		solvedDom.innerHTML = 'SOLVED';
 		solvedDom.style.paddingBottom = '25px';
+		createFormDom();
 		noLoop();
-	} else {
-		updateCount();
 	}
 }
 
@@ -200,4 +202,17 @@ function isSolved() {
 		}
 	}
 	return true;
+}
+
+function createFormDom() {
+	submitDom.innerHTML += '<label>Enter in Name for Leaderboard:</label>';
+	submitDom.innerHTML += '<br>';
+	submitDom.innerHTML += "<input type='text' name='name' />";
+	submitDom.innerHTML += "<input type='hidden' name='size' id='size' value='" + size + "'/>";
+	submitDom.innerHTML += "<input type='hidden' name='numMoves' id='numMoves' value='" + numMoves + "'/>";
+	submitDom.innerHTML +=
+		"<input type='hidden' name='time' id='time' value='" + ((Date.now() - start) / 1000).toFixed(2) + "'/>";
+	submitDom.innerHTML += '<br><br>';
+	submitDom.innerHTML += "<input type='submit' name='submit'/>";
+	submitDom.style.paddingBottom = '25px';
 }

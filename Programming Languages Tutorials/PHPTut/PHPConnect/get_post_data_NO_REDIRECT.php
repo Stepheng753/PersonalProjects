@@ -21,7 +21,7 @@
 		<title>Post Data</title>
 	</head>
 	<body>
-		<form action="./get_post_data_NO_REDIRECT.php" method="POST">
+		<form action="get_post_data_NO_REDIRECT.php" method="POST">
 			<label>Enter in Password : </label>
 			<input type="password" name="password" />
 			<br />
@@ -50,9 +50,7 @@
 		</form>
 		<br><br>
 		<?php
-
-		require_once('../../../PHPPasswords/passStore.php');
-		
+		require_once('../../../PHPConnect/connectStore.php');
 		if (isset($_POST) && array_key_exists('password', $_POST)) {
 			$DB_PASSWORD = $_POST['password'];
 			$post_data = $_POST['post_data'];

@@ -24,6 +24,13 @@
                 margin-right: 30px;
 				text-decoration: underline;
 			}
+            table, th, td {
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid black;
+                table-layout: fixed ;
+                width: 100% ;
+            }
 		</style>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
     <title>Slide Puzzle</title>
@@ -35,51 +42,69 @@
     <a id="Hard" onclick="javascript:reset(10000)">Hard</a>
     <div style="padding-top: 15px;">
         Size:
-        <input type="number" id="sizer" onKeyDown="return false" onchange="setSize()" value="4" min="3" max="9" size="1" style="width: 40px" />
+        <input type="number" id="sizer" onKeyDown="return false" onchange="setSize()" min="3" max="9" size="1" style="width: 40px" />
     </div>
     <div style="padding-bottom: 25px; padding-top: 15px;">
         <div id="move-counter" style="display: inline-block; padding-right: 15px;"></div>
         <div id="time-counter" style="display: inline-block; padding-left: 15px;"></div>
     </div>
     <div id="solved"></div>
-    <form action="./slidePuzzle.php" method="POST" style="padding-bottom: 25px">
-        <label>Enter in Name for Leaderboard:</label>
-        <br>
-        <input type="text" name="name" />
-        <input type="hidden" name="numMoves" id="numMoves" />
-        <input type="hidden" name="time" id="time" />
-        <br><br>
-        <input type="submit" name="submit"/>
+    <form action="./slidePuzzle.php" id="submitForm" method="POST"">
     </form>
     <?php 
         require_once('../../../PHPConnect/connectStore.php');
-        $dbc = @mysqli_connect(DB_HOST, LB_DB_USER, LB_DB_PASSWORD, LB_DB_NAME, DB_PORT)
-        OR die('Could not connect to MySQL: ' . mysqli_connect_error());
-        
-        $name = $_POST['name'];
-        $numMoves = $_POST['numMoves'];
-        $timeSecs = $_POST['time'];
+        if (isset($_POST) && array_key_exists('submit', $_POST)) {
+            $dbc = @mysqli_connect(DB_HOST, LB_DB_USER, LB_DB_PASSWORD, LB_DB_NAME, DB_PORT)
+            OR die('Could not connect to MySQL: ' . mysqli_connect_error());
 
-        $sql = '';
-        if (isset($name) && !empty($name)) {
-            $sql = "INSERT INTO slidePuzzleLB ('name', 'numMoves', 'time(secs)') VALUES ('". $name . "','" . $numMoves . "','" . $timeSecs . "')";
+            $name = $_POST['name'];
+            $size = $_POST['size'];
+            $numMoves = $_POST['numMoves'];
+            $timeSecs = $_POST['time'];
+
+            $sql = '';
+            if (isset($name) && !empty($name)) {
+                $sql = "INSERT INTO `slidePuzzleLB`(`name`, `size`, `numMoves`, `time(secs)`) VALUES ('". $name . "','" . $size . "','" . $numMoves . "','" . $timeSecs . "')";
+                if ($dbc->query($sql) === TRUE) {
+					echo "New record created successfully";
+				} else {
+					echo "Error: " . $sql . "<br>" . $dbc->error;
+				}
+            } else {
+                echo "No Name Given";
+            }
+            echo "<br><br>";
             $query = "SELECT * FROM `slidePuzzleLB`";
             $response = @mysqli_query($dbc, $query);
 
-            $count = 1;
             if($response){
+                echo "<table style='align'>";
+                echo "<tr>";
+                echo "<th>Name</th>";
+                echo "<th>Size</th>";
+                echo "<th>Moves</th>";
+                echo "<th>Time (secs)</th>";
+                echo "</tr>";
                 while($row = mysqli_fetch_array($response)){
-                    echo $count . ": " . $row['name'] . ' --- ' . $row['numMoves'] . ' --- ' . $row['time(secs)'] . "<br>";
-                    $count++;
+                    echo "<tr>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>" . $row['size'] . "</td>";
+                    echo "<td>" . $row['numMoves'] . "</td>";
+                    echo "<td>" . $row['time(secs)'] . "</td>";
+                    echo "</tr>";
                 }
+                echo "</table>";
             }
-        } else {
-            echo "No Name Given";
-        }
-
-        
+            echo " <div style='padding-bottom: 25px;'></div>";
+        }        
     ?>
+   
 
     <script src="slidePuzzle.js""></script>
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </body>
 </html>
