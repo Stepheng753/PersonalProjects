@@ -2,15 +2,19 @@ let answerInput;
 let randNum1 = 0;
 let randNum2 = 0;
 let points = 0;
-let range1 = 12;
-let range2 = 12;
-let timeTotal = 120;
+let range1;
+let range2;
+let timeTotal = 60;
 let timeLeft;
 let numAnsWin = timeTotal / 2;
 let numInput;
 let startTimer;
 let start = 0;
 let stopped = 0;
+let difficulty = 'Medium';
+let timerDom = document.getElementById('time-counter');
+let pointsDom = document.getElementById('points-counter');
+let submitDom = document.getElementById('submitForm');
 
 function setup() {
 	let cnv = createCanvas(1000, 400);
@@ -18,9 +22,28 @@ function setup() {
 
 	numInput = createInput('');
 	numInput.position(420, 225, 'fixed');
+	numInput.size(150);
 	numInput.parent('sketchHolder');
 	numInput.input(myInputEvent);
 
+	setDifficulty(difficulty);
+	reset();
+}
+
+function setDifficulty(diff) {
+	difficulty = diff;
+	if (difficulty == 'Easy') {
+		range1 = 5;
+		range2 = 5;
+	} else if (difficulty == 'Medium') {
+		range1 = 12;
+		range2 = 12;
+	} else {
+		range1 = 15;
+		range2 = 15;
+	}
+	startTimer = false;
+	document.getElementById('difficultyChosen').innerHTML = difficulty;
 	reset();
 }
 
@@ -43,33 +66,20 @@ function draw() {
 	}
 	pop();
 
-	if (isLooping()) {
+	if (timeLeft != 0) {
 		if (startTimer) {
 			timeLeft = (timeTotal - (millis() - start) / 1000).toFixed(2);
 			if (timeLeft < 0) {
 				timeLeft = 0;
-				noLoop();
-				draw();
 			}
 		}
 
-		push();
-		fill(0, 0, 0, 100);
-		rect(5, 5, 200, 40);
-		strokeWeight(5);
-		fill(255);
-		textSize(20);
-		text('Time Left: ' + timeLeft + ' secs', 10, 30);
-		pop();
-
-		push();
-		fill(0, 0, 0, 100);
-		rect(890, 5, 100, 40);
-		strokeWeight(5);
-		fill(255);
-		textSize(20);
-		text('Points: ' + points, 900, 30);
-		pop();
+		timerDom.innerHTML = 'Time Left: ' + Math.abs(timeLeft).toFixed(2) + ' secs';
+		if (!startTimer && points == -1) {
+			pointsDom.innerHTML = 'Points: 0';
+		} else {
+			pointsDom.innerHTML = 'Points: ' + points;
+		}
 
 		push();
 		fill(0, 0, 0, 100);
@@ -88,39 +98,48 @@ function draw() {
 			answerInput = null;
 		}
 	} else {
-		loop();
 		numInput.hide();
 		push();
 		fill(0, 0, 0, 100);
-		rect(40, 40, 950, 300);
+		rect(20, 40, 960, 300);
 		strokeWeight(5);
 		fill(255);
 		textSize(60);
-		text('Total Points: ' + points, 325, 100);
-		if (points >= numAnsWin) text('Winner Winner!', 325, 200);
-		else text('Try Again!', 350, 200);
-		text('Time per point: ' + (timeTotal / points).toFixed(2) + ' secs', 225, 300);
+		text('Total Points: ' + points, 275, 100);
+		if (points >= numAnsWin) {
+			text('Winner Winner!', 275, 200);
+			createFormDom();
+		} else {
+			text('Try Again!', 350, 200);
+		}
+		if (points == 0) {
+			text('No Points!', 350, 300);
+		} else {
+			text('Seconds per point: ' + (timeTotal / points).toFixed(2) + ' secs', 125, 300);
+		}
 		pop();
 		noLoop();
 	}
 }
 
-function setVars(num) {
-	if (num == 0) range1 = parseInt(document.getElementById('range1Input').value);
-	if (num == 1) range2 = parseInt(document.getElementById('range2Input').value);
-	if (num == 2) {
-		timeTotal = parseInt(document.getElementById('timeInput').value);
-		numAnsWin = timeTotal / 2;
-	}
-	reset();
-}
-
 function reset() {
 	loop();
 	points = -1;
-	start = millis();
 	randNum1 = 0;
 	randNum2 = 0;
 	numInput.show();
 	timeLeft = timeTotal;
+}
+
+function createFormDom() {
+	submitDom.innerHTML += '<label>Enter in Name for Leaderboard:</label>';
+	submitDom.innerHTML += '<br>';
+	submitDom.innerHTML += "<input type='text' name='name' />";
+	submitDom.innerHTML += "<input type='hidden' name='difficulty' id='difficulty' value='" + difficulty + "'/>";
+	submitDom.innerHTML += "<input type='hidden' name='points' id='points' value='" + points + "'/>";
+	submitDom.innerHTML +=
+		"<input type='hidden' name='timePerPt' id='timePerPt' value='" + (timeTotal / points).toFixed(2) + "'/>";
+	submitDom.innerHTML += '<br><br>';
+	submitDom.innerHTML += "<input type='submit' name='submit'/>";
+	submitDom.style.paddingBottom = '25px';
 }

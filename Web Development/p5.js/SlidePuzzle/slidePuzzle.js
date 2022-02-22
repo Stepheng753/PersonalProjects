@@ -4,6 +4,8 @@ let board;
 let w;
 let h;
 let size = 3;
+let sizeMin = 3;
+let sizeMax = 10;
 let moveCounterDom = document.getElementById('move-counter');
 let timeCounterDom = document.getElementById('time-counter');
 let submitDom = document.getElementById('submitForm');
@@ -53,12 +55,14 @@ function convertSecs(secs) {
 function preload() {
 	source = loadImage('Icon.png');
 	document.getElementById('sizer').value = size;
+	document.getElementById('sizer').min = sizeMin;
+	document.getElementById('sizer').max = sizeMax;
 	updateCount();
 }
 
 function setSize() {
 	let sizerVal = parseInt(document.getElementById('sizer').value);
-	if (sizerVal >= 3 && sizerVal < 10) {
+	if (sizerVal >= sizeMin && sizerVal < sizeMax) {
 		size = sizerVal;
 	}
 	reset();
