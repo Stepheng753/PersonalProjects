@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Estimate Pi</title>
+
+		<style type="text/css">
+			body {
+				width: 1000px;
+				margin: auto;
+				text-align: center;
+			}
+			a:hover {
+				color: blue;
+			}
+			a:active {
+				color: red;
+			}
+			a:visited {
+				color: #a91101;
+			}
+			a {
+				text-decoration: underline;
+			}
+			#one-line {
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+			input {
+				display: inline-block;
+				width: 60px;
+			}
+		</style>
+
+		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+	</head>
+
+	<body>
+		<div style="padding-bottom: 15px">
+			<h1 style="padding: 0">PI Estimator</h1>
+			<label>Max Number of Points</label>
+			<input id="maxPts" type="number" value="10000" step="1000" min="0" size="1" />
+			<label style="padding-left: 15px">Point Size</label>
+			<input id="pointSize" type="number" value="5" step="1" min="1" size="1" />
+			<label style="padding-left: 15px">Color Speed</label>
+			<input id="colorSpeed" type="number" value="50" step="10" min="0" size="1" />
+			<label style="padding-left: 15px">Points Speed</label>
+			<input id="pointSpeed" type="number" value="20" step="10" min="0" size="1" />
+			<div id="one-line" style="padding-top: 25px">
+				<div id="inside-count" style="display: inline-block; padding-right: 15px"></div>
+				<div id="total-count" style="display: inline-block; padding-left: 15px"></div>
+			</div>
+			<div id="one-line">
+				<div id="estimation" style="display: inline-block; padding-right: 15px"></div>
+				<div id="percentError" style="display: inline-block; padding-left: 15px"></div>
+			</div>
+		</div>
+		<script src="EstimatePi.js"></script>
+	</body>
+</html>
