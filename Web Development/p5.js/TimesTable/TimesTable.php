@@ -49,7 +49,7 @@
 	</head>
 
 	<body>
-		<div style="padding-top: 25px" />
+		<h1 style="padding: 0">Times Table</h1>
 		<a id="Easy" onclick="javascript:setDifficulty('Easy')">Easy</a>
 		<a id="Medium" onclick="javascript:setDifficulty('Medium')">Medium</a>
 		<a id="Hard" onclick="javascript:setDifficulty('Hard')">Hard</a>

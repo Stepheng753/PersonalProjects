@@ -39,7 +39,7 @@
     <title>Slide Puzzle</title>
 </head>
 <body>
-    <div style="padding-top: 25px;"/>
+    <h1 style="padding: 0">Slide Puzzle</h1>
     <a id="Easy" onclick="javascript:reset(100)">Easy</a>
     <a id="Medium" onclick="javascript:reset(1000)">Medium</a>
     <a id="Hard" onclick="javascript:reset(10000)">Hard</a>
