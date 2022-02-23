@@ -20,7 +20,7 @@ let colorSpeed;
 let ptSpeed;
 
 function setup() {
-	createCanvas(800, 800);
+	createCanvas(700, 700);
 	diameter = height - 2 * bigMargin;
 	radius = diameter / 2;
 	start = Date.now();
