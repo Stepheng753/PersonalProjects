@@ -1,4 +1,4 @@
-let canvasSize = 1000;
+let canvasSize = 900;
 let numRows = 8;
 let numCols = 8;
 let squares = new Array(64);
@@ -114,7 +114,7 @@ function mouseClicked() {
 		board[originalIndex] = 0;
 		board[index] = temp;
 		squares[index] = '#d6d980';
-	} else if (board[index] == 0) {
+	} else {
 		initSquares();
 	}
 	originalIndex = -1;
