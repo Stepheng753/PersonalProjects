@@ -12,7 +12,7 @@ let moves = [];
 function setup() {
 	createCanvas(canvasSize, canvasSize);
 	initChess();
-	setPieces('r7ppp3pp4k7n5P8K4PP5b0R2R3');
+	// setPieces('r7ppp3pp4k7n5P8K4PP5b0R2R3');
 }
 
 function draw() {
