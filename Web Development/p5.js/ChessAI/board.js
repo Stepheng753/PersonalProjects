@@ -12,12 +12,12 @@ let moves = [];
 function setup() {
 	createCanvas(canvasSize, canvasSize);
 	initChess();
+	setPieces('r7ppp3pp4k7n5P8K4PP5b0R2R3');
 }
 
 function draw() {
 	drawSquares();
 	drawAllPieces();
-	// checkForCheck();
 }
 
 function drawAllPieces() {
@@ -46,11 +46,14 @@ function initSquares() {
 			squares[i] = 255;
 		}
 	}
+	checkForCheck(true);
 }
 
 function initEmptySpace() {
-	for (let i = 16; i <= 47; i++) {
-		pieces[i] = 0;
+	for (let i = 0; i < pieces.length; i++) {
+		if (!pieces[i]) {
+			pieces[i] = 0;
+		}
 	}
 }
 
@@ -95,14 +98,14 @@ function initKings() {
 }
 
 function initChess() {
-	initEmptySpace();
-	initSquares();
 	initPawns();
 	initBishops();
 	initKnights();
 	initRooks();
 	initQueens();
 	initKings();
+	initEmptySpace();
+	initSquares();
 }
 
 function mouseClicked() {
@@ -114,31 +117,7 @@ function mouseClicked() {
 		) {
 			initSquares();
 			squares[index] = '#e9eba2';
-
-			if (checkForCheck(true)) {
-				let possibleMoves = pieces[convertPixelToIndex(mouseX, mouseY)].getLegalMoves(false);
-				currLegalMoves = [];
-				console.log(possibleMoves);
-				for (let i = 0; i < possibleMoves.length; i++) {
-					let ogTemp = pieces[index];
-					let newTemp = pieces[possibleMoves[i][0]];
-
-					pieces[index] = 0;
-					pieces[possibleMoves[i][0]] = ogTemp;
-
-					if (!checkForCheck(false)) {
-						currLegalMoves.push(possibleMoves[i]);
-					}
-					pieces[index] = ogTemp;
-					pieces[possibleMoves[i][0]] = newTemp;
-				}
-
-				for (let i = 0; i < currLegalMoves.length; i++) {
-					squares[currLegalMoves[i][0]] = '#59b381';
-				}
-			} else {
-				currLegalMoves = pieces[convertPixelToIndex(mouseX, mouseY)].getLegalMoves(true);
-			}
+			currLegalMoves = pieces[convertPixelToIndex(mouseX, mouseY)].getLegalMoves(true, true);
 			originalIndex = index;
 			return;
 		}
@@ -223,4 +202,34 @@ function findsArray2D(array2D, element) {
 
 function convertPixelToIndex(x, y) {
 	return Math.floor(x / (canvasSize / numRows)) + Math.floor(y / (canvasSize / numCols)) * numRows;
+}
+
+function setPieces(piecesString) {
+	let stringIndex = 0;
+	let piecesIndex = 0;
+	while (stringIndex < piecesString.length) {
+		let pieceChar = piecesString.charAt(stringIndex++);
+		if (pieceChar.toLowerCase() == 'p') {
+			pieces[piecesIndex] = new Pawn(piecesIndex++, pieceChar.toUpperCase() == pieceChar);
+		} else if (pieceChar.toLowerCase() == 'b') {
+			pieces[piecesIndex] = new Bishop(piecesIndex++, pieceChar.toUpperCase() == pieceChar);
+		} else if (pieceChar.toLowerCase() == 'n') {
+			pieces[piecesIndex] = new Knight(piecesIndex++, pieceChar.toUpperCase() == pieceChar);
+		} else if (pieceChar.toLowerCase() == 'r') {
+			pieces[piecesIndex] = new Rook(piecesIndex++, pieceChar.toUpperCase() == pieceChar);
+		} else if (pieceChar.toLowerCase() == 'q') {
+			pieces[piecesIndex] = new Queen(piecesIndex++, pieceChar.toUpperCase() == pieceChar);
+		} else if (pieceChar.toLowerCase() == 'k') {
+			pieces[piecesIndex] = new King(piecesIndex++, pieceChar.toUpperCase() == pieceChar);
+		} else if (!isNaN(pieceChar) && pieceChar != '0') {
+			for (let k = 0; k < int(pieceChar); k++) {
+				pieces[piecesIndex++] = 0;
+			}
+		} else if (pieceChar.toLowerCase() == 'm') {
+			isWhitesTurn = false;
+		} else {
+			pieces[piecesIndex++] = 0;
+		}
+	}
+	checkForCheck(true);
 }

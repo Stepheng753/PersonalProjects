@@ -7,6 +7,7 @@ class Piece {
 		this.index = index;
 		this.isWhite = isWhite;
 		this.numMoves = 0;
+		this.legalMoves = [];
 
 		let y = this.isWhite ? 0 : img.height / 2;
 		this.piecePic = img.get((numPic * img.width) / 6, y, img.width / 6, img.width / 6);
@@ -18,6 +19,29 @@ class Piece {
 		let y = Math.floor(this.index / numRows) * (canvasSize / numCols);
 		image(this.piecePic, x, y);
 	}
+
+	filterCheck() {
+		let i = 0;
+		while (i < this.legalMoves.length) {
+			let currMove = this.legalMoves[i];
+			let ogTemp = pieces[this.index];
+			let newTemp = pieces[currMove[0]];
+
+			pieces[this.index] = 0;
+			pieces[this.legalMoves[i][0]] = ogTemp;
+
+			if (checkForCheck(false)) {
+				this.legalMoves = this.legalMoves.filter((value) => {
+					return value != currMove;
+				});
+				i--;
+			}
+
+			pieces[this.index] = ogTemp;
+			pieces[currMove[0]] = newTemp;
+			i++;
+		}
+	}
 }
 
 class Pawn extends Piece {
@@ -25,8 +49,8 @@ class Pawn extends Piece {
 		super(index, isWhite, 5);
 	}
 
-	getLegalMoves(showMoves) {
-		let legalMoves = [];
+	getLegalMoves(showMoves, doCheck = false) {
+		this.legalMoves = [];
 
 		let numMovesForward =
 			Math.floor(this.index / numRows) == 1 || Math.floor(this.index / numRows) == numRows - 2 ? 2 : 1;
@@ -34,7 +58,7 @@ class Pawn extends Piece {
 		for (let i = 1; i <= numMovesForward; i++) {
 			let possibleMoveIndex = this.index + indexingDirection * numRows * i;
 			if (pieces[possibleMoveIndex] == 0) {
-				legalMoves.push([possibleMoveIndex, '']);
+				this.legalMoves.push([possibleMoveIndex, '']);
 			} else {
 				break;
 			}
@@ -44,7 +68,7 @@ class Pawn extends Piece {
 		if (oneIndexForward % numRows >= 0 && oneIndexForward % numRows <= numRows - 2) {
 			let oneIndexForwardRight = oneIndexForward + 1;
 			if (pieces[oneIndexForwardRight] != 0 && pieces[oneIndexForwardRight].isWhite != this.isWhite) {
-				legalMoves.push([oneIndexForwardRight, 'x']);
+				this.legalMoves.push([oneIndexForwardRight, 'x']);
 			}
 		}
 		if (
@@ -53,7 +77,7 @@ class Pawn extends Piece {
 		) {
 			let oneIndexForwardLeft = oneIndexForward - 1;
 			if (pieces[oneIndexForwardLeft] != 0 && pieces[oneIndexForwardLeft].isWhite != this.isWhite) {
-				legalMoves.push([oneIndexForwardLeft, 'x']);
+				this.legalMoves.push([oneIndexForwardLeft, 'x']);
 			}
 		}
 
@@ -71,17 +95,21 @@ class Pawn extends Piece {
 					rightElement.numMoves == 1 &&
 					moves[moves.length - 1][0] == rightElement
 				) {
-					legalMoves.push([rightIndex + indexingDirection * numRows, 'e.p.']);
+					this.legalMoves.push([rightIndex + indexingDirection * numRows, 'e.p.']);
 				}
 			}
 		}
 
+		if (doCheck) {
+			this.filterCheck();
+		}
+
 		if (showMoves) {
-			for (let i = 0; i < legalMoves.length; i++) {
-				squares[legalMoves[i][0]] = '#59b381';
+			for (let i = 0; i < this.legalMoves.length; i++) {
+				squares[this.legalMoves[i][0]] = '#59b381';
 			}
 		}
-		return legalMoves;
+		return this.legalMoves;
 	}
 }
 
@@ -90,8 +118,8 @@ class Bishop extends Piece {
 		super(index, isWhite, 2);
 	}
 
-	getLegalMoves(showMoves) {
-		let legalMoves = [];
+	getLegalMoves(showMoves, doCheck = false) {
+		this.legalMoves = [];
 
 		let diag = [
 			[1, -1, 7],
@@ -104,9 +132,9 @@ class Bishop extends Piece {
 			let diagIndex = this.index + diag[i][0] * numRows + diag[i][1];
 			while (diagIndex % numRows != diag[i][2] && diagIndex >= 0 && diagIndex < pieces.length) {
 				if (pieces[diagIndex] == 0) {
-					legalMoves.push([diagIndex, '']);
+					this.legalMoves.push([diagIndex, '']);
 				} else if (pieces[diagIndex].isWhite != this.isWhite) {
-					legalMoves.push([diagIndex, 'x']);
+					this.legalMoves.push([diagIndex, 'x']);
 					break;
 				} else {
 					break;
@@ -115,12 +143,16 @@ class Bishop extends Piece {
 			}
 		}
 
+		if (doCheck) {
+			this.filterCheck();
+		}
+
 		if (showMoves) {
-			for (let i = 0; i < legalMoves.length; i++) {
-				squares[legalMoves[i][0]] = '#59b381';
+			for (let i = 0; i < this.legalMoves.length; i++) {
+				squares[this.legalMoves[i][0]] = '#59b381';
 			}
 		}
-		return legalMoves;
+		return this.legalMoves;
 	}
 }
 
@@ -129,8 +161,8 @@ class Knight extends Piece {
 		super(index, isWhite, 3);
 	}
 
-	getLegalMoves(showMoves) {
-		let legalMoves = [];
+	getLegalMoves(showMoves, doCheck = false) {
+		this.legalMoves = [];
 
 		let lMoves = [
 			[-2, -numRows, numRows],
@@ -149,20 +181,24 @@ class Knight extends Piece {
 					lMoveIndex < pieces.length
 				) {
 					if (pieces[lMoveIndex] == 0) {
-						legalMoves.push([lMoveIndex, '']);
+						this.legalMoves.push([lMoveIndex, '']);
 					} else if (pieces[lMoveIndex].isWhite != this.isWhite) {
-						legalMoves.push([lMoveIndex, 'x']);
+						this.legalMoves.push([lMoveIndex, 'x']);
 					}
 				}
 			}
 		}
 
+		if (doCheck) {
+			this.filterCheck();
+		}
+
 		if (showMoves) {
-			for (let i = 0; i < legalMoves.length; i++) {
-				squares[legalMoves[i][0]] = '#59b381';
+			for (let i = 0; i < this.legalMoves.length; i++) {
+				squares[this.legalMoves[i][0]] = '#59b381';
 			}
 		}
-		return legalMoves;
+		return this.legalMoves;
 	}
 }
 
@@ -171,8 +207,8 @@ class Rook extends Piece {
 		super(index, isWhite, 4);
 	}
 
-	getLegalMoves(showMoves) {
-		let legalMoves = [];
+	getLegalMoves(showMoves, doCheck = false) {
+		this.legalMoves = [];
 
 		let horzVert = [
 			[-numRows, numRows],
@@ -185,9 +221,9 @@ class Rook extends Piece {
 			let horzVertIndex = this.index + horzVert[i][0];
 			while (horzVertIndex % numRows != horzVert[i][1] && horzVertIndex >= 0 && horzVertIndex < pieces.length) {
 				if (pieces[horzVertIndex] == 0) {
-					legalMoves.push([horzVertIndex, '']);
+					this.legalMoves.push([horzVertIndex, '']);
 				} else if (pieces[horzVertIndex].isWhite != this.isWhite) {
-					legalMoves.push([horzVertIndex, 'x']);
+					this.legalMoves.push([horzVertIndex, 'x']);
 					break;
 				} else {
 					break;
@@ -196,12 +232,16 @@ class Rook extends Piece {
 			}
 		}
 
+		if (doCheck) {
+			this.filterCheck();
+		}
+
 		if (showMoves) {
-			for (let i = 0; i < legalMoves.length; i++) {
-				squares[legalMoves[i][0]] = '#59b381';
+			for (let i = 0; i < this.legalMoves.length; i++) {
+				squares[this.legalMoves[i][0]] = '#59b381';
 			}
 		}
-		return legalMoves;
+		return this.legalMoves;
 	}
 }
 
@@ -210,8 +250,8 @@ class Queen extends Piece {
 		super(index, isWhite, 1);
 	}
 
-	getLegalMoves(showMoves) {
-		let legalMoves = [];
+	getLegalMoves(showMoves, doCheck = false) {
+		this.legalMoves = [];
 
 		let diag = [
 			[1, -1, 7],
@@ -231,9 +271,9 @@ class Queen extends Piece {
 			let diagIndex = this.index + diag[i][0] * numRows + diag[i][1];
 			while (diagIndex % numRows != diag[i][2] && diagIndex >= 0 && diagIndex < pieces.length) {
 				if (pieces[diagIndex] == 0) {
-					legalMoves.push([diagIndex, '']);
+					this.legalMoves.push([diagIndex, '']);
 				} else if (pieces[diagIndex].isWhite != this.isWhite) {
-					legalMoves.push([diagIndex, 'x']);
+					this.legalMoves.push([diagIndex, 'x']);
 					break;
 				} else {
 					break;
@@ -246,9 +286,9 @@ class Queen extends Piece {
 			let horzVertIndex = this.index + horzVert[i][0];
 			while (horzVertIndex % numRows != horzVert[i][1] && horzVertIndex >= 0 && horzVertIndex < pieces.length) {
 				if (pieces[horzVertIndex] == 0) {
-					legalMoves.push([horzVertIndex, '']);
+					this.legalMoves.push([horzVertIndex, '']);
 				} else if (pieces[horzVertIndex].isWhite != this.isWhite) {
-					legalMoves.push([horzVertIndex, 'x']);
+					this.legalMoves.push([horzVertIndex, 'x']);
 					break;
 				} else {
 					break;
@@ -257,12 +297,16 @@ class Queen extends Piece {
 			}
 		}
 
+		if (doCheck) {
+			this.filterCheck();
+		}
+
 		if (showMoves) {
-			for (let i = 0; i < legalMoves.length; i++) {
-				squares[legalMoves[i][0]] = '#59b381';
+			for (let i = 0; i < this.legalMoves.length; i++) {
+				squares[this.legalMoves[i][0]] = '#59b381';
 			}
 		}
-		return legalMoves;
+		return this.legalMoves;
 	}
 }
 
@@ -271,8 +315,8 @@ class King extends Piece {
 		super(index, isWhite, 0);
 	}
 
-	getLegalMoves(showMoves) {
-		let legalMoves = [];
+	getLegalMoves(showMoves, doCheck = false) {
+		this.legalMoves = [];
 
 		let possibleMoveIndices = [-numRows, 0, numRows];
 		for (let i = 0; i < possibleMoveIndices.length; i++) {
@@ -284,9 +328,9 @@ class King extends Piece {
 					borderIndex < pieces.length
 				) {
 					if (pieces[borderIndex] == 0) {
-						legalMoves.push([borderIndex, '']);
+						this.legalMoves.push([borderIndex, '']);
 					} else if (pieces[borderIndex].isWhite != this.isWhite) {
-						legalMoves.push([borderIndex, 'x']);
+						this.legalMoves.push([borderIndex, 'x']);
 					}
 				}
 			}
@@ -311,19 +355,23 @@ class King extends Piece {
 
 				if (pieces[j].constructor.name == 'Rook' && pieces[j].numMoves == 0 && nothingBetween) {
 					let kingQueenSide = leftRightRookSearch[i] > 0 ? '0-0' : '0-0-0';
-					legalMoves.push([j - leftRightRookSearch[i], kingQueenSide]);
+					this.legalMoves.push([j - leftRightRookSearch[i], kingQueenSide]);
 					if (leftRightRookSearch[i] < 0) {
-						legalMoves.push([j - 2 * leftRightRookSearch[i], kingQueenSide]);
+						this.legalMoves.push([j - 2 * leftRightRookSearch[i], kingQueenSide]);
 					}
 				}
 			}
 		}
 
+		if (doCheck) {
+			this.filterCheck();
+		}
+
 		if (showMoves) {
-			for (let i = 0; i < legalMoves.length; i++) {
-				squares[legalMoves[i][0]] = '#59b381';
+			for (let i = 0; i < this.legalMoves.length; i++) {
+				squares[this.legalMoves[i][0]] = '#59b381';
 			}
 		}
-		return legalMoves;
+		return this.legalMoves;
 	}
 }
