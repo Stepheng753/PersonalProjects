@@ -87,15 +87,16 @@ class Pawn extends Piece {
 		];
 		for (let i = 0; i < leftRightBounds.length; i++) {
 			if (this.index % numRows >= leftRightBounds[i][0] && this.index % numRows <= leftRightBounds[i][1]) {
-				let rightIndex = this.index + leftRightBounds[i][2];
-				let rightElement = pieces[rightIndex];
+				let rightLeftIndex = this.index + leftRightBounds[i][2];
+				let rightLeftElement = pieces[rightLeftIndex];
 				if (
-					rightElement != 0 &&
-					rightElement.isWhite != this.isWhite &&
-					rightElement.numMoves == 1 &&
-					moves[moves.length - 1][0] == rightElement
+					rightLeftElement != 0 &&
+					rightLeftElement.isWhite != this.isWhite &&
+					rightLeftElement.constructor.name == 'Pawn' &&
+					rightLeftElement.numMoves == 1 &&
+					moves[moves.length - 1][0] == rightLeftElement
 				) {
-					this.legalMoves.push([rightIndex + indexingDirection * numRows, 'e.p.']);
+					this.legalMoves.push([rightLeftIndex + indexingDirection * numRows, 'e.p.']);
 				}
 			}
 		}
