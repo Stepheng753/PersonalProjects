@@ -274,7 +274,7 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 	if (checkBool) {
 		for (let i = 0; i < pieces.length; i++) {
 			if (pieces[i] != 0 && pieces[i].isWhite == isWhitesTurn) {
-				let numLegalMoves = pieces[i].getLegalMoves(true, true).length;
+				let numLegalMoves = pieces[i].getLegalMoves(false, true).length;
 				console.log(pieces[i], numLegalMoves);
 				if (numLegalMoves > 0) {
 					return { check: true, checkmate: false };
