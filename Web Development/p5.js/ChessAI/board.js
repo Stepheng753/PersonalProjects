@@ -2,12 +2,13 @@ const canvasSize = 900;
 const numRows = 8;
 const numCols = 8;
 const squareSize = canvasSize / numRows;
+const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 let squares = new Array(64);
 let pieces = new Array(64);
 let img;
 let moveFromIndex = -1;
 let currLegalMoves = [];
-let moves = [];
+let prevMoves = [];
 let isWhitesTurn = true;
 let promotionMode = false;
 const defaultSquareColor = '#A3524C';
@@ -15,6 +16,7 @@ const selectionColor = '#e9eba2';
 const legalMoveColor = '#59b381';
 const captureColor = '#4d6cfa';
 const checkColor = '#c74343';
+const checkmateColor = '#eb1313';
 
 function setup() {
 	createCanvas(canvasSize, canvasSize);
@@ -159,14 +161,20 @@ function mouseClicked() {
 			pieces[currIndex] = pieces[moveFromIndex];
 			pieces[currIndex].numMoves++;
 			pieces[moveFromIndex] = 0;
-			moves.push([pieces[currIndex], moveFromIndex, currIndex]);
+			prevMoves.push({
+				piece: pieces[currIndex],
+				moveFromIndex: moveFromIndex,
+				moveToIndex: currIndex,
+				type: foundElement.type,
+				check: false,
+			});
 
 			// En Passant
 			// If en passant, remove the piece above/below new space
 			if (pieces[currIndex].constructor.name == 'Pawn') {
 				let behindDirection = -1 * pieces[currIndex].getIndexingDirection();
 				if (foundElement.type == 'e.p.') {
-					pieces[currIndex + indexingDirection * numRows] = 0;
+					pieces[currIndex + behindDirection * numRows] = 0;
 				}
 			}
 
@@ -177,18 +185,12 @@ function mouseClicked() {
 					pieces[currIndex + 1] = pieces[currIndex - getColNum(currIndex)];
 					pieces[currIndex + 1].numMoves++;
 					pieces[currIndex + 1].index = currIndex + 1;
-					moves.push([pieces[currIndex + 1], currIndex - getColNum(currIndex), currIndex + 1]);
 				}
 				// Absolute Left Castling, move Rook
 				else if (currIndex > moveFromIndex) {
 					pieces[currIndex - 1] = pieces[currIndex + (numRows - 1) - getColNum(currIndex)];
 					pieces[currIndex - 1].numMoves++;
 					pieces[currIndex - 1].index = currIndex - 1;
-					moves.push([
-						pieces[currIndex - 1],
-						currIndex + (numRows - 1) - getColNum(currIndex),
-						currIndex - 1,
-					]);
 				}
 			}
 
@@ -209,7 +211,9 @@ function mouseClicked() {
 			}
 
 			// Check to see if this move, put opponent in check
-			checkIfCurrentInCheck(true);
+			if (checkIfCurrentInCheck(true).check) {
+				prevMoves[prevMoves.length - 1].check = true;
+			}
 		} else {
 			initSquares();
 		}
@@ -221,7 +225,7 @@ function mouseClicked() {
 function promotionPicker() {
 	let y1 = 3.5 * squareSize;
 	let y2 = 4.5 * squareSize;
-	let promotionIndex = moves[moves.length - 1][2];
+	let promotionIndex = prevMoves[prevMoves.length - 1].moveToIndex;
 
 	let promotionChoices = [
 		new Queen(promotionIndex, !isWhitesTurn),
@@ -234,6 +238,7 @@ function promotionPicker() {
 		let x2 = x1 + squareSize;
 		if (mouseX >= x1 && mouseX <= x2 && mouseY >= y1 && mouseY <= y2) {
 			pieces[promotionIndex] = promotionChoices[i - 2];
+			prevMoves[prevMoves.length - 1].type += pieces[promotionIndex].constructor.name[0];
 		}
 	}
 	promotionMode = false;
@@ -245,10 +250,12 @@ function promotionPicker() {
  * @param {*} show
  * @returns
  */
-function checkIfCurrentInCheck(show) {
+function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 	let kingIndex = pieces.findIndex(
 		(element) => element.isWhite == isWhitesTurn && element.constructor.name == 'King'
 	);
+	let checkBool = false;
+
 	for (let i = 0; i < pieces.length; i++) {
 		if (pieces[i] != 0 && pieces[i].isWhite != isWhitesTurn) {
 			let legalMoves = pieces[i].getLegalMoves(false);
@@ -257,10 +264,29 @@ function checkIfCurrentInCheck(show) {
 				if (show) {
 					squares[kingIndex] = checkColor;
 				}
-				return true;
+				checkBool = true;
+				if (checkOnlyCheck) {
+					return { check: true, checkmate: false };
+				}
 			}
 		}
 	}
+	if (checkBool) {
+		for (let i = 0; i < pieces.length; i++) {
+			if (pieces[i] != 0 && pieces[i].isWhite == isWhitesTurn) {
+				let numLegalMoves = pieces[i].getLegalMoves(true, true).length;
+				console.log(pieces[i], numLegalMoves);
+				if (numLegalMoves > 0) {
+					return { check: true, checkmate: false };
+				}
+			}
+		}
+		if (show) {
+			squares[kingIndex] = checkmateColor;
+		}
+		return { check: true, checkmate: true };
+	}
+	return { check: false, checkmate: false };
 }
 
 /**
@@ -355,4 +381,47 @@ function getPieces() {
 		piecesString += 'm';
 	}
 	return piecesString;
+}
+
+function getPrevMoves() {
+	let moveString = '';
+	for (let i = 0; i < prevMoves.length; i++) {
+		let colLetter = colLetters[getColNum(prevMoves[i].moveToIndex)];
+		let rowNumber = getRowNum(prevMoves[i].moveToIndex) + 1;
+		let moveType = prevMoves[i].type;
+		if (prevMoves[i].piece.constructor.name == 'Pawn') {
+			if (moveType.includes('x') || moveType == 'e.p.') {
+				moveString += colLetters[getColNum(prevMoves[i].moveFromIndex)] + 'x';
+			}
+			moveString += colLetter.concat(rowNumber);
+			if (moveType == 'e.p.') {
+				moveString += '(ep)';
+			} else if (moveType.includes('=')) {
+				moveString += '=' + moveType[moveType.indexOf('=') + 1];
+			}
+		} else if (prevMoves[i].piece.constructor.name == 'Bishop') {
+			moveString += 'B' + moveType + colLetter.concat(rowNumber);
+		} else if (prevMoves[i].piece.constructor.name == 'Knight') {
+			moveString += 'N' + moveType + colLetter.concat(rowNumber);
+		} else if (prevMoves[i].piece.constructor.name == 'Rook') {
+			moveString += 'R' + moveType + colLetter.concat(rowNumber);
+		} else if (prevMoves[i].piece.constructor.name == 'Queen') {
+			moveString += 'Q' + moveType + colLetter.concat(rowNumber);
+		} else if (prevMoves[i].piece.constructor.name == 'King') {
+			if (moveType.includes('0')) {
+				moveString += moveType;
+			} else {
+				moveString += 'K' + colLetter.concat(rowNumber);
+			}
+		}
+		if (prevMoves[i].check) {
+			moveString += '+ ';
+		}
+		if (i % 2 == 1 && i != prevMoves.length - 1) {
+			moveString += ' | ';
+		} else {
+			moveString += ' ';
+		}
+	}
+	return moveString;
 }

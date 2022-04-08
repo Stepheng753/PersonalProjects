@@ -31,7 +31,7 @@ class Piece {
 			pieces[this.legalMoves[i].moveIndex] = ogTemp;
 
 			// If move puts king in check, remove move from list
-			if (checkIfCurrentInCheck(false)) {
+			if (checkIfCurrentInCheck(false, true).check) {
 				this.legalMoves = this.legalMoves.filter((value) => {
 					return value != currMove;
 				});
@@ -59,16 +59,16 @@ class Pawn extends Piece {
 	getLegalMoves(showMoves, runFilterCheck = false) {
 		this.legalMoves = [];
 		let end = this.isWhite ? 0 : numRows - 1;
+		let indexingDirection = this.getIndexingDirection();
 
 		// If pawn is on starting row, add 2 moves
 		let numMovesForward = this.numMoves == 0 ? 2 : 1;
-		let indexingDirection = this.getIndexingDirection();
 		for (let i = 1; i <= numMovesForward; i++) {
 			let possibleMoveIndex = this.index + indexingDirection * numRows * i;
 			if (pieces[possibleMoveIndex] == 0) {
 				let move = { moveIndex: possibleMoveIndex, type: '' };
-				if (Math.floor(getRowNum(possibleMoveIndex)) == end) {
-					move[1] = move[1].concat('=');
+				if (getRowNum(possibleMoveIndex) == end) {
+					move.type = move.type.concat('=');
 				}
 				this.legalMoves.push(move);
 			} else {
@@ -78,19 +78,19 @@ class Pawn extends Piece {
 
 		// Check Pawn Captures
 		let leftRightBounds = [
-			[0, numRows - 2, 1],
-			[1, numRows - 1, -1],
+			{ startBound: 0, endBound: numRows - 2, colShift: 1 },
+			{ startBound: 1, endBound: numRows - 1, colShift: -1 },
 		];
 		for (let i = 0; i < leftRightBounds.length; i++) {
 			let oneIndexForward = this.index + indexingDirection * numRows;
 			if (
-				getColNum(oneIndexForward) >= leftRightBounds[i][0] &&
-				getColNum(oneIndexForward) <= leftRightBounds[i][1]
+				getColNum(oneIndexForward) >= leftRightBounds[i].startBound &&
+				getColNum(oneIndexForward) <= leftRightBounds[i].endBound
 			) {
-				let oneIndexForwardRightLeft = oneIndexForward + leftRightBounds[i][2];
+				let oneIndexForwardRightLeft = oneIndexForward + leftRightBounds[i].colShift;
 				if (pieces[oneIndexForwardRightLeft] != 0 && pieces[oneIndexForwardRightLeft].isWhite != this.isWhite) {
-					let move = { moveIndex: oneIndexForwardRightLeft, type: 'X' };
-					if (Math.floor(oneIndexForwardRightLeft / numRows) == end) {
+					let move = { moveIndex: oneIndexForwardRightLeft, type: 'x' };
+					if (getRowNum(oneIndexForwardRightLeft) == end) {
 						move.type = move.type.concat('=');
 					}
 					this.legalMoves.push(move);
@@ -100,15 +100,18 @@ class Pawn extends Piece {
 
 		// Check En Passant
 		for (let i = 0; i < leftRightBounds.length; i++) {
-			if (getColNum(this.index) >= leftRightBounds[i][0] && getColNum(this.index) <= leftRightBounds[i][1]) {
-				let rightLeftIndex = this.index + leftRightBounds[i][2];
+			if (
+				getColNum(this.index) >= leftRightBounds[i].startBound &&
+				getColNum(this.index) <= leftRightBounds[i].endBound
+			) {
+				let rightLeftIndex = this.index + leftRightBounds[i].colShift;
 				let rightLeftElement = pieces[rightLeftIndex];
 				if (
 					rightLeftElement != 0 &&
 					rightLeftElement.isWhite != this.isWhite &&
 					rightLeftElement.constructor.name == 'Pawn' &&
 					rightLeftElement.numMoves == 1 &&
-					moves[moves.length - 1][0] == rightLeftElement
+					prevMoves[prevMoves.length - 1].piece == rightLeftElement
 				) {
 					this.legalMoves.push({ moveIndex: rightLeftIndex + indexingDirection * numRows, type: 'e.p.' });
 				}
@@ -140,25 +143,24 @@ class Bishop extends Piece {
 		this.legalMoves = [];
 
 		let diag = [
-			[1, -1, 7],
-			[1, 1, 0],
-			[-1, -1, 7],
-			[-1, 1, 0],
+			{ rowShift: numRows, colShift: -1, stopIndex: 7 },
+			{ rowShift: numRows, colShift: 1, stopIndex: 0 },
+			{ rowShift: -numRows, colShift: -1, stopIndex: 7 },
+			{ rowShift: -numRows, colShift: 1, stopIndex: 0 },
 		];
 
 		for (let i = 0; i < diag.length; i++) {
-			// Index up/down row and left/right col
-			let diagIndex = this.index + diag[i][1] + diag[i][0] * numRows;
-			while (getColNum(diagIndex) != diag[i][2] && diagIndex >= 0 && diagIndex < pieces.length) {
+			let diagIndex = this.index + diag[i].colShift + diag[i].rowShift;
+			while (getColNum(diagIndex) != diag[i].stopIndex && diagIndex >= 0 && diagIndex < pieces.length) {
 				if (pieces[diagIndex] == 0) {
 					this.legalMoves.push({ moveIndex: diagIndex, type: '' });
 				} else if (pieces[diagIndex].isWhite != this.isWhite) {
-					this.legalMoves.push({ moveIndex: diagIndex, type: 'X' });
+					this.legalMoves.push({ moveIndex: diagIndex, type: 'x' });
 					break;
 				} else {
 					break;
 				}
-				diagIndex += diag[i][1] + diag[i][0] * numRows;
+				diagIndex += diag[i].colShift + diag[i].rowShift;
 			}
 		}
 
@@ -183,26 +185,27 @@ class Knight extends Piece {
 		this.legalMoves = [];
 
 		let lMoves = [
-			[-2, -numRows, numRows],
-			[2, -numRows, numRows],
-			[-1, -2 * numRows, 2 * numRows],
-			[1, -2 * numRows, 2 * numRows],
+			{ colShift: -2, rowShift: -numRows },
+			{ colShift: 2, rowShift: -numRows },
+			{ colShift: -1, rowShift: -2 * numRows },
+			{ colShift: 1, rowShift: -2 * numRows },
 		];
 
 		for (let i = 0; i < lMoves.length; i++) {
-			for (let j = 1; j <= 2; j++) {
-				let lMoveIndex = this.index + lMoves[i][0] + lMoves[i][j];
+			for (let j = 0; j < 2; j++) {
+				let lMoveIndex = this.index + lMoves[i].colShift + lMoves[i].rowShift;
 				if (
-					getRowNum(lMoveIndex) - getRowNum(this.index) == getRowNum(lMoves[i][j]) &&
+					getRowNum(lMoveIndex) - getRowNum(this.index) == getRowNum(lMoves[i].rowShift) &&
 					lMoveIndex >= 0 &&
 					lMoveIndex < pieces.length
 				) {
 					if (pieces[lMoveIndex] == 0) {
 						this.legalMoves.push({ moveIndex: lMoveIndex, type: '' });
 					} else if (pieces[lMoveIndex].isWhite != this.isWhite) {
-						this.legalMoves.push({ moveIndex: lMoveIndex, type: 'X' });
+						this.legalMoves.push({ moveIndex: lMoveIndex, type: 'x' });
 					}
 				}
+				lMoves[i].rowShift *= -1;
 			}
 		}
 
@@ -227,24 +230,28 @@ class Rook extends Piece {
 		this.legalMoves = [];
 
 		let horzVert = [
-			[-numRows, numRows],
-			[numRows, numRows],
-			[-1, 7],
-			[1, 0],
+			{ shift: -numRows, stopIndex: -1 },
+			{ shift: numRows, stopIndex: -1 },
+			{ shift: -1, stopIndex: 7 },
+			{ shift: 1, stopIndex: 0 },
 		];
 
 		for (let i = 0; i < horzVert.length; i++) {
-			let horzVertIndex = this.index + horzVert[i][0];
-			while (getColNum(horzVertIndex) != horzVert[i][1] && horzVertIndex >= 0 && horzVertIndex < pieces.length) {
+			let horzVertIndex = this.index + horzVert[i].shift;
+			while (horzVertIndex >= 0 && horzVertIndex < pieces.length) {
+				if (horzVert[i].stopIndex != -1 && getColNum(horzVertIndex) == horzVert[i].stopIndex) {
+					break;
+				}
 				if (pieces[horzVertIndex] == 0) {
 					this.legalMoves.push({ moveIndex: horzVertIndex, type: '' });
 				} else if (pieces[horzVertIndex].isWhite != this.isWhite) {
-					this.legalMoves.push({ moveIndex: horzVertIndex, type: 'X' });
+					this.legalMoves.push({ moveIndex: horzVertIndex, type: 'x' });
 					break;
 				} else {
 					break;
 				}
-				horzVertIndex += horzVert[i][0];
+
+				horzVertIndex += horzVert[i].shift;
 			}
 		}
 
@@ -290,57 +297,78 @@ class King extends Piece {
 	getLegalMoves(showMoves, doCheck = false) {
 		this.legalMoves = [];
 
-		let possibleMoveIndices = [-numRows, 0, numRows];
-		for (let i = 0; i < possibleMoveIndices.length; i++) {
-			for (let j = -1; j <= 1; j++) {
-				let borderIndex = this.index + possibleMoveIndices[i] + j;
+		for (let rowShift = -numRows; rowShift <= numRows; rowShift += numRows) {
+			for (let colShift = -1; colShift <= 1; colShift++) {
+				if (rowShift == colShift && rowShift == 0) {
+					continue;
+				}
+
+				let borderIndex = this.index + rowShift + colShift;
 				if (
-					getRowNum(borderIndex) == getRowNum(borderIndex - j) &&
+					getRowNum(borderIndex) == getRowNum(borderIndex - colShift) &&
 					borderIndex >= 0 &&
 					borderIndex < pieces.length
 				) {
 					if (pieces[borderIndex] == 0) {
 						this.legalMoves.push({ moveIndex: borderIndex, type: '' });
 					} else if (pieces[borderIndex].isWhite != this.isWhite) {
-						this.legalMoves.push({ moveIndex: borderIndex, type: 'X' });
+						this.legalMoves.push({ moveIndex: borderIndex, type: 'x' });
 					}
 				}
 			}
 		}
 
 		// Castling
-		let leftRightRookSearch = [1, -1];
-		let castlingSpaces = [[], []];
+		let leftRightRookSearch = 1;
+		let castlingSpaces = { absoluteRight: [], absoluteLeft: [] };
 		if (this.numMoves == 0) {
-			for (let i = 0; i < leftRightRookSearch.length; i++) {
-				let j = this.index + leftRightRookSearch[i];
+			for (let i = 0; i < 2; i++) {
+				let leftRightShifted = this.index + leftRightRookSearch;
 				let nothingBetween = true;
 
 				while (
-					(j % numRows < numRows - 1 && leftRightRookSearch[i] > 0) ||
-					(j % numRows > 0 && leftRightRookSearch[i] < 0)
+					(getColNum(leftRightShifted) < numRows - 1 && leftRightRookSearch > 0) ||
+					(getColNum(leftRightShifted) > 0 && leftRightRookSearch < 0)
 				) {
-					if (pieces[j] != 0) {
+					if (pieces[leftRightShifted] != 0) {
 						nothingBetween = false;
 					}
-					j += leftRightRookSearch[i];
+					leftRightShifted += leftRightRookSearch;
 				}
 
-				if (pieces[j].constructor.name == 'Rook' && pieces[j].numMoves == 0 && nothingBetween) {
-					let kingQueenSide = leftRightRookSearch[i] > 0 ? '0-0' : '0-0-0';
-					this.legalMoves.push({ moveIndex: j - leftRightRookSearch[i], type: kingQueenSide });
-					if (leftRightRookSearch[i] > 0) {
-						castlingSpaces[0].push({ moveIndex: this.index + leftRightRookSearch[i], type: '' });
-						castlingSpaces[0].push({ moveIndex: j - leftRightRookSearch[i], type: kingQueenSide });
+				if (
+					pieces[leftRightShifted].constructor.name == 'Rook' &&
+					pieces[leftRightShifted].numMoves == 0 &&
+					nothingBetween
+				) {
+					let kingQueenSide = leftRightRookSearch > 0 ? '0-0' : '0-0-0';
+					this.legalMoves.push({ moveIndex: leftRightShifted - leftRightRookSearch, type: kingQueenSide });
+					if (leftRightRookSearch > 0) {
+						castlingSpaces.absoluteRight.push({ moveIndex: this.index + leftRightRookSearch, type: '' });
+						castlingSpaces.absoluteRight.push({
+							moveIndex: leftRightShifted - leftRightRookSearch,
+							type: kingQueenSide,
+						});
 					}
-					if (leftRightRookSearch[i] < 0) {
-						this.legalMoves.push({ moveIndex: j - 2 * leftRightRookSearch[i], type: kingQueenSide });
+					if (leftRightRookSearch < 0) {
+						this.legalMoves.push({
+							moveIndex: leftRightShifted - 2 * leftRightRookSearch,
+							type: kingQueenSide,
+						});
 
-						castlingSpaces[1].push({ moveIndex: j - leftRightRookSearch[i], type: kingQueenSide });
-						castlingSpaces[1].push({ moveIndex: j - 2 * leftRightRookSearch[i], type: kingQueenSide });
-						castlingSpaces[1].push({ moveIndex: this.index + leftRightRookSearch[i], type: '' });
+						castlingSpaces.absoluteLeft.push({
+							moveIndex: leftRightShifted - leftRightRookSearch,
+							type: kingQueenSide,
+						});
+						castlingSpaces.absoluteLeft.push({
+							moveIndex: leftRightShifted - 2 * leftRightRookSearch,
+							type: kingQueenSide,
+						});
+						castlingSpaces.absoluteLeft.push({ moveIndex: this.index + leftRightRookSearch, type: '' });
 					}
 				}
+
+				leftRightRookSearch *= -1;
 			}
 		}
 
@@ -350,20 +378,21 @@ class King extends Piece {
 
 		// Tester: setPieces('rnb0kbnrp00ppppp000000000pp00000qPP00000B0N00000P00PPPPPR000KBNRm')
 		// Tester: setPieces('rnb0kbnrp00p000p000000000pp0p000qPP0000PB0N00N0BP00PP000R000K00R')
-		// Tester: setPieces('rnb0kbr0p00pn00p000000000pp0p000qPPPP00PB0N00N0BP0000000R000K00R')
 		// If the king can't go to spaces between Rook and King because of checking, it cant castle
-		for (let i = 0; i < castlingSpaces.length; i++) {
+		for (let side in castlingSpaces) {
 			let containsAllCastlingSide = true;
-			for (let j = 0; j < castlingSpaces[i].length; j++) {
-				if (findsLegalMoves(this.legalMoves, castlingSpaces[i][j][0]) == -1) {
+			for (let j = 0; j < castlingSpaces[side].length; j++) {
+				let move = castlingSpaces[side][j];
+				if (findsLegalMoves(this.legalMoves, move.moveIndex) == -1) {
 					containsAllCastlingSide = false;
 					break;
 				}
 			}
 			if (!containsAllCastlingSide) {
-				for (let j = 0; j < castlingSpaces[i].length; j++) {
+				for (let j = 0; j < castlingSpaces[side].length; j++) {
 					this.legalMoves = this.legalMoves.filter((value) => {
-						return value[0] != castlingSpaces[i][j][0] || !castlingSpaces[i][j][1].includes('0');
+						let move = castlingSpaces[side][j];
+						return value.moveIndex != move.moveIndex || !move.type.includes('0');
 					});
 				}
 			}
