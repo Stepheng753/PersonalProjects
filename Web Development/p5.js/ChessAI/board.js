@@ -3,6 +3,7 @@ const numRows = 8;
 const numCols = 8;
 const squareSize = canvasSize / numRows;
 const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+const flipBoard = false;
 let squares = new Array(64);
 let pieces = new Array(64);
 let img;
@@ -124,7 +125,7 @@ function drawAllPieces() {
 function drawPromotionPicker() {
 	fill(100, 100, 100, 225);
 	rect(0, 0, canvasSize, canvasSize);
-	let choices = img.get(img.width / 6, isWhitesTurn ? img.height / 2 : 0, (4 / 6) * img.width, img.width / 6);
+	let choices = img.get(img.width / 6, isWhitesTurn ? 0 : img.height / 2, (4 / 6) * img.width, img.width / 6);
 	choices.resize(4 * squareSize, squareSize);
 	image(choices, 2 * squareSize, 3.5 * squareSize);
 }
@@ -138,7 +139,6 @@ function mouseClicked() {
 	// Check if user clicked inside canvas
 	else if (mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize) {
 		let currIndex = convertPixelToIndex(mouseX, mouseY);
-
 		if (
 			((moveFromIndex < 0 && pieces[currIndex] != 0) || // If no piece selected previously, and piece currently selected is a Piece
 				pieces[currIndex] != 0) && // If selected a new piece
@@ -197,6 +197,7 @@ function mouseClicked() {
 			// Pawn Promotion
 			if (foundElement.type.includes('=')) {
 				promotionMode = true;
+				isWhitesTurn = !isWhitesTurn;
 			}
 
 			isWhitesTurn = !isWhitesTurn; // Switch turns
@@ -228,10 +229,10 @@ function promotionPicker() {
 	let promotionIndex = prevMoves[prevMoves.length - 1].moveToIndex;
 
 	let promotionChoices = [
-		new Queen(promotionIndex, !isWhitesTurn),
-		new Bishop(promotionIndex, !isWhitesTurn),
-		new Knight(promotionIndex, !isWhitesTurn),
-		new Rook(promotionIndex, !isWhitesTurn),
+		new Queen(promotionIndex, isWhitesTurn),
+		new Bishop(promotionIndex, isWhitesTurn),
+		new Knight(promotionIndex, isWhitesTurn),
+		new Rook(promotionIndex, isWhitesTurn),
 	];
 	for (let i = 2; i < 6; i++) {
 		let x1 = i * squareSize;
@@ -242,6 +243,7 @@ function promotionPicker() {
 		}
 	}
 	promotionMode = false;
+	isWhitesTurn = !isWhitesTurn;
 	checkIfCurrentInCheck(true);
 }
 
@@ -312,12 +314,18 @@ function findsLegalMoves(legalMoves, moveIndex) {
 }
 
 function convertIndexToPixel(index) {
+	if (!isWhitesTurn && flipBoard) {
+		index = 63 - index;
+	}
 	let x = getColNum(index) * squareSize;
 	let y = getRowNum(index) * squareSize;
 	return { x: x, y: y };
 }
 
 function convertPixelToIndex(x, y) {
+	if (!isWhitesTurn && flipBoard) {
+		return 63 - (Math.floor(x / squareSize) + Math.floor(y / squareSize) * numRows);
+	}
 	return Math.floor(x / squareSize) + Math.floor(y / squareSize) * numRows;
 }
 
