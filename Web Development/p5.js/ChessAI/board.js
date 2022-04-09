@@ -3,7 +3,7 @@ const numRows = 8;
 const numCols = 8;
 const squareSize = canvasSize / numRows;
 const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-const flipBoard = false;
+let flipBoard = false;
 let squares = new Array(64);
 let pieces = new Array(64);
 let img;
@@ -431,4 +431,8 @@ function getPrevMoves() {
 		}
 	}
 	return moveString;
+}
+
+function toggleFlipBoard() {
+	flipBoard = !flipBoard;
 }
