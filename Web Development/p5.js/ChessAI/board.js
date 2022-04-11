@@ -3,6 +3,7 @@ const numRows = 8;
 const numCols = 8;
 const squareSize = canvasSize / numRows;
 const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+const aiBuffer = 60;
 let flipBoard = false;
 let squares = new Array(64);
 let pieces = new Array(64);
@@ -12,17 +13,21 @@ let currLegalMoves = [];
 let prevMoves = [];
 let isWhitesTurn = true;
 let promotionMode = false;
+let checkmate = false;
+let moveFromFrame = 0;
+let chessAI;
 const defaultSquareColor = '#A3524C';
 const selectionColor = '#e9eba2';
 const legalMoveColor = '#59b381';
 const captureColor = '#4d6cfa';
 const checkColor = '#c74343';
 const checkmateColor = '#eb1313';
+const turnIndicator = '#90ee90';
 
 function setup() {
 	createCanvas(canvasSize, canvasSize);
 	initChess();
-	// setPieces('r7ppp3pp4k7n5P8K4PP5b0R2R3');
+	chessAI = new AI(false);
 }
 
 function initChess() {
@@ -101,6 +106,24 @@ function draw() {
 
 	if (promotionMode) {
 		drawPromotionPicker();
+		if (chessAI && !isWhitesTurn) {
+			let mouseClick = chessAI.choosePromotion();
+			promotionPicker(mouseClick.x, mouseClick.y);
+		}
+	} else if (chessAI && !checkmate) {
+		if (!isWhitesTurn && moveFromIndex < 0) {
+			let chooseFromIndex = chessAI.chooseFromPiece();
+			moveFromFrame = frameCount;
+			selectMoveFrom(chooseFromIndex);
+		} else if (!isWhitesTurn && frameCount - moveFromFrame >= aiBuffer) {
+			let foundIndex = chessAI.chooseToPiece();
+			let foundElement = currLegalMoves[foundIndex];
+			selectMoveTo(foundElement.moveIndex, foundElement);
+			moveFromIndex = -1;
+			currLegalMoves = [];
+		}
+	} else if (checkmate) {
+		noLoop();
 	}
 }
 
@@ -111,6 +134,13 @@ function drawSquares() {
 		fill(squares[i]);
 		rect(x, y, squareSize, squareSize);
 	}
+	let yBlackBar = isWhitesTurn ? canvasSize : 0;
+
+	push();
+	strokeWeight(15);
+	stroke(turnIndicator);
+	line(0, yBlackBar, canvasSize, yBlackBar);
+	pop();
 }
 
 function drawAllPieces() {
@@ -133,97 +163,106 @@ function drawPromotionPicker() {
 function mouseClicked() {
 	// If in promotion mode, let user choose promotion piece
 	if (promotionMode) {
-		promotionPicker();
+		promotionPicker(mouseX, mouseY);
 	}
 
 	// Check if user clicked inside canvas
-	else if (mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize) {
+	else if (!chessAI || (isWhitesTurn && mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize)) {
 		let currIndex = convertPixelToIndex(mouseX, mouseY);
-		if (
-			((moveFromIndex < 0 && pieces[currIndex] != 0) || // If no piece selected previously, and piece currently selected is a Piece
-				pieces[currIndex] != 0) && // If selected a new piece
-			pieces[currIndex].isWhite == isWhitesTurn // If piece is of the correct color
-		) {
-			initSquares();
-			squares[currIndex] = selectionColor;
-			currLegalMoves = pieces[convertPixelToIndex(mouseX, mouseY)].getLegalMoves(true, true);
-			moveFromIndex = currIndex;
-
-			return;
+		if (pieces[currIndex] != 0 && pieces[currIndex].isWhite == isWhitesTurn) {
+			return selectMoveFrom(currIndex);
 		}
-
-		// If FROM piece is selected, choose TO piece
 		let foundIndex = findsLegalMoves(currLegalMoves, currIndex);
 		if (foundIndex != -1) {
 			let foundElement = currLegalMoves[foundIndex];
-			// Change Piece selected to previous piece and update index, and leave previous piece empty
-			pieces[moveFromIndex].index = currIndex;
-			pieces[currIndex] = pieces[moveFromIndex];
-			pieces[currIndex].numMoves++;
-			pieces[moveFromIndex] = 0;
-			prevMoves.push({
-				piece: pieces[currIndex],
-				moveFromIndex: moveFromIndex,
-				moveToIndex: currIndex,
-				type: foundElement.type,
-				check: false,
-			});
-
-			// En Passant
-			// If en passant, remove the piece above/below new space
-			if (pieces[currIndex].constructor.name == 'Pawn') {
-				let behindDirection = -1 * pieces[currIndex].getIndexingDirection();
-				if (foundElement.type == 'e.p.') {
-					pieces[currIndex + behindDirection * numRows] = 0;
-				}
-			}
-
-			// Castle
-			if (foundElement.type == '0-0' || foundElement.type == '0-0-0') {
-				// Absolute Right Castling, move Rook
-				if (currIndex < moveFromIndex) {
-					pieces[currIndex + 1] = pieces[currIndex - getColNum(currIndex)];
-					pieces[currIndex + 1].numMoves++;
-					pieces[currIndex + 1].index = currIndex + 1;
-				}
-				// Absolute Left Castling, move Rook
-				else if (currIndex > moveFromIndex) {
-					pieces[currIndex - 1] = pieces[currIndex + (numRows - 1) - getColNum(currIndex)];
-					pieces[currIndex - 1].numMoves++;
-					pieces[currIndex - 1].index = currIndex - 1;
-				}
-			}
-
-			// Pawn Promotion
-			if (foundElement.type.includes('=')) {
-				promotionMode = true;
-				isWhitesTurn = !isWhitesTurn;
-			}
-
-			isWhitesTurn = !isWhitesTurn; // Switch turns
-			initSquares(); // Reset squares
-			squares[moveFromIndex] = selectionColor; // Highlighted FROM square
-
-			// Capture
-			if (foundElement.type == 'X') {
-				squares[currIndex] = captureColor;
-			} else {
-				squares[currIndex] = selectionColor;
-			}
-
-			// Check to see if this move, put opponent in check
-			if (checkIfCurrentInCheck(true).check) {
-				prevMoves[prevMoves.length - 1].check = true;
-			}
+			selectMoveTo(currIndex, foundElement);
 		} else {
 			initSquares();
 		}
+
 		moveFromIndex = -1;
 		currLegalMoves = [];
 	}
 }
 
-function promotionPicker() {
+function selectMoveFrom(moveFromIndexParam) {
+	initSquares();
+	squares[moveFromIndexParam] = selectionColor;
+	currLegalMoves = pieces[moveFromIndexParam].getLegalMoves(true, true);
+	moveFromIndex = moveFromIndexParam;
+}
+
+function selectMoveTo(moveToIndex, foundElement) {
+	// Change Piece selected to previous piece and update index, and leave previous piece empty
+	pieces[moveFromIndex].index = moveToIndex;
+	pieces[moveToIndex] = pieces[moveFromIndex];
+	pieces[moveToIndex].numMoves++;
+	pieces[moveFromIndex] = 0;
+	prevMoves.push({
+		piece: pieces[moveToIndex],
+		moveFromIndex: moveFromIndex,
+		moveToIndex: moveToIndex,
+		type: foundElement.type,
+		check: false,
+	});
+
+	enPassantMove(moveToIndex, foundElement);
+	castleMove(moveToIndex, foundElement);
+	pawnPromotionMove(foundElement);
+
+	isWhitesTurn = !isWhitesTurn; // Switch turns
+	initSquares(); // Reset squares
+	squares[moveFromIndex] = selectionColor; // Highlighted FROM square
+
+	// Capture
+	if (foundElement.type == 'X') {
+		squares[moveToIndex] = captureColor;
+	} else {
+		squares[moveToIndex] = selectionColor;
+	}
+
+	// Check to see if this move, put opponent in check
+	let result = checkIfCurrentInCheck(true);
+	if (result.check) {
+		prevMoves[prevMoves.length - 1].check = true;
+	}
+}
+
+function enPassantMove(moveToIndex, foundElement) {
+	// If en passant, remove the piece above/below new space
+	if (pieces[moveToIndex].constructor.name == 'Pawn') {
+		let behindDirection = -1 * pieces[moveToIndex].getIndexingDirection();
+		if (foundElement.type == 'e.p.') {
+			pieces[moveToIndex + behindDirection * numRows] = 0;
+		}
+	}
+}
+
+function castleMove(moveToIndex, foundElement) {
+	if (foundElement.type == '0-0' || foundElement.type == '0-0-0') {
+		// Absolute Right Castling, move Rook
+		if (moveToIndex < moveFromIndex) {
+			pieces[moveToIndex + 1] = pieces[moveToIndex - getColNum(currIndex)];
+			pieces[moveToIndex + 1].numMoves++;
+			pieces[moveToIndex + 1].index = moveToIndex + 1;
+		}
+		// Absolute Left Castling, move Rook
+		else if (moveToIndex > moveFromIndex) {
+			pieces[moveToIndex - 1] = pieces[moveToIndex + (numRows - 1) - getColNum(currIndex)];
+			pieces[moveToIndex - 1].numMoves++;
+			pieces[moveToIndex - 1].index = moveToIndex - 1;
+		}
+	}
+}
+
+function pawnPromotionMove(foundElement) {
+	if (foundElement.type.includes('=')) {
+		promotionMode = true;
+		isWhitesTurn = !isWhitesTurn;
+	}
+}
+
+function promotionPicker(mouseXParam, mouseYParam) {
 	let y1 = 3.5 * squareSize;
 	let y2 = 4.5 * squareSize;
 	let promotionIndex = prevMoves[prevMoves.length - 1].moveToIndex;
@@ -236,8 +275,8 @@ function promotionPicker() {
 	];
 	for (let i = 2; i < 6; i++) {
 		let x1 = i * squareSize;
-		let x2 = x1 + squareSize;
-		if (mouseX >= x1 && mouseX <= x2 && mouseY >= y1 && mouseY <= y2) {
+		let x2 = (i + 1) * squareSize;
+		if (mouseXParam >= x1 && mouseXParam <= x2 && mouseYParam >= y1 && mouseYParam <= y2) {
 			pieces[promotionIndex] = promotionChoices[i - 2];
 			prevMoves[prevMoves.length - 1].type += pieces[promotionIndex].constructor.name[0];
 		}
@@ -285,6 +324,7 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 		if (show) {
 			squares[kingIndex] = checkmateColor;
 		}
+		checkmate = true;
 		return { check: true, checkmate: true };
 	}
 	return { check: false, checkmate: false };
