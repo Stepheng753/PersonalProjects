@@ -39,6 +39,7 @@ function initChess() {
 	initQueens();
 	initKings();
 	initEmptySpace();
+	setPieces('0000000k0000000000000000000000QK00000000000000000000000000000000');
 	initSquares();
 }
 
@@ -98,7 +99,12 @@ function initSquares() {
 			squares[i] = 255;
 		}
 	}
-	checkIfCurrentInCheck(true);
+	let result = checkIfCurrentInCheck(true);
+	if (prevMoves.length > 0) {
+		prevMoves[prevMoves.length - 1].check = result.check;
+		prevMoves[prevMoves.length - 1].checkmate = result.checkmate;
+		prevMoves[prevMoves.length - 1].stalemate = result.stalemate;
+	}
 }
 
 function draw() {
@@ -182,7 +188,12 @@ function mouseClicked() {
 		(isWhitesTurn != chessAI.isWhite && mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize)
 	) {
 		let currIndex = convertPixelToIndex(mouseX, mouseY);
-		if (pieces[currIndex] != 0 && pieces[currIndex].isWhite == isWhitesTurn) {
+		if (
+			currIndex >= 0 &&
+			currIndex < pieces.length &&
+			pieces[currIndex] != 0 &&
+			pieces[currIndex].isWhite == isWhitesTurn
+		) {
 			return selectMoveFrom(currIndex);
 		}
 		let foundIndex = findsLegalMoves(currLegalMoves, currIndex);
@@ -230,7 +241,6 @@ function selectMoveTo(moveToIndex, foundElement) {
 		checkmate: false,
 		stalemate: false,
 	});
-	document.getElementById('printMoves').innerHTML = getPrevMoves();
 
 	enPassantMove(moveToIndex, foundElement);
 	castleMove(moveToIndex, foundElement);
@@ -246,9 +256,7 @@ function selectMoveTo(moveToIndex, foundElement) {
 	} else {
 		squares[moveToIndex] = selectionColor;
 	}
-
-	// Check to see if this move, put opponent in check
-	checkIfCurrentInCheck(true);
+	document.getElementById('printMoves').innerHTML = getPrevMoves();
 }
 
 function enPassantMove(moveToIndex, foundElement) {
@@ -319,54 +327,55 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 	let kingIndex = pieces.findIndex(
 		(element) => element.isWhite == isWhitesTurn && element.constructor.name == 'King'
 	);
-	console.log(prevMoves.length, prevMoves);
-
 	let checkBool = false;
-	let stalemateBool = true;
 	for (let i = 0; i < pieces.length; i++) {
 		if (pieces[i] != 0 && pieces[i].isWhite != isWhitesTurn) {
 			let legalMoves = pieces[i].getLegalMoves(false);
 			if (legalMoves.length > 0) {
-				stalemateBool = false;
 				let findIndex = findsLegalMoves(legalMoves, kingIndex);
 				if (findIndex != -1) {
 					if (show) {
 						squares[kingIndex] = checkColor;
 					}
 					checkBool = true;
-					prevMoves[prevMoves.length - 1].check = true;
 					if (checkOnlyCheck) {
 						return { check: true, checkmate: false, stalemate: false };
 					}
 				}
 			}
-			if (prevMoves.length == 1) {
-				return 'a';
-			}
 		}
 	}
-	if (checkBool) {
-		for (let i = 0; i < pieces.length; i++) {
-			if (pieces[i] != 0 && pieces[i].isWhite == isWhitesTurn) {
-				let numLegalMoves = pieces[i].getLegalMoves(false, true).length;
-				if (numLegalMoves > 0) {
-					return { check: true, checkmate: false, stalemate: false };
+	if (!checkOnlyCheck) {
+		if (checkBool) {
+			for (let i = 0; i < pieces.length; i++) {
+				if (pieces[i] != 0 && pieces[i].isWhite == isWhitesTurn) {
+					let numLegalMoves = pieces[i].getLegalMoves(false, true).length;
+					if (numLegalMoves > 0) {
+						return { check: true, checkmate: false, stalemate: false };
+					}
 				}
 			}
+			if (show) {
+				squares[kingIndex] = checkmateColor;
+			}
+			checkmate = true;
+			return { check: true, checkmate: true, stalemate: false };
+		} else {
+			let stalemateBool = true;
+			for (let i = 0; i < pieces.length; i++) {
+				if (pieces[i] != 0 && pieces[i].isWhite == isWhitesTurn) {
+					let numLegalMoves = pieces[i].getLegalMoves(false, true).length;
+					if (numLegalMoves > 0) {
+						stalemateBool = false;
+						return { check: false, checkmate: false, stalemate: false };
+					}
+				}
+			}
+			stalemate = stalemateBool;
+			return { check: false, checkmate: false, stalemate: true };
 		}
-		if (show) {
-			squares[kingIndex] = checkmateColor;
-		}
-		checkmate = true;
-		prevMoves[prevMoves.length - 1].checkmate = true;
-		return { check: true, checkmate: true, stalemate: false };
 	}
-	stalemate = stalemateBool;
-	if (prevMoves.length > 0) {
-		prevMoves[prevMoves.length - 1].stalemate = stalemateBool;
-	}
-
-	return { check: false, checkmate: false, stalemate: stalemateBool };
+	return { check: false, checkmate: false, stalemate: false };
 }
 
 /**
@@ -505,7 +514,7 @@ function getPrevMoves() {
 		} else if (prevMoves[i].check) {
 			moveString += '+ ';
 		} else if (prevMoves[i].stalemate) {
-			moveString += '½';
+			moveString += '-½';
 		}
 		if (i % 2 == 1 && i != prevMoves.length - 1) {
 			moveString += ' | ';
