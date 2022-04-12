@@ -3,7 +3,7 @@ const numRows = 8;
 const numCols = 8;
 const squareSize = canvasSize / numRows;
 const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-const aiBuffer = 60;
+const aiBuffer = 1;
 let flipBoard = false;
 let squares = new Array(64);
 let pieces = new Array(64);
@@ -103,10 +103,11 @@ function initSquares() {
 function draw() {
 	drawSquares();
 	drawAllPieces();
+	drawRulers();
 
 	if (promotionMode) {
 		drawPromotionPicker();
-		if (chessAI && !isWhitesTurn) {
+		if (chessAI && isWhitesTurn == chessAI.isWhite) {
 			let mouseClick = chessAI.choosePromotion();
 			promotionPicker(mouseClick.x, mouseClick.y);
 		}
@@ -115,7 +116,7 @@ function draw() {
 			let chooseFromIndex = chessAI.chooseFromPiece();
 			moveFromFrame = frameCount;
 			selectMoveFrom(chooseFromIndex);
-		} else if (!isWhitesTurn && frameCount - moveFromFrame >= aiBuffer) {
+		} else if (isWhitesTurn == chessAI.isWhite && frameCount - moveFromFrame >= aiBuffer) {
 			let foundIndex = chessAI.chooseToPiece();
 			let foundElement = currLegalMoves[foundIndex];
 			selectMoveTo(foundElement.moveIndex, foundElement);
@@ -133,14 +134,18 @@ function drawSquares() {
 		let y = convertIndexToPixel(i).y;
 		fill(squares[i]);
 		rect(x, y, squareSize, squareSize);
+		fill(0);
+		text(colLetters[getColNum(i)] + (numRows - getRowNum(i)), x + 0.03 * squareSize, y + 0.15 * squareSize);
 	}
 	let yBlackBar = isWhitesTurn ? canvasSize : 0;
 
-	push();
-	strokeWeight(15);
-	stroke(turnIndicator);
-	line(0, yBlackBar, canvasSize, yBlackBar);
-	pop();
+	if (!flipBoard) {
+		push();
+		strokeWeight(15);
+		stroke(turnIndicator);
+		line(0, yBlackBar, canvasSize, yBlackBar);
+		pop();
+	}
 }
 
 function drawAllPieces() {
@@ -150,6 +155,8 @@ function drawAllPieces() {
 		}
 	}
 }
+
+function drawRulers() {}
 
 // Tester: setPieces('rnbqkbnrppppP00p00000000000000000000000000000000PPPPP0PPRNBQKBNR')
 function drawPromotionPicker() {
@@ -167,7 +174,10 @@ function mouseClicked() {
 	}
 
 	// Check if user clicked inside canvas
-	else if (!chessAI || (isWhitesTurn && mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize)) {
+	else if (
+		!chessAI ||
+		(isWhitesTurn != chessAI.isWhite && mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize)
+	) {
 		let currIndex = convertPixelToIndex(mouseX, mouseY);
 		if (pieces[currIndex] != 0 && pieces[currIndex].isWhite == isWhitesTurn) {
 			return selectMoveFrom(currIndex);
@@ -204,6 +214,7 @@ function selectMoveTo(moveToIndex, foundElement) {
 		moveToIndex: moveToIndex,
 		type: foundElement.type,
 		check: false,
+		checkmate: false,
 	});
 
 	enPassantMove(moveToIndex, foundElement);
@@ -222,10 +233,7 @@ function selectMoveTo(moveToIndex, foundElement) {
 	}
 
 	// Check to see if this move, put opponent in check
-	let result = checkIfCurrentInCheck(true);
-	if (result.check) {
-		prevMoves[prevMoves.length - 1].check = true;
-	}
+	checkIfCurrentInCheck(true);
 }
 
 function enPassantMove(moveToIndex, foundElement) {
@@ -306,6 +314,7 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 					squares[kingIndex] = checkColor;
 				}
 				checkBool = true;
+				prevMoves[prevMoves.length - 1].check = true;
 				if (checkOnlyCheck) {
 					return { check: true, checkmate: false };
 				}
@@ -325,6 +334,7 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 			squares[kingIndex] = checkmateColor;
 		}
 		checkmate = true;
+		prevMoves[prevMoves.length - 1].checkmate = true;
 		return { check: true, checkmate: true };
 	}
 	return { check: false, checkmate: false };
@@ -434,7 +444,7 @@ function getPrevMoves() {
 	let moveString = '';
 	for (let i = 0; i < prevMoves.length; i++) {
 		let colLetter = colLetters[getColNum(prevMoves[i].moveToIndex)];
-		let rowNumber = getRowNum(prevMoves[i].moveToIndex) + 1;
+		let rowNumber = numRows - getRowNum(prevMoves[i].moveToIndex);
 		let moveType = prevMoves[i].type;
 		if (prevMoves[i].piece.constructor.name == 'Pawn') {
 			if (moveType.includes('x') || moveType == 'e.p.') {
@@ -461,7 +471,9 @@ function getPrevMoves() {
 				moveString += 'K' + colLetter.concat(rowNumber);
 			}
 		}
-		if (prevMoves[i].check) {
+		if (prevMoves[i].checkmate) {
+			moveString += '# ';
+		} else if (prevMoves[i].check) {
 			moveString += '+ ';
 		}
 		if (i % 2 == 1 && i != prevMoves.length - 1) {
