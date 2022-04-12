@@ -39,7 +39,6 @@ function initChess() {
 	initQueens();
 	initKings();
 	initEmptySpace();
-	setPieces('0000000k0000000000000000000000QK00000000000000000000000000000000');
 	initSquares();
 }
 
