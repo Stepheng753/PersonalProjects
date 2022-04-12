@@ -4,18 +4,29 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<style type="text/css">
-			body {
-				width: 1000px;
-				margin: auto;
-				padding-top: 25px;
-				text-align: center;
-			}
-		</style>
+		<link rel="stylesheet" href="styles.css" />
 		<title>Chess AI</title>
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
 	</head>
 	<body>
+		<div id="top">
+			<div class="toggler" id="flipCheckBox">
+				<h3 style="padding-right: 10px">Flip Board</h3>
+				<label class="switch">
+					<input type="checkbox" onclick="toggleFlipBoard()" />
+					<span class="slider round" id="toggleFlip"></span>
+				</label>
+			</div>
+
+			<div class="toggler" id="aiCheckBox">
+				<h3 style="padding-right: 10px">Play AI</h3>
+				<label class="switch">
+					<input type="checkbox" checked onclick="toggleAI()" />
+					<span class="slider round" id="toggleFlip"></span>
+				</label>
+			</div>
+		</div>
+
 		<script src="board.js"></script>
 		<script src="piece.js"></script>
 		<script src="chessAI.js"></script>

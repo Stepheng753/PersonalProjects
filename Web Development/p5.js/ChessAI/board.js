@@ -1,4 +1,4 @@
-const canvasSize = 900;
+const canvasSize = 800;
 const numRows = 8;
 const numCols = 8;
 const squareSize = canvasSize / numRows;
@@ -14,6 +14,7 @@ let prevMoves = [];
 let isWhitesTurn = true;
 let promotionMode = false;
 let checkmate = false;
+let stalemate = false;
 let moveFromFrame = 0;
 let chessAI;
 const defaultSquareColor = '#A3524C';
@@ -22,7 +23,7 @@ const legalMoveColor = '#59b381';
 const captureColor = '#4d6cfa';
 const checkColor = '#c74343';
 const checkmateColor = '#eb1313';
-const turnIndicator = '#90ee90';
+const turnIndicator = '#87c987';
 
 function setup() {
 	createCanvas(canvasSize, canvasSize);
@@ -103,15 +104,14 @@ function initSquares() {
 function draw() {
 	drawSquares();
 	drawAllPieces();
-	drawRulers();
 
 	if (promotionMode) {
 		drawPromotionPicker();
-		if (chessAI && isWhitesTurn == chessAI.isWhite) {
+		if (chessAI && isWhitesTurn == chessAI.isWhite && frameCount - moveFromFrame >= aiBuffer) {
 			let mouseClick = chessAI.choosePromotion();
 			promotionPicker(mouseClick.x, mouseClick.y);
 		}
-	} else if (chessAI && !checkmate) {
+	} else if (chessAI && !checkmate && !stalemate) {
 		if (!isWhitesTurn && moveFromIndex < 0) {
 			let chooseFromIndex = chessAI.chooseFromPiece();
 			moveFromFrame = frameCount;
@@ -123,7 +123,7 @@ function draw() {
 			moveFromIndex = -1;
 			currLegalMoves = [];
 		}
-	} else if (checkmate) {
+	} else if (checkmate || stalemate) {
 		noLoop();
 	}
 }
@@ -134,7 +134,12 @@ function drawSquares() {
 		let y = convertIndexToPixel(i).y;
 		fill(squares[i]);
 		rect(x, y, squareSize, squareSize);
-		fill(0);
+		let oppositeColor = defaultSquareColor;
+		if (squares[i] == 255) {
+			fill(oppositeColor);
+		} else {
+			fill(255);
+		}
 		text(colLetters[getColNum(i)] + (numRows - getRowNum(i)), x + 0.03 * squareSize, y + 0.15 * squareSize);
 	}
 	let yBlackBar = isWhitesTurn ? canvasSize : 0;
@@ -155,8 +160,6 @@ function drawAllPieces() {
 		}
 	}
 }
-
-function drawRulers() {}
 
 // Tester: setPieces('rnbqkbnrppppP00p00000000000000000000000000000000PPPPP0PPRNBQKBNR')
 function drawPromotionPicker() {
@@ -203,6 +206,16 @@ function selectMoveFrom(moveFromIndexParam) {
 }
 
 function selectMoveTo(moveToIndex, foundElement) {
+	if (prevMoves.length == 0) {
+		const flipToggle = document.getElementById('flipCheckBox');
+		const aiToggle = document.getElementById('aiCheckBox');
+		flipToggle.remove();
+		aiToggle.remove();
+		let top = document.getElementById('top');
+		let movePrinter = document.createElement('h3');
+		movePrinter.setAttribute('id', 'printMoves');
+		top.appendChild(movePrinter);
+	}
 	// Change Piece selected to previous piece and update index, and leave previous piece empty
 	pieces[moveFromIndex].index = moveToIndex;
 	pieces[moveToIndex] = pieces[moveFromIndex];
@@ -215,7 +228,9 @@ function selectMoveTo(moveToIndex, foundElement) {
 		type: foundElement.type,
 		check: false,
 		checkmate: false,
+		stalemate: false,
 	});
+	document.getElementById('printMoves').innerHTML = getPrevMoves();
 
 	enPassantMove(moveToIndex, foundElement);
 	castleMove(moveToIndex, foundElement);
@@ -266,6 +281,7 @@ function castleMove(moveToIndex, foundElement) {
 function pawnPromotionMove(foundElement) {
 	if (foundElement.type.includes('=')) {
 		promotionMode = true;
+		moveFromFrame = frameCount;
 		isWhitesTurn = !isWhitesTurn;
 	}
 }
@@ -303,21 +319,29 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 	let kingIndex = pieces.findIndex(
 		(element) => element.isWhite == isWhitesTurn && element.constructor.name == 'King'
 	);
-	let checkBool = false;
+	console.log(prevMoves.length, prevMoves);
 
+	let checkBool = false;
+	let stalemateBool = true;
 	for (let i = 0; i < pieces.length; i++) {
 		if (pieces[i] != 0 && pieces[i].isWhite != isWhitesTurn) {
 			let legalMoves = pieces[i].getLegalMoves(false);
-			let findIndex = findsLegalMoves(legalMoves, kingIndex);
-			if (findIndex != -1) {
-				if (show) {
-					squares[kingIndex] = checkColor;
+			if (legalMoves.length > 0) {
+				stalemateBool = false;
+				let findIndex = findsLegalMoves(legalMoves, kingIndex);
+				if (findIndex != -1) {
+					if (show) {
+						squares[kingIndex] = checkColor;
+					}
+					checkBool = true;
+					prevMoves[prevMoves.length - 1].check = true;
+					if (checkOnlyCheck) {
+						return { check: true, checkmate: false, stalemate: false };
+					}
 				}
-				checkBool = true;
-				prevMoves[prevMoves.length - 1].check = true;
-				if (checkOnlyCheck) {
-					return { check: true, checkmate: false };
-				}
+			}
+			if (prevMoves.length == 1) {
+				return 'a';
 			}
 		}
 	}
@@ -326,7 +350,7 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 			if (pieces[i] != 0 && pieces[i].isWhite == isWhitesTurn) {
 				let numLegalMoves = pieces[i].getLegalMoves(false, true).length;
 				if (numLegalMoves > 0) {
-					return { check: true, checkmate: false };
+					return { check: true, checkmate: false, stalemate: false };
 				}
 			}
 		}
@@ -335,9 +359,14 @@ function checkIfCurrentInCheck(show, checkOnlyCheck = false) {
 		}
 		checkmate = true;
 		prevMoves[prevMoves.length - 1].checkmate = true;
-		return { check: true, checkmate: true };
+		return { check: true, checkmate: true, stalemate: false };
 	}
-	return { check: false, checkmate: false };
+	stalemate = stalemateBool;
+	if (prevMoves.length > 0) {
+		prevMoves[prevMoves.length - 1].stalemate = stalemateBool;
+	}
+
+	return { check: false, checkmate: false, stalemate: stalemateBool };
 }
 
 /**
@@ -453,7 +482,7 @@ function getPrevMoves() {
 			moveString += colLetter.concat(rowNumber);
 			if (moveType == 'e.p.') {
 				moveString += '(ep)';
-			} else if (moveType.includes('=')) {
+			} else if (moveType.includes('=') && moveType[moveType.indexOf('=') + 1]) {
 				moveString += '=' + moveType[moveType.indexOf('=') + 1];
 			}
 		} else if (prevMoves[i].piece.constructor.name == 'Bishop') {
@@ -475,6 +504,8 @@ function getPrevMoves() {
 			moveString += '# ';
 		} else if (prevMoves[i].check) {
 			moveString += '+ ';
+		} else if (prevMoves[i].stalemate) {
+			moveString += '½';
 		}
 		if (i % 2 == 1 && i != prevMoves.length - 1) {
 			moveString += ' | ';
@@ -487,4 +518,12 @@ function getPrevMoves() {
 
 function toggleFlipBoard() {
 	flipBoard = !flipBoard;
+}
+
+function toggleAI() {
+	if (chessAI) {
+		chessAI = null;
+	} else {
+		chessAI = new AI(false);
+	}
 }

@@ -111,7 +111,11 @@ class Pawn extends Piece {
 					rightLeftElement.isWhite != this.isWhite &&
 					rightLeftElement.constructor.name == 'Pawn' &&
 					rightLeftElement.numMoves == 1 &&
-					prevMoves[prevMoves.length - 1].piece == rightLeftElement
+					prevMoves[prevMoves.length - 1].piece == rightLeftElement &&
+					Math.abs(
+						getRowNum(prevMoves[prevMoves.length - 1].moveFromIndex) -
+							getRowNum(prevMoves[prevMoves.length - 1].moveToIndex)
+					) == 2
 				) {
 					this.legalMoves.push({ moveIndex: rightLeftIndex + indexingDirection * numRows, type: 'e.p.' });
 				}
