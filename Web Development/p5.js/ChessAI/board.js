@@ -26,7 +26,8 @@ const checkmateColor = '#eb1313';
 const turnIndicator = '#87c987';
 
 function setup() {
-	createCanvas(canvasSize, canvasSize);
+	let cnv = createCanvas(canvasSize, canvasSize);
+	cnv.parent('container');
 	initChess();
 	chessAI = new AI(false);
 }
@@ -129,6 +130,7 @@ function draw() {
 			currLegalMoves = [];
 		}
 	} else if (checkmate || stalemate) {
+		document.getElementById('printMoves').innerHTML = getPrevMoves();
 		noLoop();
 	}
 }
@@ -221,10 +223,7 @@ function selectMoveTo(moveToIndex, foundElement) {
 		const aiToggle = document.getElementById('aiCheckBox');
 		flipToggle.remove();
 		aiToggle.remove();
-		let top = document.getElementById('top');
-		let movePrinter = document.createElement('h3');
-		movePrinter.setAttribute('id', 'printMoves');
-		top.appendChild(movePrinter);
+		document.getElementById('container').style.marginTop = '50px';
 	}
 	// Change Piece selected to previous piece and update index, and leave previous piece empty
 	pieces[moveFromIndex].index = moveToIndex;
@@ -314,7 +313,12 @@ function promotionPicker(mouseXParam, mouseYParam) {
 	}
 	promotionMode = false;
 	isWhitesTurn = !isWhitesTurn;
-	checkIfCurrentInCheck(true);
+	let result = checkIfCurrentInCheck(true);
+	if (prevMoves.length > 0) {
+		prevMoves[prevMoves.length - 1].check = result.check;
+		prevMoves[prevMoves.length - 1].checkmate = result.checkmate;
+		prevMoves[prevMoves.length - 1].stalemate = result.stalemate;
+	}
 }
 
 /**
@@ -515,10 +519,11 @@ function getPrevMoves() {
 		} else if (prevMoves[i].stalemate) {
 			moveString += '-½';
 		}
+		if (i % 2 == 0 && i != prevMoves.length - 1) {
+			moveString += ', ';
+		}
 		if (i % 2 == 1 && i != prevMoves.length - 1) {
-			moveString += ' | ';
-		} else {
-			moveString += ' ';
+			moveString += ' <br> ';
 		}
 	}
 	return moveString;
