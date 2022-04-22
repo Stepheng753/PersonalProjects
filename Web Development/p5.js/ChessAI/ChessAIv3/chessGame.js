@@ -148,6 +148,7 @@ class ChessGame {
 			}
 
 			sideGame.undoMove(undoMove);
+
 			i++;
 		}
 		return legalMoves;
@@ -260,6 +261,7 @@ class ChessGame {
 			stalemate: inCheckResult.stalemate,
 		});
 		if (show) {
+			this.initSquares();
 			this.squares[move.moveFromIndex] = selectionColor;
 			if (move.type.includes('x')) {
 				this.squares[move.moveToIndex] = captureColor;
@@ -376,19 +378,16 @@ class ChessGame {
 
 		for (let i = 0; i < sideGame.pieces.length; i++) {
 			if (sideGame.pieces[i] != 0 && sideGame.pieces[i].isWhite == isWhite) {
-				let legalMoves = sideGame.getLegalMoves(i, true);
+				let legalMoves = sideGame.getLegalMoves(i, false);
 				for (let j = 0; j < legalMoves.length; j++) {
 					let undoMove = sideGame.makeMove(legalMoves[j], false, false, false);
-
 					if (depth != 1) {
 						let opponentBestMove = sideGame.findBestMove(!isWhite, depth - 1);
 						if (opponentBestMove.length > 0) {
 							legalMoves[j].value -= opponentBestMove[0].value;
 						}
 					}
-
 					sideGame.undoMove(undoMove);
-
 					if (legalMoves[j].value > maxValue) {
 						maxValue = legalMoves[j].value;
 						legalMoves[j]['piece'] = this.pieces[i];
@@ -416,6 +415,7 @@ class ChessGame {
 
 		this.squares = [...chessGame2.squares];
 		this.prevMoves = [...chessGame2.prevMoves];
+		// this.pieces = [...chessGame2.pieces];
 		this.pieces = new Array(64);
 		for (let i = 0; i < this.pieces.length; i++) {
 			if (chessGame2.pieces[i] != 0) {

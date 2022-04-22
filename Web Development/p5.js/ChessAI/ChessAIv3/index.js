@@ -27,17 +27,29 @@ function setup() {
 }
 
 function draw() {
+	document.getElementById('printMoves').innerHTML = MAIN_chessGame.getPrevMoves();
 	drawAllSquares();
 	drawAllPieces();
+
+	if (
+		MAIN_chessGame.prevMoves.length > 0 &&
+		(MAIN_chessGame.prevMoves[MAIN_chessGame.prevMoves.length - 1].checkmate ||
+			MAIN_chessGame.prevMoves[MAIN_chessGame.prevMoves.length - 1].stalemate)
+	) {
+		noLoop();
+		return;
+	}
 
 	if (promotionMoves.length > 0) {
 		drawPromotionPicker();
 	}
-	if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 10 && aiBuffer == 0) {
+	if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 0 && aiBuffer == 0) {
 		console.log('Thinking');
-		console.log(MAIN_chessGame.findBestMove(MAIN_chessGame.isWhitesTurn, 2));
-		MAIN_chessGame.isWhitesTurn = !MAIN_chessGame.isWhitesTurn;
-	} else if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 10) {
+		let bestMove = MAIN_chessGame.findBestMove(MAIN_chessGame.isWhitesTurn, 2);
+		console.log(bestMove);
+		MAIN_chessGame.makeMove(bestMove[Math.floor(Math.random() * bestMove.length)]);
+		aiBuffer = 1;
+	} else if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 0) {
 		aiBuffer -= 1;
 	}
 }
@@ -89,7 +101,6 @@ function mouseClicked() {
 
 		promotionMoves = [];
 		currLegalMoves = [];
-		document.getElementById('printMoves').innerHTML = MAIN_chessGame.getPrevMoves();
 	}
 }
 
