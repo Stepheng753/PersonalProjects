@@ -26,6 +26,7 @@ function setup() {
 	let canvas = createCanvas(canvasSize, canvasSize);
 	canvas.parent('container');
 
+	chessAI = new ChessAI(false);
 	chessGame = new ChessGame(false, false, true);
 }
 

@@ -19,9 +19,7 @@ class ChessAI {
 					piecesParam[legalMoves[j].moveToIndex] = moveFrom;
 
 					if (depth != 1) {
-						console.log('1::', currValue);
 						currValue -= this.findBestMove(!isWhiteParam, depth - 1, piecesParam);
-						console.log('2::', currValue);
 					}
 
 					piecesParam[legalMoves[j].moveFromIndex] = moveFrom;

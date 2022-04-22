@@ -17,6 +17,7 @@ let MAIN_chessGame;
 let chessAI;
 let currLegalMoves = [];
 let promotionMoves = [];
+let aiBuffer = 1;
 
 function setup() {
 	let canvas = createCanvas(canvasSize, canvasSize);
@@ -28,13 +29,16 @@ function setup() {
 function draw() {
 	drawAllSquares();
 	drawAllPieces();
+
 	if (promotionMoves.length > 0) {
 		drawPromotionPicker();
 	}
-	if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 10) {
-		drawAllPieces();
+	if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 10 && aiBuffer == 0) {
+		console.log('Thinking');
 		console.log(MAIN_chessGame.findBestMove(MAIN_chessGame.isWhitesTurn, 2));
 		MAIN_chessGame.isWhitesTurn = !MAIN_chessGame.isWhitesTurn;
+	} else if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 10) {
+		aiBuffer -= 1;
 	}
 }
 
