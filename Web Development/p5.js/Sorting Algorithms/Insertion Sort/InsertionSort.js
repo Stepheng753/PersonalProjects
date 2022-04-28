@@ -1,9 +1,10 @@
+let canvasWidth = document.body.clientWidth;
 let lineHeight = [];
 let i = 0;
 let comparisons = 0;
 
 function setup() {
-	createCanvas(1000, 400);
+	createCanvas(canvasWidth, canvasWidth * 0.75);
 	for (let i = 0; i < width; i++) {
 		lineHeight.push(int(random(0, height)));
 	}

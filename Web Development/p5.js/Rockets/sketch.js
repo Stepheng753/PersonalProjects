@@ -1,3 +1,5 @@
+let canvasWidth = document.body.clientWidth;
+
 var population;
 var maxDistance;
 
@@ -6,9 +8,9 @@ var obstacleCount = 0;
 var targetCount = 0;
 var speciesCount = 1;
 
-var rx = 250;
-var ry = 200;
-var rw = 500;
+var rx = canvasWidth / 4;
+var ry = canvasWidth / 2;
+var rw = canvasWidth / 2;
 var rh = 10;
 
 var target;
@@ -25,7 +27,7 @@ var completionFactor = 10;
 var crashFactor = 10;
 
 function setup() {
-	createCanvas(1000, 400);
+	createCanvas(canvasWidth, canvasWidth);
 	frameRate(60);
 	target = createVector(width / 2, targety);
 	maxDistance = dist(width / 2, targety, width, height);

@@ -1,4 +1,5 @@
 var cols, rows;
+let canvasWidth = document.body.clientWidth;
 var cellSideLength = 40;
 var grid = [];
 var currentCell;
@@ -7,7 +8,10 @@ var phase2 = false;
 var endCell;
 
 function setup() {
-	createCanvas(1000, 400);
+	createCanvas(
+		int((canvasWidth * 0.95) / cellSideLength) * cellSideLength,
+		int((canvasWidth * 0.95) / cellSideLength) * cellSideLength
+	);
 	frameRate(5);
 	cols = floor(width / cellSideLength);
 	rows = floor(height / cellSideLength);

@@ -1,3 +1,4 @@
+let canvasWidth = document.body.clientWidth;
 let margin = 10;
 let triangleBase = 5;
 let bigMargin = margin + triangleBase * 10;
@@ -20,7 +21,7 @@ let colorSpeed;
 let ptSpeed;
 
 function setup() {
-	createCanvas(700, 700);
+	createCanvas(canvasWidth * 0.9, canvasWidth * 0.9);
 	diameter = height - 2 * bigMargin;
 	radius = diameter / 2;
 	start = Date.now();

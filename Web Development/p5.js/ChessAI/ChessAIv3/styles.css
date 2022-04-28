@@ -1,5 +1,5 @@
 body {
-	width: 1000px;
+	width: 100%;
 	margin: auto;
 }
 
@@ -17,7 +17,7 @@ body {
 
 #printMoves {
 	width: 8em;
-	height: 800px;
+	height: 100%;
 	margin-top: 0;
 	padding-right: 10px;
 	overflow-y: scroll;

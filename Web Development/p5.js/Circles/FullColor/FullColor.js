@@ -1,11 +1,13 @@
 let circles = [];
 let img;
 let keepColor = false;
+let canvasWidth = document.body.clientWidth;
 
 function preload() {
 	img = loadImage('US.jpg');
 }
 function setup() {
+	img.resize(canvasWidth * 0.85, 0);
 	createCanvas(img.width, img.height);
 	frameRate(60);
 	pixelDensity(1);
@@ -55,6 +57,10 @@ function draw() {
 		for (let i = 0; i < circles.length; i++) {
 			circles[i].show();
 		}
+	}
+
+	if (frameCount > 600) {
+		noLoop();
 	}
 }
 

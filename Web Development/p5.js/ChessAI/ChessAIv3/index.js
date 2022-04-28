@@ -1,4 +1,4 @@
-const canvasSize = 800;
+const canvasSize = document.body.clientWidth * 0.8;
 const numRows = 8;
 const squareSize = canvasSize / numRows;
 const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -23,10 +23,11 @@ function setup() {
 	let canvas = createCanvas(canvasSize, canvasSize);
 	canvas.parent('container');
 
-	MAIN_chessGame = new ChessGame(false, true);
+	MAIN_chessGame = new ChessGame(false, false);
 }
 
 function draw() {
+	document.getElementById('printMoves').style.height = canvasSize + 'px';
 	document.getElementById('printMoves').innerHTML = MAIN_chessGame.getPrevMoves();
 	drawAllSquares();
 	drawAllPieces();

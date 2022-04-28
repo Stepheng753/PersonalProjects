@@ -1,9 +1,10 @@
+let canvasWidth = document.body.clientWidth;
 let values = [];
 let toBeCopied = [];
 let comparisons = 0;
 
 function setup() {
-	createCanvas(1000, 400);
+	createCanvas(canvasWidth, canvasWidth * 0.75);
 	frameRate(60);
 
 	for (var i = 0; i < width; i++) {

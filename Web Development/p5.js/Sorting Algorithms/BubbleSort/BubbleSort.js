@@ -1,3 +1,4 @@
+let canvasWidth = document.body.clientWidth;
 let values = [];
 let comparisons = 0;
 
@@ -5,7 +6,7 @@ let comparisons = 0;
 let i = 0;
 let j = i + 1;
 function setup() {
-	createCanvas(1000, 400);
+	createCanvas(canvasWidth, canvasWidth * 0.75);
 	for (var i = 0; i < width; i++) {
 		values.push(random(0, height));
 	}

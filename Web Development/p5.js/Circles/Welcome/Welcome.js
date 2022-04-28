@@ -3,12 +3,14 @@ let img;
 let img1;
 let spots = [];
 let keepColor = false;
+let canvasWidth = document.body.clientWidth;
 
 function preload() {
 	img = loadImage('Welcome1.png');
 	img1 = loadImage('Sky.jpg');
 }
 function setup() {
+	img.resize(canvasWidth, 0);
 	createCanvas(img.width, img.height);
 	frameRate(60);
 	img.loadPixels();
@@ -67,6 +69,10 @@ function draw() {
 		for (let i = 0; i < circles.length; i++) {
 			circles[i].show();
 		}
+	}
+
+	if (frameCount > 600) {
+		noLoop();
 	}
 }
 
