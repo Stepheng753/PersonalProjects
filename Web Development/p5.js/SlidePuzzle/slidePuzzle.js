@@ -12,6 +12,7 @@ let submitDom = document.getElementById('submitForm');
 let solvedDom = document.getElementById('solved');
 let numMoves = 0;
 let start;
+let canvasWidth = document.body.clientWidth;
 
 class Tile {
 	constructor(index, img) {
@@ -54,6 +55,7 @@ function convertSecs(secs) {
 
 function preload() {
 	source = loadImage('Icon.png');
+	source.resize(canvasWidth * 0.85, 0);
 	document.getElementById('sizer').value = size;
 	document.getElementById('sizer').min = sizeMin;
 	document.getElementById('sizer').max = sizeMax;
@@ -85,6 +87,7 @@ function reset(multiplier = 1000) {
 
 			let img = createImage(w, h);
 			img.copy(source, x, y, w, h, 0, 0, w, h);
+			console.log(x, y, w, h);
 
 			let index = i + j * size;
 			board.push(index);
@@ -101,7 +104,8 @@ function reset(multiplier = 1000) {
 }
 
 function setup() {
-	createCanvas(500, 500);
+	source.resize(canvasWidth * 0.85, 0);
+	createCanvas(source.width, source.height);
 	frameRate(60);
 	reset();
 }
@@ -219,4 +223,8 @@ function createFormDom() {
 	submitDom.innerHTML += '<br><br>';
 	submitDom.innerHTML += "<input type='submit' name='submit'/>";
 	submitDom.style.paddingBottom = '25px';
+}
+
+function disable() {
+	return false;
 }

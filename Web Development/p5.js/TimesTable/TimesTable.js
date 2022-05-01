@@ -15,14 +15,15 @@ let difficulty = 'Medium';
 let timerDom = document.getElementById('time-counter');
 let pointsDom = document.getElementById('points-counter');
 let submitDom = document.getElementById('submitForm');
+let canvasWidth = document.body.clientWidth;
 
 function setup() {
-	let cnv = createCanvas(1000, 400);
+	let cnv = createCanvas(canvasWidth * 0.85, canvasWidth * 0.5);
 	cnv.parent('sketchHolder');
 
 	numInput = createInput('');
-	numInput.position(420, 225, 'fixed');
-	numInput.size(150);
+	numInput.position(canvasWidth * 0.075 + width / 4, height / 2, 'relative');
+	numInput.size(width * 0.49);
 	numInput.parent('sketchHolder');
 	numInput.input(myInputEvent);
 
@@ -66,7 +67,7 @@ function draw() {
 	}
 	pop();
 
-	if (timeLeft != 0) {
+	if (timeLeft != 0 && points < numAnsWin) {
 		if (startTimer) {
 			timeLeft = (timeTotal - (millis() - start) / 1000).toFixed(2);
 			if (timeLeft < 0) {
@@ -83,11 +84,11 @@ function draw() {
 
 		push();
 		fill(0, 0, 0, 100);
-		rect(400, 140, 200, 125);
+		rect(width / 4, height / 4, width / 2, height / 2);
 		strokeWeight(5);
 		fill(255);
 		textSize(45);
-		text(randNum1 + ' × ' + randNum2, 425, 200);
+		text(randNum1 + ' × ' + randNum2, width * 0.42, height * 0.45);
 		pop();
 
 		if (answerInput == randNum1 * randNum2) {
@@ -101,21 +102,19 @@ function draw() {
 		numInput.hide();
 		push();
 		fill(0, 0, 0, 100);
-		rect(20, 40, 960, 300);
+		rect(width / 4, height / 3, width / 2, height / 3);
 		strokeWeight(5);
 		fill(255);
-		textSize(60);
-		text('Total Points: ' + points, 275, 100);
+		textSize(20);
+		text('Total Points: ' + points, width / 3.9, height / 3 + height / 16);
 		if (points >= numAnsWin) {
-			text('Winner Winner!', 275, 200);
+			text('Winner Winner!', width / 3.9, height / 3 + height / 6);
+			text('Time: ' + (timeTotal - timeLeft).toFixed(2) + ' secs', width / 3.9, (2 * height) / 3 - height / 16);
 			createFormDom();
+		} else if (points == 0) {
+			text('No Points!', width / 3.9, height / 3 + height / 6);
 		} else {
-			text('Try Again!', 350, 200);
-		}
-		if (points == 0) {
-			text('No Points!', 350, 300);
-		} else {
-			text('Seconds per point: ' + (timeTotal / points).toFixed(2) + ' secs', 125, 300);
+			text('Try Again!', width / 3.9, height / 3 + height / 6);
 		}
 		pop();
 		noLoop();
