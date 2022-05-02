@@ -8,6 +8,8 @@
 
 		<style type="text/css">
 			body {
+				background-color: var(--background-color);
+				color: white;
 				width: 100%;
 				margin: auto;
 				text-align: center;
@@ -22,22 +24,11 @@
 				color: #000;
 			}
 			a {
+				cursor: pointer;
 				text-decoration: underline;
 			}
 			h2 {
-				text-align: left;
-			}
-
-			#leftH2 {
-				float: left;
-				text-align: left;
-			}
-			#rightH2 {
-				float: right;
-				text-align: right;
-			}
-			#current {
-				color: #b31b1b;
+				text-align: center;
 			}
 		</style>
 
@@ -45,8 +36,8 @@
 	</head>
 
 	<body>
-		<h2 id="leftH2">SmartRockets.js</h2>
-		<h2 id="rightH2">
+		<h2>SmartRockets.js</h2>
+		<h2>
 			<a onclick="rewardPunish(1)">Inc Speed Reward</a> //
 			<a onclick="rewardPunish(2)">Inc Completion Reward</a> //
 			<a onclick="rewardPunish(3)">Inc Crash Punishment</a>
