@@ -55,17 +55,14 @@ function draw() {
 			prevPts.push([x2, y2]);
 		}
 	}
-
-	// drawPrevPts();
-	drawTrace(x2, y2);
-	drawPendulum(x1, y1, x2, y2);
-
-	px2 = x2;
-	py2 = y2;
-
 	if (frameCount - start > frameDuration) {
 		noLoop();
+	} else {
+		drawTrace(x2, y2);
+		drawPendulum(x1, y1, x2, y2);
 	}
+	px2 = x2;
+	py2 = y2;
 }
 
 function calcd2theta() {
