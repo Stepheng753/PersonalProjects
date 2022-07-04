@@ -4,7 +4,7 @@ let keepColor = false;
 let canvasWidth = document.body.clientWidth;
 
 function preload() {
-	img = loadImage('US.jpg');
+	img = loadImage('HotAirBalloon.jpg');
 }
 function setup() {
 	img.resize(canvasWidth * 0.85, 0);

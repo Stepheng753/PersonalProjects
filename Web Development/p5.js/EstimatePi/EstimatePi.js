@@ -150,7 +150,7 @@ class Point {
 			if (strokeCol > 360) {
 				strokeCol = map(strokeCol, 360, 360 + change, 0, change);
 			}
-			stroke(strokeCol, 255, 255);
+			stroke(strokeCol, 100, 100);
 		} else {
 			stroke(50);
 		}
