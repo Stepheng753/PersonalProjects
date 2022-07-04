@@ -37,8 +37,14 @@
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
 	</head>
 	<body>
-		<div style="padding-bottom: 15px">
+		<div id="container" style="padding-bottom: 15px">
 			<h1 style="padding: 0">Double Pendulum</h1>
+			<label style="padding-left: 15px">Gravity</label>
+			<input id="gravity" type="number" value="1" step=".1" min="1" max="20" onchange="updateParameters()" />
+			<label style="padding-left: 15px">Mass 1</label>
+			<input id="mass1" type="number" value="10" step="1" min="1" max="50" onchange="updateParameters()" />
+			<label style="padding-left: 15px">Mass 2</label>
+			<input id="mass2" type="number" value="10" step="1" min="1" max="50" onchange="updateParameters()" />
 		</div>
 
 		<script src="DoublePendulum.js"></script>
