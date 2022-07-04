@@ -50,7 +50,6 @@ function draw() {
 		dtheta2 += d2theta[1];
 		theta1 += dtheta1;
 		theta2 += dtheta2;
-		console.log(theta1, theta2, dtheta1, dtheta2, d2theta[0], d2theta[1]);
 
 		if (frameCount % frameSpeed == 0) {
 			prevPts.push([x2, y2]);
@@ -136,11 +135,9 @@ function mouseDragged() {
 		let theta = -atan2(y, x) + Math.PI / 2;
 		let d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
-		console.log(d, l1 + l2);
 		if (d >= l1 + l2 || d <= l1 - l2) {
 			theta1 = theta;
 			theta2 = theta;
-			console.log(mouseX);
 		} else {
 			innerTheta = acos((Math.pow(l2, 2) - Math.pow(d, 2) - Math.pow(l1, 2)) / (-2 * d * l1));
 			if (x < 0) {
@@ -206,7 +203,6 @@ window.onload = () => {
 	length2Label.innerHTML = 'Length 2';
 	container.append(length2Label);
 	container.appendChild(length2Input);
-	console.log(length2Input);
 };
 
 function updateParameters() {
