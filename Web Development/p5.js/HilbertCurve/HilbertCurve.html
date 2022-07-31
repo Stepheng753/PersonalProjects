@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style type="text/css">
+			body {
+				background-color: #24283b;
+				color: white;
+				width: 100%;
+				margin: auto;
+				text-align: center;
+			}
+			input {
+				display: inline-block;
+				width: 60px;
+				text-align: center;
+			}
+		</style>
+		<title>Hilbert Curve</title>
+		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+	</head>
+	<body>
+		<div style="padding-bottom: 15px">
+			<h1 style="padding: 0">Hilbert Curve</h1>
+			<label>Order</label>
+			<input id="orderInput" type="number" value="6" step="1" min="1" size="1" onchange="changeOrder()" />
+		</div>
+
+		<script src="./PathFunctions.js"></script>
+		<script src="./HilbertCurve.js"></script>
+	</body>
+</html>
