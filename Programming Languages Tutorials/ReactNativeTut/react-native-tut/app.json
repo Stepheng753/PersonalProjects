@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "react-native-tut",
+    "slug": "react-native-tut",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

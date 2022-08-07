@@ -1,0 +1,6 @@
+
+
+expo init "NAME"
+bare - Minimal
+
+expo start
