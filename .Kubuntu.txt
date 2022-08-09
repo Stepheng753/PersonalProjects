@@ -1,0 +1,41 @@
+
+
+settings:
+    sweet
+    sweet mars
+    otto
+
+apps:
+    google-chrome
+    spotify
+    vs-code
+    oracle
+    spotify
+    input-remapper
+    arduino
+
+Konsole:
+    alias ll='ls -l'
+    alias la='ls -lA'
+    alias l='ls -CF'
+    alias cls='clear'
+    alias gs="git status"
+    alias ga="git add"
+    alias gc="git commit -m"
+
+
+Konsole Downloads:
+    python3
+    java
+    javac
+    nodejs
+    npm
+        expo-cli
+        create-react-app
+    pip
+        numpy
+    jupyter
+    anaconda
+    latte-dock
+    alsa mixer
+    
