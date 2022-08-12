@@ -84,7 +84,7 @@ function getHSLAColor(index) {
 
 function updateFrequency() {
 	let HSLColor = getHSLAColor(currPoint);
-	let frequency = map(HSLColor[0], 0, 100, 100, 600);
+	let frequency = map(HSLColor[0], 0, 255, 100, 600);
 	osc.freq(frequency);
 	currPoint++;
 	if (currPoint >= hilbertPoints.length) {

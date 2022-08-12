@@ -1,4 +1,6 @@
-
+Icons:
+    Codeblocks
+    onlyoffice
 
 settings:
     sweet
@@ -10,15 +12,15 @@ apps:
     spotify
     vs-code
     oracle
-    spotify
-    input-remapper
     arduino
+    anaconda
 
 Konsole:
     alias ll='ls -l'
     alias la='ls -lA'
     alias l='ls -CF'
     alias cls='clear'
+    alias py='python3'
     alias gs="git status"
     alias ga="git add"
     alias gc="git commit -m"
@@ -26,8 +28,8 @@ Konsole:
 
 Konsole Downloads:
     python3
-    java
-    javac
+    python-is-python3
+    openjdk-jdk-18-jdk
     nodejs
     npm
         expo-cli
@@ -35,7 +37,7 @@ Konsole Downloads:
     pip
         numpy
     jupyter
-    anaconda
+    input-remapper
     latte-dock
     alsa mixer
     
