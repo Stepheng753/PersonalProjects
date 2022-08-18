@@ -1,43 +1,95 @@
 Icons:
-    Codeblocks
-    onlyoffice
+    Application Menu - Codeblocks
+    Projects Dir - OnlyOffice
 
-settings:
-    sweet
-    sweet mars
-    otto
+Settings:
+    Appearance:
+        Plasma-Style - Sweet-mars
+        Colors - Sweet - Change Purple to #ED254E
+        Window Decorations - Sweet-Mars-Transparent 
+                           - Titlebar Buttons - App Menu, Keep Above ----- Min, Max, Close
+        Icons - Candy Icons
+        Cursors - Layan Border
+        Splash Screen - Sweet-Mars
+    Workspace Behavior:
+        Desktop Effects:     
+            Snap Helper
+            Fall Apart
+            Sheet
+            Wobbly Windows
+            Magic Lamp
+            Squash - Off
+            Overview
+        Touch Screen:
+            Top - Desktop Grid
+        Screen Locking:
+            Appearance - Pic
+        Virtual Desktops:
+            Add 8 Desktops
+            Disable Navigation Wrapping
+    Shortcuts:
+        Custom Shortcut Services:
+            Launch Konsole: Meta + T
+        KWin:
+            Switch to Next Desktop: Meta + Ctrl + Right
+            Switch to Prev Desktop: Meta + Ctrl + Left
+        Power Management:
+            Suspend: Meta + S
+    Startup and Shutdown:
+        Desktop Session:
+            Start with an empty Session
+    Notifications:
+        Popup: Bottom Right
+    Konsole:
+        Appearance - Otto, I-Beam
+        Scrolling: Unlimited
+        Mouse: Copy as HTML, Trim Leading/Trailing Spaces, Underline Links, Open files by direct click
+    Latte:
+        Preferences: Press META to activate App Launcher
 
-apps:
+Apps:
     google-chrome
-    spotify
-    vs-code
-    oracle
+        https://www.google.com/chrome/downloads/
     arduino
-    anaconda
+        https://www.arduino.cc/en/software
+    
+Discover Downloads:
+    Win7 Volume Mixer
+    code
+    spotify
+
+Widget Downloads:
+    Event Calendar
 
 Konsole:
-    alias ll='ls -l'
-    alias la='ls -lA'
-    alias l='ls -CF'
-    alias cls='clear'
-    alias py='python3'
-    alias gs="git status"
-    alias ga="git add"
-    alias gc="git commit -m"
+    touch .bash_aliases
+        alias ll='ls -l'
+        alias la='ls -lA'
+        alias l='ls -CF'
+        alias cls='clear'
+        alias py='python3'
+        alias gs="git status"
+        alias ga="git add"
+        alias gc="git commit -m"
 
 
 Konsole Downloads:
-    python3
-    python-is-python3
-    openjdk-jdk-18-jdk
-    nodejs
-    npm
-        expo-cli
-        create-react-app
-    pip
-        numpy
-    jupyter
-    input-remapper
-    latte-dock
-    alsa mixer
+    PYTHON
+        sudo apt install python3
+        sudo apt install python-is-python3
+        sudo apt install pip
+            pip install numpy
+        sudo apt install anaconda
+        sudo apt install jupyter
+    JAVA
+        sudo apt install openjdk-jdk-18-jdk
+    JAVASCRIPT
+        sudo apt install nodejs
+        sudo apt install npm
+            npm install -g expo-cli
+            npm install create-react-app
+            
+    sudo apt install input-remapper
+    sudo apt install latte-dock
+    sudo apt install virtualbox
     
