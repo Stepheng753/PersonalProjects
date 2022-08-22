@@ -10,6 +10,7 @@ let prevDir;
 let foodImg;
 let prevFoodIndex = -1;
 let foodIndex;
+let pointDiv = document.getElementById('points');
 
 function preload() {
 	foodImg = loadImage('mouse.png');
@@ -24,6 +25,7 @@ function setup() {
 	}
 	snake.push(new SnakeBodyPart(parseInt(numSquares / 2), true));
 	setRandomFoodIndex();
+	pointDiv.innerHTML = snake.length;
 }
 
 function draw() {
@@ -74,6 +76,7 @@ function update(d_index) {
 	if (snake[0].getNFromEndPos(snake.length) == prevFoodIndex) {
 		snake.push(new SnakeBodyPart(prevFoodIndex));
 		prevFoodIndex = -1;
+		pointDiv.innerHTML = snake.length;
 	}
 	for (let i = 1; i < snake.length; i++) {
 		snake[i].path.push(snake[0].getNFromEndPos(i));
@@ -108,7 +111,7 @@ function setRandomFoodIndex() {
 		isOverlapped = false;
 		randFoodIndex = parseInt(Math.random() * numSquares);
 		for (let i = 0; i < snake.length; i++) {
-			if (randFoodIndex == snake[i].getCurrPos()) {
+			if (randFoodIndex == snake[i].getCurrPos() || randFoodIndex == foodIndex) {
 				isOverlapped = true;
 			}
 		}
