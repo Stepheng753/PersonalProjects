@@ -4,7 +4,7 @@ let squareSize = canvasWidth / length;
 let numSquares = Math.pow(length, 2);
 let squareArr = [];
 let snake = [];
-let speed = 10;
+let speed = 7;
 let currDir;
 let prevDir;
 let foodImg;
