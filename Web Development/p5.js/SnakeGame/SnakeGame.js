@@ -1,16 +1,17 @@
-let canvasWidth = 0.85 * document.body.clientWidth;
+let canvasWidth = Math.min(0.85 * document.body.clientWidth, 800);
 let length = 15;
 let squareSize = canvasWidth / length;
 let numSquares = Math.pow(length, 2);
 let squareArr = [];
 let snake = [];
-let speed = 7;
+let speed = 6;
 let currDir;
 let prevDir;
 let foodImg;
 let prevFoodIndex = -1;
 let foodIndex;
 let pointDiv = document.getElementById('points');
+let moveInProgress;
 
 function preload() {
 	foodImg = loadImage('mouse.png');
@@ -18,6 +19,7 @@ function preload() {
 
 function setup() {
 	createCanvas(canvasWidth, canvasWidth);
+	moveInProgress = false;
 	prevDir = RIGHT_ARROW;
 	currDir = 1;
 	for (let i = 0; i < numSquares; i++) {
@@ -30,7 +32,6 @@ function setup() {
 
 function draw() {
 	background(0);
-
 	for (let i = 0; i < squareArr.length; i++) {
 		squareArr[i].draw();
 	}
@@ -43,25 +44,29 @@ function draw() {
 
 	if (frameCount % speed == 0) {
 		update(currDir);
+		moveInProgress = false;
 	}
 }
 
 function keyPressed() {
-	if (keyCode == LEFT_ARROW && prevDir != RIGHT_ARROW) {
-		currDir = -1;
-		prevDir = keyCode;
-	}
-	if (keyCode == UP_ARROW && prevDir != DOWN_ARROW) {
-		currDir = -length;
-		prevDir = keyCode;
-	}
-	if (keyCode == RIGHT_ARROW && prevDir != LEFT_ARROW) {
-		currDir = 1;
-		prevDir = keyCode;
-	}
-	if (keyCode == DOWN_ARROW && prevDir != UP_ARROW) {
-		currDir = length;
-		prevDir = keyCode;
+	if (!moveInProgress) {
+		if (keyCode == LEFT_ARROW && prevDir != RIGHT_ARROW) {
+			currDir = -1;
+			prevDir = keyCode;
+		}
+		if (keyCode == UP_ARROW && prevDir != DOWN_ARROW) {
+			currDir = -length;
+			prevDir = keyCode;
+		}
+		if (keyCode == RIGHT_ARROW && prevDir != LEFT_ARROW) {
+			currDir = 1;
+			prevDir = keyCode;
+		}
+		if (keyCode == DOWN_ARROW && prevDir != UP_ARROW) {
+			currDir = length;
+			prevDir = keyCode;
+		}
+		moveInProgress = true;
 	}
 }
 
