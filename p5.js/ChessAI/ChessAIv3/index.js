@@ -45,9 +45,7 @@ function draw() {
 		drawPromotionPicker();
 	}
 	if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 0 && aiBuffer == 0) {
-		console.log('Thinking');
 		let bestMove = MAIN_chessGame.findBestMove(MAIN_chessGame.isWhitesTurn, 2);
-		console.log(bestMove);
 		MAIN_chessGame.makeMove(bestMove[Math.floor(Math.random() * bestMove.length)]);
 		aiBuffer = 1;
 	} else if (!MAIN_chessGame.isWhitesTurn && MAIN_chessGame.prevMoves.length > 0) {
@@ -58,7 +56,12 @@ function draw() {
 function mouseClicked() {
 	MAIN_chessGame.initSquares();
 	if (mouseX >= 0 && mouseX <= canvasSize && mouseY >= 0 && mouseY <= canvasSize) {
-		let index = convertPixelToIndex(mouseX, mouseY, MAIN_chessGame.isWhitesTurn, MAIN_chessGame.flipBoard);
+		let index = convertPixelToIndex(
+			mouseX,
+			mouseY,
+			MAIN_chessGame.isWhitesTurn,
+			MAIN_chessGame.flipBoard
+		);
 		let currentMoveIndex = findsLegalMoves(currLegalMoves, index);
 
 		// Draw Promotion Picker
@@ -111,7 +114,8 @@ function drawAllSquares() {
 		fill(MAIN_chessGame.squares[i]);
 		rect(pixel.x, pixel.y, squareSize, squareSize);
 
-		let oppositeColor = MAIN_chessGame.squares[i] == whiteSquareColor ? defaultSquareColor : whiteSquareColor;
+		let oppositeColor =
+			MAIN_chessGame.squares[i] == whiteSquareColor ? defaultSquareColor : whiteSquareColor;
 		fill(oppositeColor);
 		text(
 			colLetters[getColNum(i)] + (numRows - getRowNum(i)),
@@ -136,7 +140,11 @@ function drawAllSquares() {
 function drawAllPieces() {
 	for (let i = 0; i < MAIN_chessGame.pieces.length; i++) {
 		if (MAIN_chessGame.pieces[i] != 0) {
-			let pixel = convertIndexToPixel(i, MAIN_chessGame.isWhitesTurn, MAIN_chessGame.flipBoard);
+			let pixel = convertIndexToPixel(
+				i,
+				MAIN_chessGame.isWhitesTurn,
+				MAIN_chessGame.flipBoard
+			);
 			image(MAIN_chessGame.pieces[i].piecePic, pixel.x, pixel.y);
 		}
 	}

@@ -1,4 +1,4 @@
-let canvasWidth = 0.8 * document.body.clientWidth;
+let canvasWidth = 0.95 * document.body.clientWidth;
 let outerRadius = 0.4 * canvasWidth;
 let innerRadius = outerRadius / 2;
 let pointDiameter = 20;
@@ -40,7 +40,10 @@ function draw() {
 		}
 	});
 
-	if (numInnerRotations > circleArr.length && circleArr[0].outerCircleTheta == remap(angles[0] - 90)) {
+	if (
+		numInnerRotations > circleArr.length &&
+		circleArr[0].outerCircleTheta == remap(angles[0] - 90)
+	) {
 		circleArr.push(new MovingCircle(angles[0], pointDiameter));
 		angles.shift();
 	}
@@ -123,7 +126,12 @@ class MovingCircle {
 
 	drawInnerLine() {
 		stroke(color(this.origTheta * 2, 100, 100));
-		line(this.innerCircleCenterX, this.innerCircleCenterY, this.pointCenterX, this.pointCenterY);
+		line(
+			this.innerCircleCenterX,
+			this.innerCircleCenterY,
+			this.pointCenterX,
+			this.pointCenterY
+		);
 	}
 
 	drawOuterLine() {

@@ -30,13 +30,25 @@
 			h2 {
 				text-align: center;
 			}
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background-color: #d6dee1;
+				border-radius: 20px;
+			}
+
+			::-webkit-scrollbar-thumb:hover,
+			::-webkit-scrollbar-thumb:hover {
+				background-color: #ed254e;
+			}
 		</style>
 
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
 	</head>
 
 	<body>
-		<h2>SmartRockets.js</h2>
 		<h2>
 			<a onclick="rewardPunish(1)">Inc Speed Reward</a> //
 			<a onclick="rewardPunish(2)">Inc Completion Reward</a> //

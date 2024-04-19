@@ -8,12 +8,16 @@
 
 		<style type="text/css">
 			body {
-				width: 1000px;
 				margin: auto;
 				text-align: center;
+				background-color: #24283b;
+				color: white;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
 			}
 			a:hover {
-				color: blue;
+				color: cadetblue;
 			}
 			a:active {
 				color: red;
@@ -24,6 +28,19 @@
 			h2 {
 				text-align: left;
 			}
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background-color: #d6dee1;
+				border-radius: 20px;
+			}
+
+			::-webkit-scrollbar-thumb:hover,
+			::-webkit-scrollbar-thumb:hover {
+				background-color: #ed254e;
+			}
 		</style>
 
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
@@ -32,8 +49,8 @@
 
 	<body>
 		<h2>
-			Maps.js - <a href="https://www.youtube.com/user/shiffman" target="blank">Coding Train</a> Subscriber Count
-			by Country
+			<a href="https://www.youtube.com/user/shiffman" target="blank">Coding Train</a>
+			Subscriber Count by Country
 		</h2>
 		<script src="Map.js"></script>
 	</body>

@@ -1,3 +1,4 @@
+let canvasWidth = document.body.clientWidth * 0.95;
 let subscriberData;
 let countries;
 let trainMap;
@@ -18,7 +19,7 @@ function preload() {
 }
 
 function setup() {
-	canvas = createCanvas(1000, 1000);
+	canvas = createCanvas(canvasWidth, canvasWidth);
 	trainMap = mappa.tileMap(options);
 	trainMap.overlay(canvas);
 

@@ -9,7 +9,6 @@
 				background-color: #24283b;
 				color: white;
 				margin: auto;
-				margin-top: 50px;
 				text-align: center;
 			}
 			form {
@@ -22,12 +21,24 @@
 			h2 {
 				margin-right: 5rem;
 			}
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background-color: #d6dee1;
+				border-radius: 20px;
+			}
+
+			::-webkit-scrollbar-thumb:hover,
+			::-webkit-scrollbar-thumb:hover {
+				background-color: #ed254e;
+			}
 		</style>
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
 		<title>Document</title>
 	</head>
 	<body>
-		<h1>Straight Line Illusions</h1>
 		<form action="/action_page.php">
 			<h2>How does this Work?</h2>
 			<input type="radio" id="hint1" onclick="hint1Button()" value="0" />

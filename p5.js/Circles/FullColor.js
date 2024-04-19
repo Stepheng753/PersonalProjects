@@ -1,13 +1,13 @@
 let circles = [];
 let img;
 let keepColor = false;
-let canvasWidth = document.body.clientWidth;
+let canvasWidth = document.body.clientWidth * 0.95;
 
 function preload() {
-	img = loadImage('HotAirBalloon.jpg');
+	img = loadImage('TreCimeNaturalPark.jpg');
 }
 function setup() {
-	img.resize(canvasWidth * 0.85, 0);
+	img.resize(canvasWidth, 0);
 	createCanvas(img.width, img.height);
 	frameRate(60);
 	pixelDensity(1);
@@ -29,7 +29,7 @@ function draw() {
 			}
 			attempts++;
 			if (attempts > 1000) {
-				console.log('Done // FrameCount: ', frameCount);
+				'Done // FrameCount: ', frameCount;
 				keepColor = true;
 				break;
 			}

@@ -1,4 +1,4 @@
-let canvasWidth = document.body.clientWidth;
+let canvasWidth = document.body.clientWidth * 0.95;
 let order;
 let N;
 let totalNumPoints;
@@ -33,7 +33,12 @@ function initPath() {
 }
 
 function hilbert(index, top_order) {
-	let orderOnePoints = [createVector(0, 0), createVector(0, 1), createVector(1, 1), createVector(1, 0)];
+	let orderOnePoints = [
+		createVector(0, 0),
+		createVector(0, 1),
+		createVector(1, 1),
+		createVector(1, 0),
+	];
 
 	let relativeOrderOneIndex = index % 4;
 	let relativeOrderOnePoint = orderOnePoints[relativeOrderOneIndex];

@@ -15,10 +15,10 @@ let difficulty = 'Medium';
 let timerDom = document.getElementById('time-counter');
 let pointsDom = document.getElementById('points-counter');
 let submitDom = document.getElementById('submitForm');
-let canvasWidth = document.body.clientWidth;
+let canvasWidth = document.body.clientWidth * 0.95;
 
 function setup() {
-	let cnv = createCanvas(canvasWidth * 0.85, canvasWidth * 0.5);
+	let cnv = createCanvas(canvasWidth, canvasWidth * 0.5);
 	cnv.parent('sketchHolder');
 
 	numInput = createInput('');
@@ -109,7 +109,11 @@ function draw() {
 		text('Total Points: ' + points, width / 3.9, height / 3 + height / 16);
 		if (points >= numAnsWin) {
 			text('Winner Winner!', width / 3.9, height / 3 + height / 6);
-			text('Time: ' + (timeTotal - timeLeft).toFixed(2) + ' secs', width / 3.9, (2 * height) / 3 - height / 16);
+			text(
+				'Time: ' + (timeTotal - timeLeft).toFixed(2) + ' secs',
+				width / 3.9,
+				(2 * height) / 3 - height / 16
+			);
 			createFormDom();
 		} else if (points == 0) {
 			text('No Points!', width / 3.9, height / 3 + height / 6);
@@ -134,10 +138,14 @@ function createFormDom() {
 	submitDom.innerHTML += '<label>Enter in Name for Leaderboard:</label>';
 	submitDom.innerHTML += '<br>';
 	submitDom.innerHTML += "<input type='text' name='name' />";
-	submitDom.innerHTML += "<input type='hidden' name='difficulty' id='difficulty' value='" + difficulty + "'/>";
-	submitDom.innerHTML += "<input type='hidden' name='points' id='points' value='" + points + "'/>";
 	submitDom.innerHTML +=
-		"<input type='hidden' name='timePerPt' id='timePerPt' value='" + (timeTotal / points).toFixed(2) + "'/>";
+		"<input type='hidden' name='difficulty' id='difficulty' value='" + difficulty + "'/>";
+	submitDom.innerHTML +=
+		"<input type='hidden' name='points' id='points' value='" + points + "'/>";
+	submitDom.innerHTML +=
+		"<input type='hidden' name='timePerPt' id='timePerPt' value='" +
+		(timeTotal / points).toFixed(2) +
+		"'/>";
 	submitDom.innerHTML += '<br><br>';
 	submitDom.innerHTML += "<input type='submit' name='submit'/>";
 	submitDom.style.paddingBottom = '25px';

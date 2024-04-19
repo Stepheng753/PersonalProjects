@@ -1,4 +1,4 @@
-let canvasWidth = Math.min(0.85 * document.body.clientWidth, 800);
+let canvasWidth = Math.min(0.95 * document.body.clientWidth, 800);
 let length = 15;
 let squareSize = canvasWidth / length;
 let numSquares = Math.pow(length, 2);

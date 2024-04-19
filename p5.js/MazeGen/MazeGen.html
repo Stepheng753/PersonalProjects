@@ -11,7 +11,6 @@
 				background-color: #24283b;
 				color: white;
 				width: 100%;
-				max-width: 1000px;
 				margin: auto;
 				text-align: center;
 			}
@@ -30,16 +29,31 @@
 			h2 {
 				text-align: center;
 			}
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background-color: #d6dee1;
+				border-radius: 20px;
+			}
+
+			::-webkit-scrollbar-thumb:hover,
+			::-webkit-scrollbar-thumb:hover {
+				background-color: #ed254e;
+			}
 		</style>
 
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
 	</head>
 
 	<body>
-		<h2>MazeGenerator.js -- <a onclick="window.location.reload()">Click to Generate New Maze</a></h2>
 		<h2>
-			<a onclick="setFR(0)">Stop</a> // <a onclick="setFR(1)">Slow</a> // <a onclick="setFR(2)">Medium</a> //
-			<a onclick="setFR(3)">Fast</a> //
+			MazeGenerator.js -- <a onclick="window.location.reload()">Click to Generate New Maze</a>
+		</h2>
+		<h2>
+			<a onclick="setFR(0)">Stop</a> // <a onclick="setFR(1)">Slow</a> //
+			<a onclick="setFR(2)">Medium</a> // <a onclick="setFR(3)">Fast</a> //
 			<a onclick="setFR(5)">Faster</a>
 		</h2>
 

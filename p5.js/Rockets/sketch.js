@@ -1,4 +1,4 @@
-let canvasWidth = document.body.clientWidth;
+let canvasWidth = document.body.clientWidth * 0.95;
 
 var population;
 var maxDistance;

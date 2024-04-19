@@ -1,4 +1,4 @@
-let canvasWidth = document.body.clientWidth;
+let canvasWidth = document.body.clientWidth * 0.95;
 let theta1 = Math.PI / 2;
 let theta2 = Math.PI / 4;
 let dtheta1;
@@ -22,7 +22,7 @@ const frameSpeed = 1;
 const frameDuration = 2000;
 
 function setup() {
-	createCanvas(canvasWidth * 0.9, canvasWidth * 0.9);
+	createCanvas(canvasWidth, canvasWidth);
 	colorMode(HSB, 360, 100, 100);
 	angleMode(RADIANS);
 	l1 = height / 3;

@@ -1,5 +1,4 @@
-// const canvasWidth = document.body.clientWidth * 0.8;
-const canvasWidth = 800;
+const canvasWidth = document.body.clientWidth * 0.95;
 const canvasHeight = canvasWidth;
 const density = 'Ñ@#W$9876543210?!abc;:+=-,._                    ';
 // const density = reverse('       .:-i|=+%O#@');

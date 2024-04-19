@@ -1,11 +1,13 @@
+let canvasWidth = 500;
+
 function setup() {
-	createCanvas(1000, 400);
+	createCanvas(canvasWidth, 400);
 }
 
 function draw() {
 	background(230, 190, 255);
 
-	timeClock(500, 200);
+	timeClock(canvasWidth / 2, 200);
 }
 
 function timeClock(centerX, centerY) {
@@ -19,7 +21,8 @@ function timeClock(centerX, centerY) {
 	fill(255);
 	noStroke();
 	textFont('Calisto', 24);
-	let time = ('0' + hour12).slice(-2) + ':' + ('0' + min).slice(-2) + ':' + ('0' + sec).slice(-2) + ampm;
+	let time =
+		('0' + hour12).slice(-2) + ':' + ('0' + min).slice(-2) + ':' + ('0' + sec).slice(-2) + ampm;
 	text(time, -65, -170);
 
 	rotate(-PI / 2);

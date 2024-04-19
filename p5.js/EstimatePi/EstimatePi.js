@@ -1,4 +1,4 @@
-let canvasWidth = document.body.clientWidth;
+let canvasWidth = document.body.clientWidth * 0.95;
 let margin = 10;
 let triangleBase = 5;
 let bigMargin = margin + triangleBase * 10;
@@ -21,7 +21,7 @@ let colorSpeed;
 let ptSpeed;
 
 function setup() {
-	createCanvas(canvasWidth * 0.9, canvasWidth * 0.9);
+	createCanvas(canvasWidth, canvasWidth);
 	diameter = height - 2 * bigMargin;
 	radius = diameter / 2;
 	start = Date.now();
@@ -78,7 +78,14 @@ function drawYAxis() {
 
 	let triangleBase = 5;
 	let triangleHeight = Math.sqrt(Math.pow(triangleBase, 2) - Math.pow(triangleBase / 2, 2));
-	triangle(x, topY, x - triangleBase / 2, topY + triangleHeight, x + triangleBase / 2, topY + triangleHeight);
+	triangle(
+		x,
+		topY,
+		x - triangleBase / 2,
+		topY + triangleHeight,
+		x + triangleBase / 2,
+		topY + triangleHeight
+	);
 	triangle(
 		x,
 		bottomY,
@@ -99,8 +106,22 @@ function drawXAxis() {
 	line(leftX, y, rightX, y);
 
 	let triangleHeight = Math.sqrt(Math.pow(triangleBase, 2) - Math.pow(triangleBase / 2, 2));
-	triangle(leftX, y, leftX + triangleHeight, y - triangleBase / 2, leftX + triangleHeight, y + triangleBase / 2);
-	triangle(rightX, y, rightX - triangleHeight, y - triangleBase / 2, rightX - triangleHeight, y + triangleBase / 2);
+	triangle(
+		leftX,
+		y,
+		leftX + triangleHeight,
+		y - triangleBase / 2,
+		leftX + triangleHeight,
+		y + triangleBase / 2
+	);
+	triangle(
+		rightX,
+		y,
+		rightX - triangleHeight,
+		y - triangleBase / 2,
+		rightX - triangleHeight,
+		y + triangleBase / 2
+	);
 }
 
 function drawSquare() {
@@ -146,7 +167,13 @@ class Point {
 		if (this.inCircle()) {
 			colorMode(HSB);
 			let change = (colorSpeed * time) % 360;
-			let strokeCol = map(this.x + this.y, 2 / Math.sqrt(2), -2 / Math.sqrt(2), change, 360 + change);
+			let strokeCol = map(
+				this.x + this.y,
+				2 / Math.sqrt(2),
+				-2 / Math.sqrt(2),
+				change,
+				360 + change
+			);
 			if (strokeCol > 360) {
 				strokeCol = map(strokeCol, 360, 360 + change, 0, change);
 			}
