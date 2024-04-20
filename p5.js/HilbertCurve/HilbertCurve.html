@@ -19,6 +19,7 @@
 			}
 			::-webkit-scrollbar {
 				width: 5px;
+				height: 5px;
 			}
 
 			::-webkit-scrollbar-thumb {
@@ -37,15 +38,7 @@
 	<body>
 		<div style="padding-bottom: 15px">
 			<label>Order</label>
-			<input
-				id="orderInput"
-				type="number"
-				value="6"
-				step="1"
-				min="1"
-				size="1"
-				onchange="changeOrder()"
-			/>
+			<input id="orderInput" type="number" value="6" step="1" min="1" size="1" onchange="changeOrder()" />
 		</div>
 
 		<script src="./PathFunctions.js"></script>

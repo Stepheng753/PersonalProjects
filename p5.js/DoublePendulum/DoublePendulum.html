@@ -35,6 +35,7 @@
 			}
 			::-webkit-scrollbar {
 				width: 5px;
+				height: 5px;
 			}
 
 			::-webkit-scrollbar-thumb {
@@ -52,35 +53,11 @@
 	<body>
 		<div id="container" style="padding-bottom: 15px">
 			<label style="padding-left: 15px">Gravity</label>
-			<input
-				id="gravity"
-				type="number"
-				value="1"
-				step=".1"
-				min="1"
-				max="20"
-				onchange="updateParameters()"
-			/>
+			<input id="gravity" type="number" value="1" step=".1" min="1" max="20" onchange="updateParameters()" />
 			<label style="padding-left: 15px">Mass 1</label>
-			<input
-				id="mass1"
-				type="number"
-				value="10"
-				step="1"
-				min="1"
-				max="50"
-				onchange="updateParameters()"
-			/>
+			<input id="mass1" type="number" value="10" step="1" min="1" max="50" onchange="updateParameters()" />
 			<label style="padding-left: 15px">Mass 2</label>
-			<input
-				id="mass2"
-				type="number"
-				value="10"
-				step="1"
-				min="1"
-				max="50"
-				onchange="updateParameters()"
-			/>
+			<input id="mass2" type="number" value="10" step="1" min="1" max="50" onchange="updateParameters()" />
 		</div>
 
 		<script src="DoublePendulum.js"></script>
