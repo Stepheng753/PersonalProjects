@@ -1,4 +1,4 @@
-# Install script for directory: /home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/printHello
+# Install script for directory: /home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/printHello
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -36,4 +36,3 @@ endif()
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
-

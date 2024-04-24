@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1"
+CMAKE_SOURCE_DIR = "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build"
+CMAKE_BINARY_DIR = "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build"
 
 # Include any dependencies generated for this target.
 include helloExe/CMakeFiles/helloWorld.sh.dir/depend.make
@@ -59,16 +59,16 @@ include helloExe/CMakeFiles/helloWorld.sh.dir/flags.make
 
 helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o: helloExe/CMakeFiles/helloWorld.sh.dir/flags.make
 helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o: ../helloExe/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o"
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/helloWorld.sh.dir/main.c.o   -c "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o"
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/helloWorld.sh.dir/main.c.o   -c "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c"
 
 helloExe/CMakeFiles/helloWorld.sh.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/helloWorld.sh.dir/main.c.i"
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c" > CMakeFiles/helloWorld.sh.dir/main.c.i
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c" > CMakeFiles/helloWorld.sh.dir/main.c.i
 
 helloExe/CMakeFiles/helloWorld.sh.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/helloWorld.sh.dir/main.c.s"
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c" -o CMakeFiles/helloWorld.sh.dir/main.c.s
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe/main.c" -o CMakeFiles/helloWorld.sh.dir/main.c.s
 
 # Object files for target helloWorld.sh
 helloWorld_sh_OBJECTS = \
@@ -81,9 +81,9 @@ helloExe/helloWorld.sh: helloExe/CMakeFiles/helloWorld.sh.dir/main.c.o
 helloExe/helloWorld.sh: helloExe/CMakeFiles/helloWorld.sh.dir/build.make
 helloExe/helloWorld.sh: printHello/libhelloWorld.a
 helloExe/helloWorld.sh: helloExe/CMakeFiles/helloWorld.sh.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable helloWorld.sh"
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/helloWorld.sh.dir/link.txt --verbose=$(VERBOSE)
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cmake -E copy helloWorld.sh ../
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable helloWorld.sh"
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/helloWorld.sh.dir/link.txt --verbose=$(VERBOSE)
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && /usr/bin/cmake -E copy helloWorld.sh ../
 
 # Rule to build all files generated by this target.
 helloExe/CMakeFiles/helloWorld.sh.dir/build: helloExe/helloWorld.sh
@@ -91,10 +91,9 @@ helloExe/CMakeFiles/helloWorld.sh.dir/build: helloExe/helloWorld.sh
 .PHONY : helloExe/CMakeFiles/helloWorld.sh.dir/build
 
 helloExe/CMakeFiles/helloWorld.sh.dir/clean:
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && $(CMAKE_COMMAND) -P CMakeFiles/helloWorld.sh.dir/cmake_clean.cmake
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" && $(CMAKE_COMMAND) -P CMakeFiles/helloWorld.sh.dir/cmake_clean.cmake
 .PHONY : helloExe/CMakeFiles/helloWorld.sh.dir/clean
 
 helloExe/CMakeFiles/helloWorld.sh.dir/depend:
-	cd "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1" "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe" "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build" "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/helloWorld.sh.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1" "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/helloExe" "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build" "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe" "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/helloWorld.sh.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : helloExe/CMakeFiles/helloWorld.sh.dir/depend
-

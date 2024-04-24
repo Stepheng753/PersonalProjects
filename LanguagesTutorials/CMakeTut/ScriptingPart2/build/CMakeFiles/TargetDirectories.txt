@@ -1,2 +1,2 @@
-/home/stepheng753/Desktop/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/ScriptingPart2/build/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Desktop/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/ScriptingPart2/build/CMakeFiles/edit_cache.dir
+/home/stepheng753/Desktop/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/ScriptingPart2/build/CMakeFiles/rebuild_cache.dir
+/home/stepheng753/Desktop/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/ScriptingPart2/build/CMakeFiles/edit_cache.dir

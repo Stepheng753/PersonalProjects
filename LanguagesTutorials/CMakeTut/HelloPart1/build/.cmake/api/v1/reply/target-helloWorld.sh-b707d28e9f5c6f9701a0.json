@@ -1,120 +1,94 @@
 {
-	"artifacts" : 
-	[
+	"artifacts": [
 		{
-			"path" : "helloExe/helloWorld.sh"
+			"path": "helloExe/helloWorld.sh"
 		}
 	],
-	"backtrace" : 1,
-	"backtraceGraph" : 
-	{
-		"commands" : 
-		[
-			"add_executable",
-			"target_link_libraries"
-		],
-		"files" : 
-		[
-			"helloExe/CMakeLists.txt"
-		],
-		"nodes" : 
-		[
+	"backtrace": 1,
+	"backtraceGraph": {
+		"commands": ["add_executable", "target_link_libraries"],
+		"files": ["helloExe/CMakeLists.txt"],
+		"nodes": [
 			{
-				"file" : 0
+				"file": 0
 			},
 			{
-				"command" : 0,
-				"file" : 0,
-				"line" : 3,
-				"parent" : 0
+				"command": 0,
+				"file": 0,
+				"line": 3,
+				"parent": 0
 			},
 			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 6,
-				"parent" : 0
+				"command": 1,
+				"file": 0,
+				"line": 6,
+				"parent": 0
 			}
 		]
 	},
-	"compileGroups" : 
-	[
+	"compileGroups": [
 		{
-			"compileCommandFragments" : 
-			[
+			"compileCommandFragments": [
 				{
-					"fragment" : " "
+					"fragment": " "
 				}
 			],
-			"defines" : 
-			[
+			"defines": [
 				{
-					"backtrace" : 2,
-					"define" : "PRINT_HELLO_VERSION=4.0"
+					"backtrace": 2,
+					"define": "PRINT_HELLO_VERSION=4.0"
 				}
 			],
-			"includes" : 
-			[
+			"includes": [
 				{
-					"backtrace" : 2,
-					"path" : "/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/printHello/src/printHello"
+					"backtrace": 2,
+					"path": "/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/printHello/src/printHello"
 				}
 			],
-			"language" : "C",
-			"sourceIndexes" : 
-			[
-				0
-			]
+			"language": "C",
+			"sourceIndexes": [0]
 		}
 	],
-	"dependencies" : 
-	[
+	"dependencies": [
 		{
-			"backtrace" : 2,
-			"id" : "helloWorld::@ab00de9a5b388b14dba4"
+			"backtrace": 2,
+			"id": "helloWorld::@ab00de9a5b388b14dba4"
 		}
 	],
-	"id" : "helloWorld.sh::@4a10ce9c1513f3b3f635",
-	"link" : 
-	{
-		"commandFragments" : 
-		[
+	"id": "helloWorld.sh::@4a10ce9c1513f3b3f635",
+	"link": {
+		"commandFragments": [
 			{
-				"fragment" : "",
-				"role" : "flags"
+				"fragment": "",
+				"role": "flags"
 			},
 			{
-				"backtrace" : 2,
-				"fragment" : "../printHello/libhelloWorld.a",
-				"role" : "libraries"
+				"backtrace": 2,
+				"fragment": "../printHello/libhelloWorld.a",
+				"role": "libraries"
 			}
 		],
-		"language" : "C"
+		"language": "C"
 	},
-	"name" : "helloWorld.sh",
-	"nameOnDisk" : "helloWorld.sh",
-	"paths" : 
-	{
-		"build" : "helloExe",
-		"source" : "helloExe"
+	"name": "helloWorld.sh",
+	"nameOnDisk": "helloWorld.sh",
+	"paths": {
+		"build": "helloExe",
+		"source": "helloExe"
 	},
-	"sourceGroups" : 
-	[
+	"sourceGroups": [
 		{
-			"name" : "Source Files",
-			"sourceIndexes" : 
-			[
-				0
-			]
+			"name": "Source Files",
+			"sourceIndexes": [0]
 		}
 	],
-	"sources" : 
-	[
+	"sources": [
 		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "helloExe/main.c",
-			"sourceGroupIndex" : 0
+			"backtrace": 1,
+			"compileGroupIndex": 0,
+			"path": "helloExe/main.c",
+			"sourceGroupIndex": 0
 		}
 	],
-	"type" : "EXECUTABLE"
+	"type": "EXECUTABLE"
 }

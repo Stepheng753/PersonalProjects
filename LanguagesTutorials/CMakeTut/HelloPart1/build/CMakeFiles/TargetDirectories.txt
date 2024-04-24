@@ -1,8 +1,8 @@
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles/edit_cache.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/printHello/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/printHello/CMakeFiles/edit_cache.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/printHello/CMakeFiles/helloWorld.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/rebuild_cache.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/edit_cache.dir
-/home/stepheng753/Documents/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/helloWorld.sh.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles/rebuild_cache.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/CMakeFiles/edit_cache.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/printHello/CMakeFiles/rebuild_cache.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/printHello/CMakeFiles/edit_cache.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/printHello/CMakeFiles/helloWorld.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/rebuild_cache.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/edit_cache.dir
+/home/stepheng753/Documents/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/HelloPart1/build/helloExe/CMakeFiles/helloWorld.sh.dir

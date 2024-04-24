@@ -1,4 +1,4 @@
-# Install script for directory: /home/stepheng753/Desktop/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/ScriptingPart2
+# Install script for directory: /home/stepheng753/Desktop/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/ScriptingPart2
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/stepheng753/Desktop/Projects/Personal-Projects/Programming Languages Tutorials/CMakeTut/ScriptingPart2/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/stepheng753/Desktop/Projects/PersonalProjects/Programming Languages Tutorials/CMakeTut/ScriptingPart2/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
