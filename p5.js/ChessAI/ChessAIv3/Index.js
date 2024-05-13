@@ -1,4 +1,4 @@
-const canvasSize = document.body.clientWidth * 0.95;
+const canvasSize = Math.min(window.innerWidth * 0.8, window.innerHeight * 0.8);
 const numRows = 8;
 const squareSize = canvasSize / numRows;
 const colLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];

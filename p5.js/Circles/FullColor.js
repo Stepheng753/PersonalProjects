@@ -1,14 +1,18 @@
 let circles = [];
 let img;
 let keepColor = false;
-let canvasWidth = document.body.clientWidth * 0.95;
+let canvasWidth = Math.min(window.innerWidth * 0.95, (window.innerHeight * 0.95) / 2);
+let ogImg = document.getElementById('og-img');
+ogImg.style.maxWidth = window.innerWidth * 0.95 + 'px';
+ogImg.style.maxHeight = (window.innerHeight * 0.95) / 2 + 'px';
 
 function preload() {
 	img = loadImage('TreCimeNaturalPark.jpg');
 }
 function setup() {
-	img.resize(canvasWidth, 0);
-	createCanvas(img.width, img.height);
+	img.resize(ogImg.width, ogImg.height);
+	let canvas = createCanvas(img.width, img.height);
+	canvas.parent('sketch');
 	frameRate(60);
 	pixelDensity(1);
 	img.loadPixels();

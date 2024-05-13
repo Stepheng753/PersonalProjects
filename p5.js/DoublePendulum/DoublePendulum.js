@@ -1,4 +1,4 @@
-let canvasWidth = document.body.clientWidth * 0.95;
+let canvasWidth = Math.min(document.body.clientWidth * 0.95, document.body.clientHeight * 0.95);
 let theta1 = Math.PI / 2;
 let theta2 = Math.PI / 4;
 let dtheta1;
