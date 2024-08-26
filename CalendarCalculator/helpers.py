@@ -33,7 +33,7 @@ def calc_income(eventName, hrs):
 	return 0
 
 def convert_str_to_datetime(date_str, date_format="%m/%d/%Y"):
-	return datetime.datetime.strptime(date_str, date_format)
+	return datetime.datetime.strptime(date_str, date_format) if date_str != None else None
 
 def dollar_format(dollar_amt):
 	return "{:8,.2f}".format(dollar_amt)

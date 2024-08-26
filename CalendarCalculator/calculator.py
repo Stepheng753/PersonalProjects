@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import datetime
-from pytz import timezone
 import os.path
+import sys
 
 import helpers
 
@@ -25,11 +25,8 @@ def login():
 
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+        creds = flow.run_local_server(port=0)
 
         # Save the credentials for the next run
         with open('token.json', 'w') as token:
@@ -69,7 +66,7 @@ def get_events(creds, calander_title, start=datetime.datetime.now(), end=None):
         return 'An Error Has Occurred:' + error
 
 
-def calc_income(events):
+def calc_income(events, event_filter=None):
     if len(events) == 0:
         return "No Events"
 
@@ -81,24 +78,25 @@ def calc_income(events):
         max_title_str_len = len(event['summary']) if len(event['summary']) > max_title_str_len else max_title_str_len
 
     for i, event in enumerate(events):
-        print_time_format = '%I:%M %p'
-        title = event['summary'].ljust(max_title_str_len + 1)
-        start = datetime.datetime.strptime(event['start'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
-        end = datetime.datetime.strptime(event['end'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
+        if event_filter == None or event_filter in event['summary']:
+            print_time_format = '%I:%M %p'
+            title = event['summary'].ljust(max_title_str_len + 1)
+            start = datetime.datetime.strptime(event['start'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
+            end = datetime.datetime.strptime(event['end'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
 
-        num_hours = (end - start).seconds / 3600
-        date = start.strftime('%m/%d/%Y')
+            num_hours = (end - start).seconds / 3600
+            date = start.strftime('%m/%d/%Y')
 
-        start = start.strftime(print_time_format)
-        end = end.strftime(print_time_format)
+            start = start.strftime(print_time_format)
+            end = end.strftime(print_time_format)
 
-        event_income = helpers.calc_income(title, num_hours)
-        total_sum += event_income
-        total_hrs += num_hours
+            event_income = helpers.calc_income(title, num_hours)
+            total_sum += event_income
+            total_hrs += num_hours
 
-        index_time_str = str(i).rjust(2) + " : " + date + ' : ' + start + ' -> ' + end + ' : '
-        title_hrs_income_str = title + ' : ' + helpers.decimal_2_format(num_hours) + ' hrs -> $  ' + helpers.dollar_format(event_income)
-        income_str += index_time_str + title_hrs_income_str + '\n'
+            index_time_str = str(i).rjust(2) + " : " + date + ' : ' + start + ' -> ' + end + ' : '
+            title_hrs_income_str = title + ' : ' + helpers.decimal_2_format(num_hours) + ' hrs -> $  ' + helpers.dollar_format(event_income)
+            income_str += index_time_str + title_hrs_income_str + '\n'
 
     income_str += "".ljust(len(index_time_str))
     income_str += "Total".ljust(max_title_str_len + 1) + " : " + helpers.decimal_2_format(total_hrs) + ' hrs -> $  ' + helpers.dollar_format(total_sum)
@@ -107,8 +105,24 @@ def calc_income(events):
 
 
 if __name__ == '__main__':
+    calendar = 'Work'
+    start_time = datetime.datetime.now().strftime('%m/%d/%Y')
+    end_time = None
+
+    if len(sys.argv) == 2:
+        calendar = sys.argv[1]
+    if len(sys.argv) == 3:
+        start_time = sys.argv[2]
+        end_time = None
+    elif len(sys.argv) == 4:
+        start_time = sys.argv[2]
+        end_time = sys.argv[3]
+    elif len(sys.argv) == 5:
+        start_time = sys.argv[2]
+        end_time = sys.argv[3]
+        event_filter = sys.argv[4]
+
+
     creds = login()
-    events = get_events(creds, 'Tutoring', helpers.convert_str_to_datetime("06/1/2024"), helpers.convert_str_to_datetime("06/30/2024"))
-    print(calc_income(events))
-    events = get_events(creds, 'Work')
-    print(calc_income(events))
+    events = get_events(creds, calendar, helpers.convert_str_to_datetime(start_time), helpers.convert_str_to_datetime(end_time))
+    print(calc_income(events, event_filter))
