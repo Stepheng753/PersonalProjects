@@ -108,19 +108,16 @@ if __name__ == '__main__':
     calendar = 'Work'
     start_time = datetime.datetime.now().strftime('%m/%d/%Y')
     end_time = None
+    event_filter = None
 
-    if len(sys.argv) == 2:
+    if len(sys.argv) > 1:
         calendar = sys.argv[1]
-    if len(sys.argv) == 3:
-        start_time = sys.argv[2]
-        end_time = None
-    elif len(sys.argv) == 4:
-        start_time = sys.argv[2]
-        end_time = sys.argv[3]
-    elif len(sys.argv) == 5:
-        start_time = sys.argv[2]
-        end_time = sys.argv[3]
-        event_filter = sys.argv[4]
+        if len(sys.argv) > 2:
+            start_time = sys.argv[2]
+            if len(sys.argv) > 3:
+                end_time = sys.argv[3]
+                if len(sys.argv) > 4:
+                    event_filter = sys.argv[4]
 
 
     creds = login()
