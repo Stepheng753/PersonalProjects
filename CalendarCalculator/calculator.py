@@ -74,34 +74,42 @@ def calc_income(events, event_filter=None):
     total_sum = 0
     total_hrs = 0
     max_title_str_len = 0
+    idx_title_str_len = 0
     for event in events:
         max_title_str_len = len(event['summary']) if len(event['summary']) > max_title_str_len else max_title_str_len
 
     for i, event in enumerate(events):
         if event_filter == None or event_filter in event['summary']:
-            print_time_format = '%I:%M %p'
-            title = event['summary'].ljust(max_title_str_len + 1)
-            start = datetime.datetime.strptime(event['start'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
-            end = datetime.datetime.strptime(event['end'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
+            cal_event = CalendarEvent(event, max_title_str_len)
+            total_sum += cal_event.event_income
+            total_hrs += cal_event.num_hours
+            income_str += str(i).rjust(2) + " : " + str(cal_event) + '\n'
+            idx_title_str_len = cal_event.index_time_str_len
 
-            num_hours = (end - start).seconds / 3600
-            date = start.strftime('%m/%d/%Y')
-
-            start = start.strftime(print_time_format)
-            end = end.strftime(print_time_format)
-
-            event_income = helpers.calc_income(title, num_hours)
-            total_sum += event_income
-            total_hrs += num_hours
-
-            index_time_str = str(i).rjust(2) + " : " + date + ' : ' + start + ' -> ' + end + ' : '
-            title_hrs_income_str = title + ' : ' + helpers.decimal_2_format(num_hours) + ' hrs -> $  ' + helpers.dollar_format(event_income)
-            income_str += index_time_str + title_hrs_income_str + '\n'
-
-    income_str += "".ljust(len(index_time_str))
-    income_str += "Total".ljust(max_title_str_len + 1) + " : " + helpers.decimal_2_format(total_hrs) + ' hrs -> $  ' + helpers.dollar_format(total_sum)
+    income_str += "".ljust(idx_title_str_len + 5) + "Total".ljust(max_title_str_len + 1) + " : " + helpers.decimal_2_format(total_hrs) + ' hrs -> $  ' + helpers.dollar_format(total_sum)
 
     return income_str
+
+class CalendarEvent:
+
+    def __init__(self, event, max_title_str_len):
+        self.max_title_str_len = max_title_str_len
+        self.title = event['summary']
+        self.start = datetime.datetime.strptime(event['start'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
+        self.end = datetime.datetime.strptime(event['end'].get('dateTime')[0:19], '%Y-%m-%dT%H:%M:%S')
+        self.num_hours = (self.end - self.start).seconds / 3600
+        self.event_income = helpers.calc_income(self.title, self.num_hours)
+
+    def __str__(self):
+        title = self.title.ljust(self.max_title_str_len + 1)
+        date = self.start.strftime('%m/%d/%Y')
+        start = self.start.strftime('%I:%M %p')
+        end = self.end.strftime('%I:%M %p')
+
+        index_time_str = date + ' : ' + start + ' -> ' + end + ' : '
+        self.index_time_str_len = len(index_time_str)
+        title_hrs_income_str = title + ' : ' + helpers.decimal_2_format(self.num_hours) + ' hrs -> $  ' + helpers.dollar_format(self.event_income)
+        return index_time_str + title_hrs_income_str
 
 
 if __name__ == '__main__':
