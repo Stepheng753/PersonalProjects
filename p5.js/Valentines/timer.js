@@ -9,18 +9,18 @@ function countDown() {
 	const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
 	const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-	return { days, hours, minutes, seconds };
+	return { days, hours, minutes, seconds, timeLeft };
 }
 
 function drawCountDown() {
-	if (frameCount - yesButtonPressedFrameCt == 255) {
+	if (frameCount - yesButtonPressedFrameCt == 300) {
 		countdownStartPanFrameCt = frameCount;
 	}
-	if (frameCount - yesButtonPressedFrameCt >= 255) {
+	if (frameCount - yesButtonPressedFrameCt >= 300) {
 		noButton.remove();
 		yesButton.remove();
 
-		const { days, hours, minutes, seconds } = countDown();
+		const { days, hours, minutes, seconds, timeLeft } = countDown();
 		textAlign(CENTER);
 		textStyle(BOLD);
 		textSize(50);
@@ -31,7 +31,8 @@ function drawCountDown() {
 		drawPics();
 
 		let countdownPos = getXY(-200, 600, width / 2, 600);
-		text(`${days}d ${hours}h ${minutes}m ${seconds}s`, countdownPos.x, countdownPos.y);
+		let countdownText = timeLeft > 0 ? `${days}d ${hours}h ${minutes}m ${seconds}s` : 'Already Happened';
+		text(countdownText, countdownPos.x, countdownPos.y);
 		let seeYouPos = getXY(width / 2, height, width / 2, 400);
 		text('See you Em Iu\nIn ...', seeYouPos.x, seeYouPos.y);
 	}
@@ -43,7 +44,7 @@ function calculateDirection(startX, startY, endX, endY) {
 	return Math.atan2(yDir, xDir);
 }
 
-function getXY(startX, startY, endX, endY, timeDur = 200) {
+function getXY(startX, startY, endX, endY, timeDur = 300) {
 	let dir = calculateDirection(startX, startY, endX, endY);
 	let posX = startX + ((endX - startX) / timeDur) * (frameCount - countdownStartPanFrameCt);
 	let posY = startY + ((endY - startY) / timeDur) * (frameCount - countdownStartPanFrameCt);

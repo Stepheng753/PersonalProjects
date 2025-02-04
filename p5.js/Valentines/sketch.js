@@ -10,7 +10,7 @@ let bg;
 
 function preload() {
 	airplaneImg = loadImage('./assets/airplane.webp');
-	song = loadSound('./assets/Die With A Smile.mp3');
+	song = loadSound('./assets/LOVE.mp3');
 
 	let ext;
 	for (let i = 1; i <= 12; i++) {
@@ -43,7 +43,7 @@ function draw() {
 	noButtonSettings();
 	drawAirplane();
 	drawCountDown();
-	title('Will You Be My Valentines?\n👉👈');
+	title('Will You Be My Valentine?\n👉👈');
 }
 
 function title(titleText) {
@@ -84,7 +84,7 @@ function yesButtonSettings(button, posX, posY) {
 	if (yesButtonPressed) {
 		if (!yesButtonPressedFrameCt) {
 			song.play();
-			song.jump(123);
+			song.jump(81.5);
 		}
 		yesButtonPressAction();
 	}
@@ -115,7 +115,7 @@ function yesButtonPressAction() {
 	noButtonPressed = true;
 	yesButtonPressedFrameCt = frameCount;
 	airplanesInfo = [];
-	let randomNumAirplanes = random(15, 50);
+	let randomNumAirplanes = random(15, 30);
 	// let randomNumAirplanes = 15;
 	for (let i = 0; i < randomNumAirplanes; i++) {
 		airplanesInfo.push(setAirplaneInfo());
