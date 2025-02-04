@@ -43,10 +43,10 @@ function calculateDirection(startX, startY, endX, endY) {
 	return Math.atan2(yDir, xDir);
 }
 
-function getXY(startX, startY, endX, endY) {
+function getXY(startX, startY, endX, endY, timeDur = 200) {
 	let dir = calculateDirection(startX, startY, endX, endY);
-	let posX = startX + Math.cos(dir) * (frameCount - countdownStartPanFrameCt);
-	let posY = startY - Math.sin(dir) * (frameCount - countdownStartPanFrameCt);
+	let posX = startX + ((endX - startX) / timeDur) * (frameCount - countdownStartPanFrameCt);
+	let posY = startY + ((endY - startY) / timeDur) * (frameCount - countdownStartPanFrameCt);
 	if (Math.sign(Math.cos(dir)) * (endX - posX) <= 0) {
 		posX = endX;
 	}
